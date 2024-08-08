@@ -1,5 +1,5 @@
 import { Preview } from "@storybook/react";
-import "@mmhuntsberry/tokens";
+import "@mmhuntsberry/phantom-tokens";
 
 const preview: Preview = {
   parameters: {
