@@ -1,0 +1,33 @@
+.root {
+  --surface-background-color: var(--background-secondary);
+  /* border */
+  --surface-border-radius: 32px;
+  /* display */
+  --surface-display: flex;
+  --surface-flex-direction: column;
+  /* padding */
+  --surface-padding-inline-start: 32px;
+  --surface-padding-inline-end: 32px;
+  --surface-padding-block-start: 32px;
+  --surface-padding-block-end: 32px;
+}
+
+.surface {
+  background-color: var(--surface-background-color);
+  display: var(--surface-display);
+  flex-direction: var(--surface-flex-direction);
+  border-radius: var(--surface-border-radius);
+  padding-inline-start: var(--surface-padding-inline-start);
+  padding-inline-end: var(--surface-padding-inline-end);
+  padding-block-start: var(--surface-padding-block-start);
+  padding-block-end: var(--surface-padding-block-end);
+
+  transition: background-color 0.25s ease-in-out;
+}
+
+.surface[data-compact="true"] {
+  --surface-padding-inline-start: var(--sizing-lg);
+  --surface-padding-inline-end: var(--sizing-lg);
+  --surface-padding-block-start: var(--sizing-lg);
+  --surface-padding-block-end: var(--sizing-lg);
+}

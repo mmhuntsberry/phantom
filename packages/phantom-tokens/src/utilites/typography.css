@@ -1,0 +1,146 @@
+.font-family-primary {
+  font-family: var(--font-family-primary);
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.title-xs-regular {
+  font: var(--title-xs-regular);
+}
+
+.title-sm-regular {
+  font: var(--title-sm-regular);
+}
+
+.title-md-regular {
+  font: var(--title-md-regular);
+}
+
+.title-lg-regular {
+  font: var(--title-lg-regular);
+}
+
+.title-xl-regular {
+  font: var(--title-xl-regular);
+}
+
+.title-2xl-regular {
+  font: var(--title-2xl-regular);
+}
+
+.title-3xl-regular {
+  font: var(--title-3xl-regular);
+}
+
+.title-xs-semi-bold {
+  font: var(--title-xs-semi-bold);
+}
+
+.title-sm-semi-bold {
+  font: var(--title-sm-semi-bold);
+}
+
+.title-md-semi-bold {
+  font: var(--title-md-semi-bold);
+}
+
+.title-lg-semi-bold {
+  font: var(--title-lg-semi-bold);
+}
+
+.title-xl-semi-bold {
+  font: var(--title-xl-semi-bold);
+}
+
+.title-2xl-semi-bold {
+  font: var(--title-2xl-semi-bold);
+}
+
+.title-3xl-semi-bold {
+  font: var(--title-3xl-semi-bold);
+}
+.title-xs-bold {
+  font: var(--title-xs-bold);
+}
+
+.title-sm-bold {
+  font: var(--title-sm-bold);
+}
+
+.title-md-bold {
+  font: var(--title-md-bold);
+}
+
+.title-lg-bold {
+  font: var(--title-lg-bold);
+}
+
+.title-xl-bold {
+  font: var(--title-xl-bold);
+}
+
+.title-2xl-bold {
+  font: var(--title-2xl-bold);
+}
+
+.title-3xl-bold {
+  font: var(--title-3xl-bold);
+}
+
+.paragraph-md-regular {
+  font: var(--paragraph-md-regular);
+}
+
+.paragraph-md-semi-bold {
+  font: var(--paragraph-md-semi-bold);
+}
+
+.paragraph-md-bold {
+  font: var(--paragraph-md-bold);
+}
+
+.small-sm-regular {
+  font: var(--small-sm-regular);
+}
+
+.small-md-regular {
+  font: var(--small-md-regular);
+}
+
+.small-lg-regular {
+  font: var(--small-lg-regular);
+}
+
+.small-sm-semi-bold {
+  font: var(--small-sm-semi-bold);
+}
+
+.small-md-semi-bold {
+  font: var(--small-md-semi-bold);
+}
+
+.small-lg-semi-bold {
+  font: var(--small-lg-semi-bold);
+}
+
+.small-sm-bold {
+  font: var(--small-sm-bold);
+}
+
+.small-md-bold {
+  font: var(--small-md-bold);
+}
+
+.small-lg-bold {
+  font: var(--small-lg-bold);
+}

@@ -1,0 +1,53 @@
+{
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "feat",
+            "section": "Features"
+          },
+          {
+            "type": "fix",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "cleanup",
+            "section": "Cleanup"
+          },
+          {
+            "type": "docs",
+            "section": "Documentations"
+          }
+        ]
+      },
+      "infile": "packages/phantom-tokens/CHANGELOG.md",
+      "parserOpts": {
+        "headerPattern": "^(\\w*)(?:\\((phantom-tokens*)\\))?\\: (.*)$"
+      }
+    },
+    "@release-it/bumper": {
+      "in": "packages/phantom-tokens/version.json",
+      "out": [
+        "packages/phantom-tokens/version.json",
+        "packages/phantom-tokens/dist/package.json"
+      ]
+    }
+  },
+  "git": {
+    "commitMessage": "chore(repo): release phantom-tokens ${version}",
+    "tagName": "phantom-tokens-v${version}"
+  },
+  "npm": {
+    "publish": false
+  },
+  "github": {
+    "release": true,
+    "releaseName": "Release: phantom-tokens ${version}"
+  },
+  "hooks": {
+    "before:bump": "npx nx pack phantom-tokens",
+    "after:bump": ["git checkout -- package.json"]
+  }
+}

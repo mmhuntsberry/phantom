@@ -1,0 +1,142 @@
+/* RESET */
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  all: unset;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --background-primary: var(--colors-purple-900);
+  --background-secondary: var(--colors-midnight-violet-900);
+  --font-family-primary: "Roboto", sans-serif;
+  --text-color-primary: var(--colors-white);
+  --text-color-secondary: var(--colors-cyan-500);
+  --link-text-color-primary: var(--text-color-secondary);
+  --link-text-color-primary-hover: var(--colors-cyan-600);
+  --fill-primary: var(--text-color-secondary);
+  --fill-primary-hover: var(--colors-cyan-700);
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #f8f8f2;
+  background: none;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  line-height: 1.5;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: var(--sizing-md);
+  overflow: auto;
+  border-radius: var(--radii-xl);
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: var(--background-secondary);
+}
+
+:not(pre) > code[class*="language-"] {
+  border-radius: var(--radii-xl);
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: slategray;
+}
+
+.token.punctuation {
+  color: #f8f8f2;
+}
+
+.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+  color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+  color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+  color: #e6db74;
+}
+
+.token.keyword {
+  color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+  color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}

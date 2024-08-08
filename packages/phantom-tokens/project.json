@@ -1,0 +1,39 @@
+{
+  "name": "phantom-tokens",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/css/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "pack": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run pack",
+        "cwd": "packages/css"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm publish",
+        "cwd": "packages/css/dist"
+      }
+    },
+    "release": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotenv release-it -- --config=./packages/css/.release-it.json"
+      }
+    }
+  }
+}

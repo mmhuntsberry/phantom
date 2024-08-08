@@ -1,0 +1,39 @@
+.root {
+  --badge-background-color: none;
+  /* border */
+  --badge-border-radius: 32px;
+  --badge-border-width: var(--border-width-xs);
+  --badge-border-style: solid;
+  --badge-border-color: var(--colors-cyan-500);
+  /* font family */
+  --badge-font: var(--small-md-regular);
+  /* padding */
+  --badge-padding-inline-start: 12px;
+  --badge-padding-inline-end: 12px;
+  --badge-padding-block-start: 8px;
+  --badge-padding-block-end: 8px;
+
+  /* text */
+  --badge-color: var(--colors-white);
+
+  /* text decoration */
+  --badge-text-decoration: none;
+}
+
+.badge {
+  background-color: var(--badge-background-color);
+  border-radius: var(--badge-border-radius);
+  border-width: var(--badge-border-width);
+  border-style: var(--badge-border-style);
+  border-color: var(--badge-border-color);
+  color: var(--badge-color);
+  width: fit-content;
+  font: var(--badge-font);
+  padding-inline-start: var(--badge-padding-inline-start);
+  padding-inline-end: var(--badge-padding-inline-end);
+  padding-block-start: var(--badge-padding-block-start);
+  padding-block-end: var(--badge-padding-block-end);
+  text-decoration: var(--badge-text-decoration);
+
+  transition: background-color 0.25s ease-in-out;
+}

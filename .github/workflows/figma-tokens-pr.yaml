@@ -1,0 +1,43 @@
+name: Process Figma Tokens PR
+on: pull_request
+
+jobs:
+  run_if:
+    if: ${{ github.head_ref == 'figma-tokens' }}
+    name: Process Figma Tokens
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run style-dictionary
+        run: npx nx build tokens
+
+      - name: Set Git Config
+        run: |
+          # Get the event actor's username and email
+          ACTOR_USERNAME="${GITHUB_ACTOR}"
+          ACTOR_EMAIL="${GITHUB_ACTOR}@users.noreply.github.com"
+
+          # configure Git username and email
+          git config user.name "$ACTOR_USERNAME"
+          git config user.email "$ACTOR_EMAIL"
+
+
+          # Display the configured user name and email for verification
+          git config user.name
+          git config user.email
+
+      - name: Commit and push changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: Matthew Huntsberry
+          author_email: mmhuntsberry@gmail.com
+          message: "chore: style-dictionary output (version ${{ env.VERSION }})"
+          add: "."

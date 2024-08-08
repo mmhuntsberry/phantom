@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@mmhuntsberry/components": ["packages/phantom-components/src/index.ts"],
+      "@mmhuntsberry/css": ["packages/css/src/index.css"],
+      "@mmhuntsberry/fonts": ["packages/fonts"]
+    }
+  },
+  "include": ["types/*.d.ts"],
+  "exclude": ["node_modules", "tmp"]
+}

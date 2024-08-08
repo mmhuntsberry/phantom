@@ -1,0 +1,50 @@
+{
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "feat",
+            "section": "Features"
+          },
+          {
+            "type": "fix",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "cleanup",
+            "section": "Cleanup"
+          },
+          {
+            "type": "docs",
+            "section": "Documentations"
+          }
+        ]
+      },
+      "infile": "packages/phantom-components/CHANGELOG.md",
+      "parserOpts": {
+        "headerPattern": "^(\\w*)(?:\\((components*)\\))?\\: (.*)$"
+      }
+    },
+    "@release-it/bumper": {
+      "in": "packages/phantom-components/version.json",
+      "out": ["packages/phantom-components/version.json", "dist/package.json"]
+    }
+  },
+  "git": {
+    "commitMessage": "chore(repo): release components ${version}",
+    "tagName": "components-v${version}"
+  },
+  "npm": {
+    "publish": false
+  },
+  "github": {
+    "release": true,
+    "releaseName": "Release: components ${version}"
+  },
+  "hooks": {
+    "before:bump": "npx nx build components",
+    "after:bump": ["git checkout -- package.json"]
+  }
+}

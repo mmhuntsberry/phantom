@@ -1,0 +1,137 @@
+.grid {
+  display: grid;
+}
+
+.grid-span-1 {
+  grid-column: span 1;
+}
+
+.grid-span-2 {
+  grid-column: span 2;
+}
+
+.grid-span-3 {
+  grid-column: span 3;
+}
+
+.grid-span-4 {
+  grid-column: span 4;
+}
+
+.grid-span-5 {
+  grid-column: span 5;
+}
+
+.grid-span-6 {
+  grid-column: span 6;
+}
+
+.grid-span-7 {
+  grid-column: span 7;
+}
+
+.grid-span-8 {
+  grid-column: span 8;
+}
+
+.grid-span-9 {
+  grid-column: span 9;
+}
+
+.grid-span-10 {
+  grid-column: span 10;
+}
+
+.grid-span-11 {
+  grid-column: span 11;
+}
+
+.grid-span-12 {
+  grid-column: span 12;
+}
+
+.grid-span-all {
+  grid-column: 1 / -1;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.grid-cols-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+@media (max-width: 640px) {
+  .sm\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .sm\:grid-span-all {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .md\:grid-span-2 {
+    grid-column: span 2;
+  }
+  .md\:grid-span-4 {
+    grid-column: span 4;
+  }
+  .md\:grid-span-6 {
+    grid-column: span 6;
+  }
+  .md\:grid-cols-8 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+  .md\:grid-span-2-to-neg2 {
+    grid-column: 2 / -2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .lg\:grid-span-2 {
+    grid-column: span 2;
+  }
+  .lg\:grid-span-3 {
+    grid-column: span 3;
+  }
+  .lg\:grid-span-4 {
+    grid-column: span 4;
+  }
+  .lg\:grid-span-6 {
+    grid-column: span 6;
+  }
+  .lg\:grid-span-7 {
+    grid-column: span 7;
+  }
+  .lg\:grid-span-8 {
+    grid-column: span 8;
+  }
+  .lg\:grid-span-9 {
+    grid-column: span 9;
+  }
+
+  .lg\:grid-span-3-to-neg3 {
+    grid-column: 3 / -3;
+  }
+
+  .lg\:grid-cols-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}

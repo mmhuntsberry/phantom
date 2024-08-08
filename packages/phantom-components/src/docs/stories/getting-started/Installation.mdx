@@ -1,0 +1,81 @@
+import {
+  ArgsTable,
+  ArgTypes,
+  Story,
+  Canvas,
+  Description,
+  Meta,
+  Unstyled,
+  Controls,
+} from "@storybook/blocks";
+
+<Unstyled>
+
+<Meta title="Getting Started" />
+
+# Installation
+
+- [Overview](#overview)
+- [Creating an Access Token](#gh-pat)
+- [Creating a .npmrc file](#npmrc)
+- [Using the Package in Your Project](#using-the-package)
+
+## Overview
+
+The following is an example of how engineers and teams would get started using Hearst
+Design package.
+
+## Creating a Personal Access Token (PAT) on Github:
+
+- **Login to GitHub**: Go to the GitHub website and log in to your account.
+- **Navigate to Settings**: Click on your profile picture in the top-right corner, and from the dropdown menu, select "Settings."
+- **Access Developer Settings**: In the left sidebar, click on "Developer settings."
+- **Create a Personal Access Token**: Under "Personal access tokens," click on "Generate new token."
+- **Configure Token**: Give your token a descriptive name and choose the desired scopes for the token based on your needs (e.g., repo, read:user, user:email).
+- **Generate the Token**: Click on the "Generate token" button at the bottom of the page.
+- **Copy the Token**: After the token is generated, copy it immediately. You won't be able to see it again.
+- **Store the Token Securely**: Store the copied token in a safe place, as it won't be displayed again. Do not share it publicly or commit it to version control.
+
+## Creating an .npmrc File to Use the Package:
+
+- **Open Terminal**: Open your terminal or command prompt.
+- **Navigate to Your Project Directory**: Use the **`cd`** command to navigate to the root directory of your project.
+- **Create or Edit .npmrc**: If you don't have an **`.npmrc`** file in your project directory, create a new file and name it **`.npmrc`**. If the file already exists, open it for editing.
+- **Add Authentication Information**: In the **`.npmrc`** file, add the following line, replacing **`YOUR_AUTH_TOKEN`** with the Personal Access Token you generated from GitHub:
+
+```zsh
+//npm.pkg.github.com/:_authToken=YOUR_AUTH_TOKEN
+```
+
+- **Configure Package Registry**: If the package is hosted on the GitHub package registry, add the following line to the .npmrc file:
+
+```
+@heast-design:registry=https://npm.pkg.github.com
+```
+
+- **Save and Close**: Save the changes and close the .npmrc file.
+
+## Using the Package in Your Project:
+
+Now that you have set up the **`.npmrc`** file with the appropriate authentication, you can install and use the **`@heast-design/toolkit-foundations`** package in your project just like any other npm package:
+
+- **Open Terminal**: Ensure you are in the root directory of your project in the terminal.
+- **Install the Package**: Run the following command to install the package from the GitHub package registry:
+
+```bash
+npm install @heast-design/toolkit-foundations
+```
+
+- **Import and Use**: Import the package in your code using the appropriate import statement (ES6 or CommonJS), as mentioned in the previous example.
+
+```js
+import "@heast-design/toolkit-foundations";
+```
+
+```react
+TBD...
+```
+
+That's it! You've successfully created a Personal Access Token on GitHub and configured your .npmrc file to use the `@heast-design/toolkit-foundations` package from the GitHub package registry. You can now integrate the package into your project and start using its features. Happy coding!
+
+</Unstyled>

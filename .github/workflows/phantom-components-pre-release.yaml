@@ -1,0 +1,43 @@
+name: Pre Release Components
+
+on:
+  push:
+    branches:
+      - "*rc*"
+    paths:
+      - "packages/phantom-components/**"
+
+jobs:
+  publish-components-pre-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://npm.pkg.github.com/
+      - run: npm ci
+
+      - name: Set Git Config
+        run: |
+          # Get the event actor's username and email
+          ACTOR_USERNAME="${GITHUB_ACTOR}"
+          ACTOR_EMAIL="${GITHUB_ACTOR}@users.noreply.github.com"
+
+          # configure Git username and email
+          git config user.name "$ACTOR_USERNAME"
+          git config user.email "$ACTOR_EMAIL"
+
+
+          # Display the configured user name and email for verification
+          git config user.name
+          git config user.email
+
+      - name: Build packages and publish
+        run: |
+          npm config set //npm.pkg.github.com/:_authToken $NODE_AUTH_TOKEN
+          npx nx release components --preRelease=alpha --ci --no-npm
+          npx nx publish components
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

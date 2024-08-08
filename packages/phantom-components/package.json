@@ -1,0 +1,15 @@
+{
+  "name": "@mmhuntsberry/phantom-components",
+  "version": "0.0.0-replace",
+  "main": "./index.js",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "scripts": {},
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,38 @@
+.root {
+  --link-background-color: none;
+  /* border */
+  --link-border-radius: 32px;
+  /* font family */
+  --link-font: var(--small-lg-regular);
+  /* padding */
+  --link-padding-inline-start: 12px;
+  --link-padding-inline-end: 12px;
+  --link-padding-block-start: 8px;
+  --link-padding-block-end: 8px;
+
+  /* text */
+  --link-text-color: #fff;
+
+  /* text decoration */
+  --link-text-decoration: none;
+}
+
+.link {
+  background-color: var(--link-background-color);
+  border-radius: var(--link-border-radius);
+  color: var(--link-text-color);
+  font: var(--link-font);
+  padding-inline-start: var(--link-padding-inline-start);
+  padding-inline-end: var(--link-padding-inline-end);
+  padding-block-start: var(--link-padding-block-start);
+  padding-block-end: var(--link-padding-block-end);
+  text-decoration: var(--link-text-decoration);
+
+  transition: background-color 0.25s ease-in-out;
+}
+.link:hover {
+  --link-background-color: var(--background-primary);
+}
+.link[data-active="true"] {
+  --link-text-color: var(--text-color-secondary);
+}

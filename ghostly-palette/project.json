@@ -1,0 +1,70 @@
+{
+  "name": "ghostly-palette",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "ghostly-palette/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/ghostly-palette",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "ghostly-palette/src/main.ts",
+        "tsConfig": "ghostly-palette/tsconfig.app.json",
+        "assets": ["ghostly-palette/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "ghostly-palette:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "ghostly-palette:build:development"
+        },
+        "production": {
+          "buildTarget": "ghostly-palette:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["ghostly-palette/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "ghostly-palette/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

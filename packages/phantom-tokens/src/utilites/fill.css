@@ -1,0 +1,15 @@
+.fill-primary {
+  fill: var(--fill-primary) !important;
+}
+
+.fill-secondary {
+  fill: var(--fill-secondary) !important;
+}
+
+.hover\:fill-primary:hover {
+  fill: var(--fill-primary-hover) !important;
+}
+
+.hover\:fill-secondary:hover {
+  fill: var(--fill-secondary-hover) !important;
+}

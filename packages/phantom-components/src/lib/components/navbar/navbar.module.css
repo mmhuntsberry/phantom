@@ -1,0 +1,25 @@
+.root {
+  --navbar-background-color: var(--background-secondary);
+  /* border */
+  --navbar-border-radius: 32px;
+  /* display */
+  --navbar-display: inline-flex;
+  /* padding */
+  --navbar-padding-inline-start: 16px;
+  --navbar-padding-inline-end: 16px;
+  --navbar-padding-block-start: 16px;
+  --navbar-padding-block-end: 16px;
+}
+
+.nav-items {
+  list-style: none;
+  background-color: var(--navbar-background-color);
+  display: var(--navbar-display);
+  border-radius: var(--navbar-border-radius);
+  padding-inline-start: var(--navbar-padding-inline-start);
+  padding-inline-end: var(--navbar-padding-inline-end);
+  padding-block-start: var(--navbar-padding-block-start);
+  padding-block-end: var(--navbar-padding-block-end);
+
+  transition: background-color 0.25s ease-in-out;
+}

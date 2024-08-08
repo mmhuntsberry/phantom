@@ -1,0 +1,42 @@
+name: Figma Tokens Sync
+
+on:
+  push:
+    branches:
+      - "*release*"
+    paths:
+      - "packages/tokens/**"
+
+jobs:
+  publish-tokens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://npm.pkg.github.com/
+      - run: npm ci
+      - name: Set Git Config
+        run: |
+          # Get the event actor's username and email
+          ACTOR_USERNAME="${GITHUB_ACTOR}"
+          ACTOR_EMAIL="${GITHUB_ACTOR}@users.noreply.github.com"
+
+          # configure Git username and email
+          git config user.name "mmhuntsberry"
+          git config user.email "mmhuntsberry@gmail.com"
+
+
+          # Display the configured user name and email for verification
+          git config user.name
+          git config user.email
+
+      - name: Build packages
+        run: |
+          npm config set //npm.pkg.github.com/:_authToken $NODE_AUTH_TOKEN
+          npx nx release tokens --no-npm --ci
+          npx nx publish tokens
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

@@ -1,0 +1,22 @@
+.bg-color-primary {
+  background-color: var(--background-primary);
+}
+.bg-color-secondary {
+  background-color: var(--background-secondary);
+}
+
+.text-color-primary {
+  color: var(--text-color-primary) !important;
+}
+
+.text-color-secondary {
+  color: var(--colors-cyan-500);
+}
+
+.link-text-color-primary {
+  color: var(--link-text-color-primary) !important;
+}
+
+.hover\:link-text-color-primary:hover {
+  color: var(--link-text-color-primary-hover) !important;
+}

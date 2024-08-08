@@ -1,0 +1,26 @@
+{
+  "name": "@mmhuntsberry/phantom-tokens",
+  "version": "0.0.0-replace",
+  "description": "",
+  "main": "src/index.css",
+  "type": "commonjs",
+  "scripts": {
+    "build": "",
+    "pack": "mkdir -p dist && cp -r build package.json dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mmhuntsberry/phantom-ui.git",
+    "directory": "packages/tokens"
+  },
+  "publishConfig": {
+    "@mmhuntsberry:registry": "https://npm.pkg.github.com/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "style-dictionary": "^3.8.0",
+    "@tokens-studio/sd-transforms": "0.9.1"
+  }
+}
