@@ -31,7 +31,7 @@ li {
 }
 
 :root {
-  --background-primary: var(--colors-purple-900);
+  --background-primary: var(--colors-purple-950);
   --background-secondary: var(--colors-midnight-violet-900);
   --font-family-primary: "Roboto", sans-serif;
   --text-color-primary: var(--colors-white);
