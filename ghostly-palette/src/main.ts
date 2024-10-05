@@ -12,14 +12,6 @@ const {
   GHOSTLY_DATABASE,
 } = process.env;
 
-console.log(
-  GHOSTLY_USERNAME,
-  GHOSTLY_PASSWORD,
-  GHOSTLY_PORT,
-  GHOSTLY_HOST,
-  GHOSTLY_DATABASE
-);
-
 const connection = mysql.createConnection({
   host: GHOSTLY_HOST,
   user: GHOSTLY_USERNAME,

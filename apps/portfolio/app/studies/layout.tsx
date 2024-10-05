@@ -33,24 +33,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
   return (
     <html lang="en" className={sourceSans3.className}>
       <body>
         <Header navLinks={navLinks} />
-        <main className="container">
-          {pathname === "/" && (
-            <p className={styles.about}>
-              Hi, I'm Matt—an engineer, designer, educator, and design system
-              specialist. Seamlessly bridging the gap between design and code.{" "}
-              <strong>I create systems that create products.</strong>
-            </p>
-          )}
-          <h1 className={styles.title}>
-            {pathname === "/" ? "Featured Work" : "Resume"}
-          </h1>
-          {children}
-        </main>
+        <main>{children}</main>
       </body>
     </html>
   );

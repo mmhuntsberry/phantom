@@ -12,6 +12,9 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  images: {
+    domains: ["cdn.sanity.io"], // Add Sanity's CDN domain here
+  },
 };
 
 const plugins = [

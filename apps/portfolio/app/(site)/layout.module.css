@@ -1,0 +1,10 @@
+.about {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.title {
+  font-size: var(--fs-3xl);
+  font-weight: 700;
+}
