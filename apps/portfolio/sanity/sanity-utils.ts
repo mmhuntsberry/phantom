@@ -140,7 +140,5 @@ export async function getJobs(): Promise<Job[]> {
     }`
   );
 
-  console.log("Jobs fetched:", jobs); // Add this line to inspect the output
-
   return jobs;
 }

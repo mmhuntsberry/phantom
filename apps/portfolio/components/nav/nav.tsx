@@ -3,15 +3,24 @@
 import Link from "next/link";
 import styles from "./nav.module.css";
 
-type NavProps = {
-  links: { href: string; label: string }[];
+export type NavLink = {
+  href: string;
+  label: string;
+};
+
+export const navLinks: NavLink[] = [
+  { href: "/", label: "Work" },
+  { href: "/resume", label: "Resume" },
+];
+
+export type NavProps = {
   pathname: string;
 };
 
-export default function Nav({ links, pathname }: NavProps) {
+export default function Nav({  pathname }: NavProps) {
   return (
     <nav className={styles.nav}>
-      {links.map((link) => (
+      {navLinks.map((link: NavLink) => (
         <Link
           className={link.href === pathname ? styles.active : styles.link}
           href={link.href}

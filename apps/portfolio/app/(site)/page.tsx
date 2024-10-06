@@ -1,5 +1,3 @@
-import { LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
-
 import { getStudies } from "../../sanity/sanity-utils";
 
 import NextLink from "next/link";

@@ -18,8 +18,6 @@ function getImageClass(job: Job) {
 export default async function Resume() {
   const jobs: Job[] = await getJobs();
 
-  console.log(jobs);
-
   return (
     <div>
       <ul>
