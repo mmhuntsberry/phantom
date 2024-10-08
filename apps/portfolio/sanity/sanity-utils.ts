@@ -83,7 +83,9 @@ export async function getStudies(): Promise<Study[]> {
       "image": image.asset->url,
       url,
       "excerpt": array::join(string::split((pt::text(body)), "")[0..255], "") + "..."
-    }`
+    }`,
+    {},
+    { next: { revalidate: 3600 } }
   );
 }
 

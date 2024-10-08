@@ -6,6 +6,7 @@ import styles from "./page.module.css";
 
 export default async function Index() {
   const studies = await getStudies();
+  console.log(studies)
   return (
     <div>
       <ul>
