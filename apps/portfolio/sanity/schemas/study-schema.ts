@@ -48,11 +48,19 @@ const study = {
       of: [
         { type: "block" },
         {
+          name: "image",
+          title: "Image",
           type: "image",
           options: {
             hotspot: true,
-            fields: [{ name: "alt", title: "Alt", type: "string" }],
           },
+          fields: [
+            {
+              name: "alt",
+              title: "Alt",
+              type: "string",
+            },
+          ],
         },
         {
           type: "object",
