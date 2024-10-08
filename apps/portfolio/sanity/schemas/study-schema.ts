@@ -18,16 +18,21 @@ const study = {
     },
     {
       name: "image",
-      title: "Image",
+      title: "Main Image",
       type: "image",
       options: {
-        hotspot: true,
+        hotspot: true, // Allows the user to manually adjust the focus point on images
       },
       fields: [
         {
           name: "alt",
-          title: "Alt",
+          title: "Alt Text",
           type: "string",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          validation: (Rule: any) =>
+            Rule.required().error("Alt text is required for accessibility"),
+          description:
+            "Alternative text for the image, used for accessibility and SEO.",
         },
       ],
     },
@@ -46,8 +51,26 @@ const study = {
       title: "Content",
       type: "array",
       of: [
-        { type: "block" },
-        { type: "image" },
+        { type: "block" }, // Regular text block
+        {
+          type: "image", // Inline images in the content
+          title: "Inline Image",
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: "alt",
+              title: "Alt Text",
+              type: "string",
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              validation: (Rule: any) =>
+                Rule.required().error("Alt text is required for accessibility"),
+              description:
+                "Alternative text for the image, used for accessibility and SEO.",
+            },
+          ],
+        },
         {
           type: "object",
           name: "section",
@@ -62,7 +85,30 @@ const study = {
               name: "body",
               title: "Body",
               type: "array",
-              of: [{ type: "block" }, { type: "image" }],
+              of: [
+                { type: "block" }, // Blocks inside the section
+                {
+                  type: "image",
+                  title: "Section Image",
+                  options: {
+                    hotspot: true,
+                  },
+                  fields: [
+                    {
+                      name: "alt",
+                      title: "Alt Text",
+                      type: "string",
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      validation: (Rule: any) =>
+                        Rule.required().error(
+                          "Alt text is required for accessibility"
+                        ),
+                      description:
+                        "Alternative text for the image, used for accessibility and SEO.",
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
