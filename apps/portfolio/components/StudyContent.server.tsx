@@ -1,4 +1,3 @@
-// eslin
 import React from "react";
 import {
   PortableText,
@@ -11,7 +10,7 @@ import Image from "next/image";
 interface SectionProps {
   value: {
     title: string;
-    body: PortableTextBlock[]; // Adjust 'any' if you have a more specific type
+    body: PortableTextBlock[];
   };
   index: number;
 }
@@ -26,10 +25,17 @@ const Section: React.FC<SectionProps> = ({ value, index }) => {
       style={{
         backgroundColor: bgColor,
         color: textColor,
+        padding: "96px 0",
       }}
     >
       <div className="container">
-        <h3>{value.title}</h3>
+        <h3
+          style={{
+            fontSize: "var(--fs-lg)",
+          }}
+        >
+          {value.title}
+        </h3>
         <PortableText value={value.body} components={serializers} />
       </div>
     </section>
@@ -54,25 +60,67 @@ const ImageComponent = ({
       <Image
         src={asset.url}
         alt={alt || "Image"}
-        width={800} // Adjust these dimensions based on your requirements
-        height={450} // Adjust accordingly or consider making these dynamic
-        layout="responsive" // Use 'responsive' layout for automatic resizing
-        objectFit="cover" // Adjust object fit as needed (cover, contain, etc.)
+        width={800}
+        height={450}
+        layout="responsive"
+        objectFit="cover"
       />
       {alt && <figcaption style={{ textAlign: "center" }}>{alt}</figcaption>}
     </figure>
   );
 };
 
-// Define the full PortableTextReactComponents object
+// Custom List Serializers
 const serializers: PortableTextComponents = {
+  list: {
+    bullet: ({ children }) => (
+      <ul
+        style={{
+          paddingLeft: "64px",
+        }}
+      >
+        {children}
+      </ul>
+    ),
+    number: ({ children }) => <ol>{children}</ol>,
+  },
+  listItem: ({ children }) => (
+    <li
+      style={{
+        fontSize: "var(--fs-sm)",
+        lineHeight: "1.2",
+        fontWeight: "300",
+        listStyle: "disc",
+      }}
+    >
+      {children}
+    </li>
+  ),
   types: {
     block: (props) => {
       switch (props.value.style) {
         case "h3":
-          return <h3>{props.value.children[0].text}</h3>;
+          return (
+            <h3
+              style={{
+                fontSize: "var(--fs-lg)",
+              }}
+            >
+              {props.value.children[0].text}
+            </h3>
+          );
         default:
-          return <p>{props.value.children[0].text}</p>;
+          return (
+            <p
+              style={{
+                fontSize: "var(--fs-md)",
+                lineHeight: "1.5",
+                fontWeight: "300",
+              }}
+            >
+              {props.value.children[0].text}
+            </p>
+          );
       }
     },
     section: (
@@ -81,19 +129,17 @@ const serializers: PortableTextComponents = {
         body: PortableTextBlock[];
       }>
     ) => <Section {...props} />,
-    image: ImageComponent, // Ensure this is included here
+    image: ImageComponent,
   },
 };
 
 // Define the props type for the main StudyContent component
 interface StudyContentProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  content: any; // Adjust 'any[]' based on your schema if you have more precise typing
+  content: PortableTextBlock[];
 }
 
 const StudyContent: React.FC<StudyContentProps> = ({ content }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return content.map((block: any, index: number) => {
+  return content.map((block, index) => {
     return (
       <PortableText
         key={index}
@@ -103,7 +149,6 @@ const StudyContent: React.FC<StudyContentProps> = ({ content }) => {
           types: {
             ...serializers.types,
             section: (props) => <Section {...props} index={index} />,
-            image: ImageComponent,
           },
         }}
       />

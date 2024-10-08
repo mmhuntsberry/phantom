@@ -47,7 +47,13 @@ const study = {
       type: "array",
       of: [
         { type: "block" },
-        { type: "image" },
+        {
+          type: "image",
+          options: {
+            hotspot: true,
+            fields: [{ name: "alt", title: "Alt", type: "string" }],
+          },
+        },
         {
           type: "object",
           name: "section",

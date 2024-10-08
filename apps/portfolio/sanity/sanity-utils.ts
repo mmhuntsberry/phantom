@@ -73,7 +73,7 @@ export async function getStudies(): Promise<Study[]> {
   const client = createClient(config);
 
   return client.fetch(
-    groq`*[_type == "study"]{
+    groq`*[_type == "study"]|order(_createdAt desc){
      _id,
       _createdAt,
       name,
