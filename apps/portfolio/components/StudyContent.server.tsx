@@ -142,26 +142,18 @@ const StudyContent: React.FC<StudyContentProps> = ({ name, content }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return content.map((block: any, index: number) => {
     return (
-      <div key={index}>
-        <h1
-          style={{ fontSize: "var(--fs-lg)", lineHeight: "1.2" }}
-          className="container"
-        >
-          {name}
-        </h1>
-        <PortableText
-          key={index}
-          value={[block]}
-          components={{
-            ...serializers,
-            types: {
-              ...serializers.types,
-              section: (props) => <Section {...props} index={index} />,
-              image: ImageComponent,
-            },
-          }}
-        />
-      </div>
+      <PortableText
+        key={index}
+        value={[block]}
+        components={{
+          ...serializers,
+          types: {
+            ...serializers.types,
+            section: (props) => <Section {...props} index={index} />,
+            image: ImageComponent,
+          },
+        }}
+      />
     );
   });
 };

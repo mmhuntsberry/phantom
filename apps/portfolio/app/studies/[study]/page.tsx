@@ -13,6 +13,12 @@ const Page = async ({ params }: Props) => {
 
   return (
     <>
+      <h1
+        style={{ fontSize: "var(--fs-lg)", lineHeight: "1.2" }}
+        className="container"
+      >
+        {study.name}
+      </h1>
       <StudyContent name={study.name} content={study.content}></StudyContent>;
     </>
   );
