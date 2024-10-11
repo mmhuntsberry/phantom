@@ -100,6 +100,7 @@ const serializers: PortableTextComponents = {
             <h3
               style={{
                 fontSize: "var(--fs-lg)",
+                lineHeight: "1.2",
               }}
             >
               {props.value.children[0].text}
@@ -111,7 +112,7 @@ const serializers: PortableTextComponents = {
             <p
               style={{
                 fontSize: "var(--fs-md)",
-                lineHeight: "1.5",
+                lineHeight: "1.2",
                 fontWeight: "300",
               }}
             >
@@ -132,26 +133,35 @@ const serializers: PortableTextComponents = {
 
 // Define the props type for the main StudyContent component
 interface StudyContentProps {
+  name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: any; // Adjust 'any[]' based on your schema if you have more precise typing
 }
 
-const StudyContent: React.FC<StudyContentProps> = ({ content }) => {
+const StudyContent: React.FC<StudyContentProps> = ({ name, content }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return content.map((block: any, index: number) => {
     return (
-      <PortableText
-        key={index}
-        value={[block]}
-        components={{
-          ...serializers,
-          types: {
-            ...serializers.types,
-            section: (props) => <Section {...props} index={index} />,
-            image: ImageComponent,
-          },
-        }}
-      />
+      <div key={index}>
+        <h1
+          style={{ fontSize: "var(--fs-lg)", lineHeight: "1.2" }}
+          className="container"
+        >
+          {name}
+        </h1>
+        <PortableText
+          key={index}
+          value={[block]}
+          components={{
+            ...serializers,
+            types: {
+              ...serializers.types,
+              section: (props) => <Section {...props} index={index} />,
+              image: ImageComponent,
+            },
+          }}
+        />
+      </div>
     );
   });
 };

@@ -11,7 +11,11 @@ type Props = {
 const Page = async ({ params }: Props) => {
   const study = await getStudy(params.study);
 
-  return <StudyContent content={study.content}></StudyContent>;
+  return (
+    <>
+      <StudyContent name={study.name} content={study.content}></StudyContent>;
+    </>
+  );
 };
 
 export default Page;
