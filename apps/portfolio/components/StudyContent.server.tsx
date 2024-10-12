@@ -95,6 +95,19 @@ const serializers: PortableTextComponents = {
   types: {
     block: (props) => {
       switch (props.value.style) {
+        case "h1":
+          return (
+            <h1
+              style={{
+                fontSize: "var(--fs-xl)",
+                lineHeight: "1.2",
+                paddingBlock: "96px",
+              }}
+              className="container"
+            >
+              {props.value.children[0].text}
+            </h1>
+          );
         case "h3":
           return (
             <h3
@@ -133,18 +146,18 @@ const serializers: PortableTextComponents = {
 
 // Define the props type for the main StudyContent component
 interface StudyContentProps {
-  name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: any; // Adjust 'any[]' based on your schema if you have more precise typing
 }
 
-const StudyContent: React.FC<StudyContentProps> = ({ name, content }) => {
+const StudyContent: React.FC<StudyContentProps> = ({ content }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return content.map((block: any, index: number) => {
     return (
       <PortableText
         key={index}
         value={[block]}
+        onMissingComponent={false}
         components={{
           ...serializers,
           types: {
