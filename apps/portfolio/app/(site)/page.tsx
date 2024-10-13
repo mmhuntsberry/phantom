@@ -2,7 +2,6 @@ import { getStudies } from "../../sanity/sanity-utils";
 
 import NextLink from "next/link";
 import styles from "./page.module.css";
-// import { toTitleCase } from "../../utils/index";
 
 export default async function Index() {
   const studies = await getStudies();
