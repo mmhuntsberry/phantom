@@ -1,4 +1,3 @@
-"use client";
 import { Source_Sans_3 } from "next/font/google";
 
 // import "@mmhuntsberry/phantom-tokens";
