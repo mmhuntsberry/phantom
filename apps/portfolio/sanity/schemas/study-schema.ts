@@ -1,3 +1,5 @@
+import type { Rule } from "sanity";
+
 const study = {
   name: "study",
   title: "Studies",
@@ -35,7 +37,7 @@ const study = {
           name: "alt",
           title: "Alt Text",
           type: "string",
-          validation: (Rule) =>
+          validation: (Rule: Rule) =>
             Rule.required().error("Alt text is required for accessibility"),
           description:
             "Alternative text for the image, used for accessibility and SEO.",
@@ -82,7 +84,7 @@ const study = {
               name: "alt",
               title: "Alt Text",
               type: "string",
-              validation: (Rule) =>
+              validation: (Rule: Rule) =>
                 Rule.required().error("Alt text is required for accessibility"),
               description:
                 "Alternative text for the image, used for accessibility and SEO.",
@@ -98,7 +100,7 @@ const study = {
               name: "url",
               title: "Video URL",
               type: "url",
-              validation: (Rule) =>
+              validation: (Rule: Rule) =>
                 Rule.uri({ scheme: ["https", "http"] }).error(
                   "Must be a valid video URL"
                 ),
@@ -116,7 +118,7 @@ const study = {
               title: "title",
               url: "url",
             },
-            prepare({ title, url }) {
+            prepare({ title, url }: { title: string; url: string }) {
               return {
                 title: title || "Embedded Video",
                 subtitle: url,
@@ -149,7 +151,7 @@ const study = {
                       name: "alt",
                       title: "Alt Text",
                       type: "string",
-                      validation: (Rule) =>
+                      validation: (Rule: Rule) =>
                         Rule.required().error(
                           "Alt text is required for accessibility"
                         ),
@@ -167,7 +169,7 @@ const study = {
                       name: "url",
                       title: "Video URL",
                       type: "url",
-                      validation: (Rule) =>
+                      validation: (Rule: Rule) =>
                         Rule.uri({ scheme: ["https", "http"] }).error(
                           "Must be a valid video URL"
                         ),
@@ -185,7 +187,7 @@ const study = {
                       title: "title",
                       url: "url",
                     },
-                    prepare({ title, url }) {
+                    prepare({ title, url }: { title: string; url: string }) {
                       return {
                         title: title || "Embedded Video",
                         subtitle: url,

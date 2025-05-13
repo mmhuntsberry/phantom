@@ -5,6 +5,7 @@ import {
   PortableTextComponents,
   PortableTextTypeComponentProps,
 } from "@portabletext/react";
+
 import Image from "next/image";
 
 // Section renderer
