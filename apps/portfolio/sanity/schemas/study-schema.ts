@@ -17,19 +17,25 @@ const study = {
       },
     },
     {
+      name: "summary",
+      title: "Summary",
+      type: "text",
+      rows: 3,
+      description: "One-paragraph summary for preview cards and list views.",
+    },
+    {
       name: "image",
       title: "Main Image",
       type: "image",
       options: {
-        hotspot: true, // Allows the user to manually adjust the focus point on images
+        hotspot: true,
       },
       fields: [
         {
           name: "alt",
           title: "Alt Text",
           type: "string",
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          validation: (Rule: any) =>
+          validation: (Rule) =>
             Rule.required().error("Alt text is required for accessibility"),
           description:
             "Alternative text for the image, used for accessibility and SEO.",
@@ -47,29 +53,76 @@ const study = {
       type: "string",
     },
     {
+      name: "role",
+      title: "My Role",
+      type: "text",
+      description: "Clarify your leadership scope, responsibilities, or title.",
+    },
+    {
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      of: [{ type: "string" }],
+      options: {
+        layout: "tags",
+      },
+    },
+    {
       name: "content",
       title: "Content",
       type: "array",
       of: [
-        { type: "block" }, // Regular text block
+        { type: "block" },
         {
-          type: "image", // Inline images in the content
-          title: "Inline Image",
-          options: {
-            hotspot: true,
-          },
+          type: "image",
+          title: "Image",
+          options: { hotspot: true },
           fields: [
             {
               name: "alt",
               title: "Alt Text",
               type: "string",
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              validation: (Rule: any) =>
+              validation: (Rule) =>
                 Rule.required().error("Alt text is required for accessibility"),
               description:
                 "Alternative text for the image, used for accessibility and SEO.",
             },
           ],
+        },
+        {
+          type: "object",
+          name: "video",
+          title: "Video Embed",
+          fields: [
+            {
+              name: "url",
+              title: "Video URL",
+              type: "url",
+              validation: (Rule) =>
+                Rule.uri({ scheme: ["https", "http"] }).error(
+                  "Must be a valid video URL"
+                ),
+              description: "Supports YouTube, Vimeo, Loom, etc.",
+            },
+            {
+              name: "title",
+              title: "Title",
+              type: "string",
+              description: "Descriptive title for the video.",
+            },
+          ],
+          preview: {
+            select: {
+              title: "title",
+              url: "url",
+            },
+            prepare({ title, url }) {
+              return {
+                title: title || "Embedded Video",
+                subtitle: url,
+              };
+            },
+          },
         },
         {
           type: "object",
@@ -86,20 +139,17 @@ const study = {
               title: "Body",
               type: "array",
               of: [
-                { type: "block" }, // Blocks inside the section
+                { type: "block" },
                 {
                   type: "image",
                   title: "Section Image",
-                  options: {
-                    hotspot: true,
-                  },
+                  options: { hotspot: true },
                   fields: [
                     {
                       name: "alt",
                       title: "Alt Text",
                       type: "string",
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      validation: (Rule: any) =>
+                      validation: (Rule) =>
                         Rule.required().error(
                           "Alt text is required for accessibility"
                         ),
@@ -107,6 +157,41 @@ const study = {
                         "Alternative text for the image, used for accessibility and SEO.",
                     },
                   ],
+                },
+                {
+                  type: "object",
+                  name: "video",
+                  title: "Video Embed",
+                  fields: [
+                    {
+                      name: "url",
+                      title: "Video URL",
+                      type: "url",
+                      validation: (Rule) =>
+                        Rule.uri({ scheme: ["https", "http"] }).error(
+                          "Must be a valid video URL"
+                        ),
+                      description: "Supports YouTube, Vimeo, Loom, etc.",
+                    },
+                    {
+                      name: "title",
+                      title: "Title",
+                      type: "string",
+                      description: "Descriptive title for the video.",
+                    },
+                  ],
+                  preview: {
+                    select: {
+                      title: "title",
+                      url: "url",
+                    },
+                    prepare({ title, url }) {
+                      return {
+                        title: title || "Embedded Video",
+                        subtitle: url,
+                      };
+                    },
+                  },
                 },
               ],
             },

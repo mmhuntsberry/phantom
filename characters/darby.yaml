@@ -1,0 +1,63 @@
+description: |
+  A playful, friendly, 10-year-old little monster character named Darby, designed for children on the autism spectrum. Darby has a rounded, slightly rectangular body with soft, rounded edges, giving a chibi-like, cute and compact look.
+
+details:
+  head:
+    shape: circular, slightly larger than the body
+    horns:
+      quantity: 2
+      description: large, curved horns
+      color: muted purple
+      pattern: light striping detail
+    eyes:
+      size: large, round, expressive
+      pupils: prominent white
+      look: innocent, curious
+    eyebrows:
+      shape: small, rounded
+      position: above the eyes
+      expression: friendly, innocent
+    mouth:
+      shape: small, curved
+      expression: slightly mischievous smile
+    cheek_blush: none
+
+  ears:
+    shape: large, round
+    position: side of head, slightly lower than horns
+    inner_color: pink
+
+  body:
+    shape: rounded, slightly rectangular
+    color: soft pastel purple
+    unique_marking:
+      shape: circular, off-white belly patch
+      pattern: two wavy lines in the middle
+    body_markings:
+      type: small, rounded dark spots
+      location: arms, body, and tail
+
+  arms:
+    shape: short, rounded
+    position: down by the body’s side
+    ends: subtle, rounded fingers
+
+  legs:
+    shape: short, stubby
+    feet: rounded with tiny toes
+    stance: sturdy, planted
+
+  tail:
+    shape: small, rounded
+    position: back, curled slightly upward
+    color: same as body with darker tip, matching horns
+
+color_palette:
+  main_color: soft pastel purple
+  horns_and_tail_tip: darker muted purple with light stripes
+  inner_ears_and_blush: light pink
+  belly_patch: off-white with two wavy lines
+  accent_details: small dark spots on the body and tail
+
+style: |
+  Minimal and clean, designed to be simple cute and curious, with friendly vibe. The overall look is welcoming, with soft, rounded edges throughout the design to avoid harsh lines or angles. Perfect for a friendly monster character suitable for children.

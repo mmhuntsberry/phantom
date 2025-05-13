@@ -1,4 +1,3 @@
-// eslin
 import React from "react";
 import {
   PortableText,
@@ -8,10 +7,11 @@ import {
 } from "@portabletext/react";
 import Image from "next/image";
 
+// Section renderer
 interface SectionProps {
   value: {
     title: string;
-    body: PortableTextBlock[]; // Adjust 'any' if you have a more specific type
+    body: PortableTextBlock[];
   };
   index: number;
 }
@@ -23,71 +23,89 @@ const Section: React.FC<SectionProps> = ({ value, index }) => {
 
   return (
     <section
-      style={{
-        backgroundColor: bgColor,
-        color: textColor,
-        padding: "96px 0",
-      }}
+      style={{ backgroundColor: bgColor, color: textColor, padding: "96px 0" }}
     >
       <div className="container">
-        <h3
-          style={{
-            fontSize: "var(--fs-lg)",
-          }}
-        >
-          {value.title}
-        </h3>
+        <h3 style={{ fontSize: "var(--fs-lg)" }}>{value.title}</h3>
         <PortableText value={value.body} components={serializers} />
       </div>
     </section>
   );
 };
 
-// Define a custom component to handle the image type using Next.js Image component
+// Image renderer
 const ImageComponent = ({
   value,
 }: PortableTextTypeComponentProps<{
   alt?: string;
-  asset: {
-    url: string;
-  };
+  asset: { url: string };
 }>) => {
   const { alt, asset } = value;
-
-  if (!asset?.url) return null; // Check for the presence of asset.url
+  if (!asset?.url) return null;
 
   return (
     <figure style={{ margin: "20px 0" }}>
       <Image
         src={asset.url}
         alt={alt || "Image"}
-        width={800} // Adjust these dimensions based on your requirements
-        height={450} // Adjust accordingly or consider making these dynamic
-        layout="responsive" // Use 'responsive' layout for automatic resizing
-        objectFit="cover" // Adjust object fit as needed (cover, contain, etc.)
+        width={800}
+        height={450}
+        layout="responsive"
+        objectFit="cover"
       />
       {alt && <figcaption style={{ textAlign: "center" }}>{alt}</figcaption>}
     </figure>
   );
 };
 
-// Define the full PortableTextReactComponents object
+// Video renderer
+const VideoComponent = ({
+  value,
+}: PortableTextTypeComponentProps<{
+  url: string;
+  title?: string;
+}>) => {
+  if (!value?.url) return null;
+
+  return (
+    <div className="video-wrapper" style={{ margin: "48px 0" }}>
+      <iframe
+        src={value.url}
+        title={value.title || "Embedded Video"}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        style={{
+          width: "100%",
+          height: "450px",
+          borderRadius: "8px",
+        }}
+      />
+      {value.title && (
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "var(--fs-xs)",
+            marginTop: "8px",
+          }}
+        >
+          {value.title}
+        </p>
+      )}
+    </div>
+  );
+};
+
+// Portable Text serializers
 const serializers: PortableTextComponents = {
   list: {
-    // Ex. 1: customizing common list types
     bullet: ({ children }) => (
-      <ul
-        style={{
-          fontSize: "var(--fs-sm)",
-          paddingInlineStart: "64px",
-        }}
-      >
+      <ul style={{ fontSize: "var(--fs-sm)", paddingInlineStart: "64px" }}>
         {children}
       </ul>
     ),
   },
   listItem: {
-    // Ex. 1: customizing common list types
     bullet: ({ children }) => (
       <li style={{ listStyleType: "disc" }}>{children}</li>
     ),
@@ -110,16 +128,10 @@ const serializers: PortableTextComponents = {
           );
         case "h3":
           return (
-            <h3
-              style={{
-                fontSize: "var(--fs-lg)",
-                lineHeight: "1.2",
-              }}
-            >
+            <h3 style={{ fontSize: "var(--fs-lg)", lineHeight: "1.2" }}>
               {props.value.children[0].text}
             </h3>
           );
-
         default:
           return (
             <p
@@ -134,41 +146,37 @@ const serializers: PortableTextComponents = {
           );
       }
     },
+    image: ImageComponent,
+    video: VideoComponent,
     section: (
       props: PortableTextTypeComponentProps<{
         title: string;
         body: PortableTextBlock[];
       }>
     ) => <Section {...props} />,
-    image: ImageComponent, // Ensure this is included here
   },
 };
 
-// Define the props type for the main StudyContent component
+// StudyContent renderer
 interface StudyContentProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  content: any; // Adjust 'any[]' based on your schema if you have more precise typing
+  content: any;
 }
 
 const StudyContent: React.FC<StudyContentProps> = ({ content }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return content.map((block: any, index: number) => {
-    return (
-      <PortableText
-        key={index}
-        value={[block]}
-        onMissingComponent={false}
-        components={{
-          ...serializers,
-          types: {
-            ...serializers.types,
-            section: (props) => <Section {...props} index={index} />,
-            image: ImageComponent,
-          },
-        }}
-      />
-    );
-  });
+  return content.map((block: any, index: number) => (
+    <PortableText
+      key={index}
+      value={[block]}
+      onMissingComponent={false}
+      components={{
+        ...serializers,
+        types: {
+          ...serializers.types,
+          section: (props) => <Section {...props} index={index} />,
+        },
+      }}
+    />
+  ));
 };
 
 export default StudyContent;
