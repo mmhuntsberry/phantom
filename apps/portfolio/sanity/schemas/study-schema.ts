@@ -26,21 +26,49 @@ const study = {
       description: "One-paragraph summary for preview cards and list views.",
     },
     {
-      name: "image",
-      title: "Main Image",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
+      name: "media",
+      title: "Hero Media",
+      type: "object",
       fields: [
         {
-          name: "alt",
-          title: "Alt Text",
+          name: "type",
+          title: "Media Type",
           type: "string",
+          options: {
+            list: [
+              { title: "Image", value: "image" },
+              { title: "Video", value: "video" },
+            ],
+            layout: "radio",
+          },
+        },
+        {
+          name: "image",
+          title: "Image",
+          type: "image",
+          hidden: ({ parent }: { parent: { type: string } }) =>
+            parent?.type !== "image",
+          options: { hotspot: true },
+          fields: [
+            {
+              name: "alt",
+              title: "Alt Text",
+              type: "string",
+              validation: (Rule: Rule) =>
+                Rule.required().error("Alt text is required for accessibility"),
+            },
+          ],
+        },
+        {
+          name: "video",
+          title: "Video URL",
+          type: "url",
+          hidden: ({ parent }: { parent: { type: string } }) =>
+            parent?.type !== "video",
           validation: (Rule: Rule) =>
-            Rule.required().error("Alt text is required for accessibility"),
-          description:
-            "Alternative text for the image, used for accessibility and SEO.",
+            Rule.uri({ scheme: ["https", "http"] }).error(
+              "Must be a valid video URL"
+            ),
         },
       ],
     },

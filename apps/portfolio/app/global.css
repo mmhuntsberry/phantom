@@ -36,12 +36,13 @@ li {
 }
 
 .container {
-  margin: 0 auto;
-  max-width: 1024px;
+  margin: 0;
+  padding-inline: 96px;
+  /* max-width: 1024px; */
 }
 
 @media (max-width: 1024px) {
   .container {
-    padding: 0 24px;
+    /* margin: 0 24px; */
   }
 }
