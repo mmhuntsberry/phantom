@@ -19,8 +19,8 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({ value, index }) => {
   const isEven = index % 2 === 0;
-  const bgColor = isEven ? "#f5f5f5" : "#121212";
-  const textColor = isEven ? "#121212" : "#f5f5f5";
+  const bgColor = isEven ? "#f5f5f5" : "#fff";
+  const textColor = "#121212";
 
   return (
     <section
@@ -29,7 +29,8 @@ const Section: React.FC<SectionProps> = ({ value, index }) => {
       <div className="container">
         <h3
           style={{
-            color: isEven ? "#0a3f70" : "#6886a2",
+            // color: isEven ? "#0a3f70" : "#6886a2",
+            color: "#0a3f70",
             fontSize: "var(--fs-lg)",
           }}
         >
@@ -85,8 +86,8 @@ const VideoComponent = ({
         allowFullScreen
         style={{
           width: "100%",
-          height: "450px",
-          borderRadius: "8px",
+          height: "600px",
+          borderRadius: "0px",
         }}
       />
       {value.title && (
