@@ -10,7 +10,7 @@ export default async function Index() {
     <div>
       <ul>
         {studies.map((study) => (
-          <li key={study._id}>
+          <li style={{ marginBottom: "24px" }} key={study._id}>
             <NextLink href={`/studies/${study.slug}`}>
               <span className={styles.linkContainer}>
                 <h2 className={styles.title}>{study.name}</h2>
