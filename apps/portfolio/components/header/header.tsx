@@ -9,11 +9,13 @@ import Link from "next/link";
 export default function Header() {
   const pathname = usePathname();
   return (
-    <header className={`${styles.header} container`}>
-      <Link href="/">
-        <Logo />
-      </Link>
-      <Nav pathname={pathname ?? ""} />
+    <header className={`${styles.header}`}>
+      <div className={styles.headerContainer}>
+        <Link href="/">
+          <Logo />
+        </Link>
+        <Nav pathname={pathname ?? ""} />
+      </div>
     </header>
   );
 }

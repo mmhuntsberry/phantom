@@ -15,8 +15,11 @@ const Page = async ({ params }: Props) => {
     <div>
       <HeroMedia
         media={{
-          asset: { url: study.image, alt: "Hero Image" },
           type: "image",
+          image: {
+            asset: { url: study.image },
+            alt: "Hero Image",
+          },
         }}
       />
       <StudyContent content={study.content}></StudyContent>

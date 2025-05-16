@@ -9,12 +9,25 @@ export default function About() {
     pathname === "/" && (
       <>
         <p className={styles.about}>
-          Hi, I'm Matt—an engineer, designer, educator, and design system
-          specialist. Seamlessly bridging the gap between design and code.{" "}
-          <strong>I create systems that create products.</strong>
+          <strong>I lead systems work at scale.</strong> Turning fragmented UI
+          kits into operational platforms. From design tokens to Figma
+          automation to adoption analytics,{" "}
+          <strong>
+            I create systems that enable organizations to ship faster and
+            smarter.
+          </strong>
         </p>
         <h1 className={styles.title}>
-          {pathname === "/" ? "Featured Work" : "Resume"}
+          {pathname === "/" ? (
+            <>
+              <span style={{ fontStyle: "italic", fontSize: "1.225em" }}>
+                i
+              </span>
+              mpact at scale
+            </>
+          ) : (
+            "Resume"
+          )}
         </h1>
       </>
     )

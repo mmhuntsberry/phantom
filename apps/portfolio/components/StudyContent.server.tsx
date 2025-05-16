@@ -19,15 +19,22 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({ value, index }) => {
   const isEven = index % 2 === 0;
-  const bgColor = isEven ? "#ffffff" : "#000000";
-  const textColor = isEven ? "#000000" : "#ffffff";
+  const bgColor = isEven ? "#f5f5f5" : "#121212";
+  const textColor = isEven ? "#121212" : "#f5f5f5";
 
   return (
     <section
       style={{ backgroundColor: bgColor, color: textColor, padding: "96px 0" }}
     >
       <div className="container">
-        <h3 style={{ fontSize: "var(--fs-lg)" }}>{value.title}</h3>
+        <h3
+          style={{
+            color: isEven ? "#0a3f70" : "#6886a2",
+            fontSize: "var(--fs-lg)",
+          }}
+        >
+          {value.title}
+        </h3>
         <PortableText value={value.body} components={serializers} />
       </div>
     </section>

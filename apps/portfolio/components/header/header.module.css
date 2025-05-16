@@ -6,20 +6,29 @@
   top: 0;
   z-index: 1000;
   box-shadow: 0 8px 32px rgba(0, 0, 16px, 0.05); /* <--- soft edge */
+}
 
+.headerContainer {
+  width: 100%;
+  max-width: 1280px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  margin-block: 48px;
-  padding-block: 48px;
+  /* margin-block: 48px; */
+  /* padding-block: 32px; */
+  padding: 24px;
+  padding-block: 32px;
+
+  margin: 0 auto;
 }
 
 @media (min-width: 768px) {
-  .header {
+  .headerContainer {
     display: flex;
     justify-content: space-between;
     align-items: start;
-    margin-block: 96px;
+    padding: 24px;
+    /* margin: auto; */
   }
 }

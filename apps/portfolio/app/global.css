@@ -4,6 +4,8 @@ body,
 html {
   margin: 0;
   padding: 0;
+  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
+    "Arial", sans-serif;
 }
 
 a {
@@ -25,24 +27,25 @@ li {
 :root {
   --fs-3xs: clamp(0.77rem, -0.31vi + 0.83rem, 0.63rem);
   --fs-2xs: clamp(0.82rem, 0.05vi + 0.81rem, 0.84rem);
-  --fs-xs: clamp(0.88rem, 0.56vi + 0.77rem, 1.13rem);
+  --fs-xs: clamp(0.88rem, 0.56vi + 0.77rem, 1.25rem);
   --fs-sm: clamp(0.94rem, 1.28vi + 0.68rem, 1.5rem);
-  --fs-base: clamp(1rem, 2.27vi + 0.55rem, 2rem);
-  --fs-md: clamp(1.07rem, 3.63vi + 0.34rem, 2.67rem);
-  --fs-lg: clamp(1.14rem, 5.49vi + 0.04rem, 3.55rem);
+  --fs-base: clamp(1rem, 2.27vi + 0.55rem, 1.75rem);
+  --fs-md: clamp(1.07rem, 3.63vi + 0.34rem, 2rem);
+  --fs-lg: clamp(1.14rem, 5.49vi + 0.04rem, 2.4rem);
   --fs-xl: clamp(1.21rem, 8.01vi + -0.39rem, 4.74rem);
   --fs-2xl: clamp(1.3rem, 11.41vi + -0.98rem, 6.31rem);
   --fs-3xl: clamp(1.38rem, 15.99vi + -1.81rem, 8.42rem);
 }
 
 .container {
-  margin: 0;
-  padding-inline: 96px;
-  /* max-width: 1024px; */
+  margin: 0 auto;
+  /* padding-inline: 96px; */
+  max-width: 1280px;
 }
 
 @media (max-width: 1024px) {
   .container {
-    /* margin: 0 24px; */
+    padding-inline: 24px;
+    max-width: 100%;
   }
 }

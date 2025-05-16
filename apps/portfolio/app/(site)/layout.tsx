@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={sourceSans3.className}>
+    <html lang="en">
       <body>
         <Header />
         <main className="container">

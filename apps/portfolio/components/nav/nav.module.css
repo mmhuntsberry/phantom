@@ -1,9 +1,11 @@
 .nav {
   color: #1b1b1b;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 0.4;
   display: flex;
   gap: 16px;
+  color: #0a3f70;
+  font-weight: 500;
 }
 
 /* .active {
@@ -11,6 +13,5 @@
 } */
 
 .link {
-  /* color: blue; */
-  opacity: 0.48;
+  opacity: 0.64;
 }
