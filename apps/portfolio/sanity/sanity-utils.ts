@@ -74,15 +74,26 @@ export async function getStudies(): Promise<Study[]> {
 
   return client.fetch(
     groq`*[_type == "study"]|order(_createdAt desc){
-     _id,
+      _id,
       _createdAt,
       name,
       about,
       "slug": slug.current,
       content,
-      "image": image.asset->url,
+      media {
+        type,
+        image{
+          asset-> { url },
+          alt
+        },
+        video
+      },
       url,
-      "excerpt": array::join(string::split((pt::text(body)), "")[0..255], "") + "..."
+      "excerpt": 
+        array::join(
+          string::split(pt::text(content), "")[0..255],
+          ""
+        ) + "..."
     }`,
     {},
     { next: { revalidate: 3600 } }
@@ -92,21 +103,27 @@ export async function getStudies(): Promise<Study[]> {
 export async function getStudy(slug: string): Promise<Study> {
   const client = createClient(config);
 
-  const studyData = await client.fetch(
-    groq`*[_type == "study" && slug.current == $slug][0]{
+  return client.fetch(
+    groq`*[_type=="study" && slug.current == $slug][0]{
       _id,
       _createdAt,
       name,
-      "slug": slug.current,
-      "image": image.asset->url,
       about,
+      "slug": slug.current,
+      url,
+      media {
+        type,
+        image {
+          asset-> { _id, url },
+          alt
+        },
+        video
+      },
       content[]{
         ...,
         _type == "image" => {
           ...,
-          "asset": {
-            "url": asset->url // Fetch asset as an object
-          }
+          asset->{url}
         },
         _type == "section" => {
           ...,
@@ -114,9 +131,7 @@ export async function getStudy(slug: string): Promise<Study> {
             ...,
             _type == "image" => {
               ...,
-              "asset": {
-                "url": asset->url // Fetch asset as an object within section as well
-              }
+              asset->{url}
             }
           }
         }
@@ -124,7 +139,6 @@ export async function getStudy(slug: string): Promise<Study> {
     }`,
     { slug }
   );
-  return studyData;
 }
 
 export async function getJobs(): Promise<Job[]> {

@@ -11,18 +11,12 @@ type Props = {
 const Page = async ({ params }: Props) => {
   const study = await getStudy(params.study);
 
+  console.log;
+
   return (
     <div>
-      <HeroMedia
-        media={{
-          type: "image",
-          image: {
-            asset: { url: study.image },
-            alt: "Hero Image",
-          },
-        }}
-      />
-      <StudyContent content={study.content}></StudyContent>
+      <HeroMedia media={study.media} />
+      <StudyContent title={study.name} content={study.content}></StudyContent>
     </div>
   );
 };

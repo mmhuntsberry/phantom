@@ -169,23 +169,39 @@ const serializers: PortableTextComponents = {
 // StudyContent renderer
 interface StudyContentProps {
   content: any;
+  title: string;
 }
 
-const StudyContent: React.FC<StudyContentProps> = ({ content }) => {
-  return content.map((block: any, index: number) => (
-    <PortableText
-      key={index}
-      value={[block]}
-      onMissingComponent={false}
-      components={{
-        ...serializers,
-        types: {
-          ...serializers.types,
-          section: (props) => <Section {...props} index={index} />,
-        },
-      }}
-    />
-  ));
+const StudyContent: React.FC<StudyContentProps> = ({ title, content }) => {
+  return (
+    <>
+      <h1
+        className="container"
+        style={{
+          color: "#121212",
+          paddingBlockEnd: "96px",
+          fontSize: "var(--fs-xl)",
+        }}
+      >
+        {title}
+      </h1>
+      {content.map((block: any, index: number) => (
+        <PortableText
+          key={index}
+          value={[block]}
+          onMissingComponent={false}
+          components={{
+            ...serializers,
+            types: {
+              ...serializers.types,
+              section: (props) => <Section {...props} index={index} />,
+            },
+          }}
+        />
+      ))}
+      ;
+    </>
+  );
 };
 
 export default StudyContent;

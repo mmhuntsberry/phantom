@@ -13,7 +13,12 @@ const nextConfig = {
     svgr: false,
   },
   images: {
-    domains: ["cdn.sanity.io"], // Add Sanity's CDN domain here
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+    ],
   },
 };
 

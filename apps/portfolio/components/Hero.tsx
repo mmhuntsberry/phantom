@@ -16,14 +16,15 @@ export const HeroMedia = ({
 
   if (media.type === "image" && media.image?.asset?.url) {
     return (
-      <Image
-        src={media.image.asset.url}
-        alt={media.image.alt || "Hero Image"}
-        width={1200}
-        height={600}
-        layout="responsive"
-        objectFit="cover"
-      />
+      <div style={{ position: "relative", width: "100%", height: "512px" }}>
+        <Image
+          src={media.image.asset.url}
+          alt={media.image.alt || "Hero Image"}
+          fill
+          style={{ objectFit: "cover", objectPosition: "bottom" }}
+          priority
+        />
+      </div>
     );
   }
 
@@ -31,7 +32,7 @@ export const HeroMedia = ({
     return (
       <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
         <iframe
-          src={media.video}
+          src={`${media.video}?hideEmbedTopBar=true&hide_share=true&hide_title=true&hide_owner=true&hide_speed=true`}
           title="Hero Video"
           allow="autoplay; fullscreen"
           allowFullScreen
@@ -40,9 +41,9 @@ export const HeroMedia = ({
             top: 0,
             left: 0,
             width: "100%",
-            height: "100%",
+            height: "80%",
             border: "none",
-            borderRadius: "8px",
+            borderRadius: "0",
           }}
         />
       </div>
