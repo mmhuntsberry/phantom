@@ -79,7 +79,7 @@ const VideoComponent = ({
   return (
     <div className="video-wrapper" style={{ margin: "48px 0" }}>
       <iframe
-        src={value.url}
+        src={`${value.url}?hideEmbedTopBar=true&hide_share=true&hide_title=true&hide_owner=true&hide_speed=true`}
         title={value.title || "Embedded Video"}
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

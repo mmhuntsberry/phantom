@@ -9,13 +9,12 @@ export default function About() {
     pathname === "/" && (
       <>
         <p className={styles.about}>
-          <strong>I lead systems work at scale.</strong> Turning fragmented UI
-          kits into operational platforms. From design tokens to Figma
-          automation to adoption analytics,{" "}
-          <strong>
-            I create systems that enable organizations to ship faster and
-            smarter.
-          </strong>
+          Hi. I'm Matt—an architect of scalable design platforms and system ops.
+          I led the transformation of a 48-brand product ecosystem, rebuilding
+          its design system from the ground up with token pipelines, Figma
+          automation, and real-time design system analytics. I don’t just build
+          components—
+          <strong>I design how teams work at scale.</strong>
         </p>
         <h1 className={styles.title}>
           {pathname === "/" ? (
