@@ -1,0 +1,10 @@
+.footer {
+  display: grid;
+  gap: 1rem;
+  justify-content: center;
+  margin: 128px auto 64px;
+}
+
+.icon {
+  margin: 0 auto;
+}
