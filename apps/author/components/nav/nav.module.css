@@ -1,0 +1,22 @@
+.nav {
+  color: #1b1b1b;
+
+  display: flex;
+  gap: 16px;
+  font-weight: 500;
+}
+
+.active {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+
+.link {
+  font-size: var(--font-size-md);
+
+  opacity: 0.8;
+  cursor: pointer;
+  text-transform: uppercase;
+}

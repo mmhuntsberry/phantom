@@ -1,0 +1,7 @@
+.title {
+  font-size: var(--fs-xl);
+  font-weight: 1000;
+  letter-spacing: -0.04em;
+  margin-bottom: 64px;
+  text-transform: uppercase;
+}
