@@ -22,7 +22,12 @@
   cursor: pointer;
 }
 
-.root:hover {
+.root:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.root:not(:disabled):hover {
   background-color: var(--palette-neutral-200);
   transition: background-color 0.2s ease-in-out;
 }

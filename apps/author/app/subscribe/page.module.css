@@ -5,3 +5,31 @@
   margin-bottom: 64px;
   text-transform: uppercase;
 }
+
+.buttonText {
+  display: none;
+}
+
+/* show it on tablets and up (≥768px) */
+@media (min-width: 768px) {
+  .buttonText {
+    display: inline-block;
+  }
+}
+
+/* existing @keyframes spin { … } */
+
+.spin {
+  /* hook up your keyframes */
+  animation: spin 1s linear infinite;
+
+  /* ensure it spins around its own center */
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
