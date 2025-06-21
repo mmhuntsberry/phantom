@@ -19,11 +19,17 @@ export default function RootLayout({
         <main className={styles.main}>
           {children}
           <footer className={styles.footer}>
-            <Copyright size={24} />
-            <span>
-              {new Date().getFullYear()} Matthew Huntsberry. All rights
-              reserved.
-            </span>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Copyright size={24} />
+              <span>{new Date().getFullYear()}</span>
+            </div>
+            <span>Matthew Huntsberry. All rights reserved.</span>
           </footer>
         </main>
       </body>

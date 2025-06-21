@@ -48,7 +48,7 @@ export default function SubscribePage() {
             type="email"
             value={email.trim()}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email here. For the misfits, not the masses."
+            placeholder="For the misfits, not the masses."
           />
           <Button
             type="submit"

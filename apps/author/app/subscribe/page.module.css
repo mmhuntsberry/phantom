@@ -1,8 +1,8 @@
 .title {
-  font-size: var(--fs-xl);
+  font-size: var(--fs-2xl);
   font-weight: 1000;
   letter-spacing: -0.04em;
-  margin-bottom: 64px;
+  margin-bottom: var(--space-3xl);
   text-transform: uppercase;
 }
 
