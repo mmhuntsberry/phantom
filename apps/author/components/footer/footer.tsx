@@ -7,15 +7,15 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className={`${styles.footer} container`}>
-      <div className={styles.logo}>
-        <Link href="/">
-          <Logo />
-        </Link>
-      </div>
+    <footer className={`${styles.footer}`}>
+      <span className={styles.timestamp}>
+        © {new Date().getFullYear()} Matthew Huntsberry. <br /> All Rights
+        Reserved.
+      </span>
+
       <div className={styles.icon}>
         <Link href="https:s//www.instagram.com/matt_huntsberry/">
-          <InstagramLogo size={64} />
+          <InstagramLogo size={48} />
         </Link>
       </div>
     </footer>

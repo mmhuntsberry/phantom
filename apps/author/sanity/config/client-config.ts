@@ -1,3 +1,5 @@
+// apps/author/sanity/config/client-config.ts
+
 const config = {
   projectId: "rkn5h0ji",
   dataset: "production",

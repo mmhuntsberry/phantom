@@ -1,0 +1,32 @@
+.title {
+  font-size: var(--fs-4xl);
+  font-weight: 1000;
+  letter-spacing: -0.04em;
+  margin: var(--space-none);
+}
+
+.description {
+  font-size: var(--fs-lg);
+  font-weight: 380;
+  max-width: 480px;
+}
+
+.header {
+  display: grid;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}

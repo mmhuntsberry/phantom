@@ -1,0 +1,18 @@
+.title {
+  font-size: var(--fs-5xl);
+  line-height: 1.2;
+  margin-block: var(--space-3xl);
+  margin-block-end: var(--space-md);
+}
+
+.episode {
+  font-size: var(--fs-lg);
+  line-height: 1.2;
+}
+
+.episodeTitle {
+  font-size: var(--fs-lg);
+  line-height: 1.2;
+  text-transform: uppercase;
+  font-weight: 1000;
+}

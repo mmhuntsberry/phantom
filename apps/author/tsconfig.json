@@ -16,10 +16,7 @@
         "name": "next"
       }
     ],
-    "types": [
-      "jest",
-      "node"
-    ]
+    "types": ["jest", "node"]
   },
   "include": [
     "**/*.ts",
@@ -31,12 +28,18 @@
     "next-env.d.ts",
     "app/studies/layout.xtsx",
     "../../apps/author/.next/types/**/*.ts",
-    "../../dist/apps/author/.next/types/**/*.ts"
+    "../../dist/apps/author/.next/types/**/*.ts",
+    "app/(site)/layout.tsx",
+    "app/subscribe/layout.xtsx",
+    "app/(site)/series/[seriesSlug]/[season]/[episode]/layout.xtsx"
   ],
   "exclude": [
     "node_modules",
     "jest.config.ts",
     "src/**/*.spec.ts",
     "src/**/*.test.ts"
-  ]
+  ],
+  "paths": {
+    "@/*": ["./*"]
+  }
 }

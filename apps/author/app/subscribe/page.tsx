@@ -41,33 +41,35 @@ export default function SubscribePage() {
   return (
     <>
       <h1 className={styles.title}>Join the Misfits & Dreamers</h1>
-      <form className={styles.form} onSubmit={subscribe}>
-        <Label>Enter Email</Label>
-        <div className="flex gap-xs mt-xs">
-          <Input
-            type="email"
-            value={email.trim()}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="For the misfits, not the masses."
-          />
-          <Button
-            type="submit"
-            aria-label={loading ? "Sending" : "Subscribe"}
-            disabled={loading || !email.trim()}
-          >
-            {/* this span is hidden below 768px */}
-            <span className={styles.buttonText}>
-              {loading ? "Sending" : "Subscribe"}
-            </span>
-            {loading ? (
-              <CircleNotch className={styles.spin} size={24} />
-            ) : (
-              <PaperPlaneTilt strokeWidth={2} size={24} />
-            )}
-          </Button>
-        </div>
-        {message && <p className={styles.message}>{message}</p>}
-      </form>
+      <section className={styles.section}>
+        <form className={styles.form} onSubmit={subscribe}>
+          <Label>Enter Email</Label>
+          <div className="flex gap-xs mt-xs">
+            <Input
+              type="email"
+              value={email.trim()}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="For the misfits, not the masses."
+            />
+            <Button
+              type="submit"
+              aria-label={loading ? "Sending" : "Subscribe"}
+              disabled={loading || !email.trim()}
+            >
+              {/* this span is hidden below 768px */}
+              <span className={styles.buttonText}>
+                {loading ? "Sending" : "Subscribe"}
+              </span>
+              {loading ? (
+                <CircleNotch className={styles.spin} size={24} />
+              ) : (
+                <PaperPlaneTilt strokeWidth={2} size={24} />
+              )}
+            </Button>
+          </div>
+          {message && <p className={styles.message}>{message}</p>}
+        </form>
+      </section>
     </>
   );
 }

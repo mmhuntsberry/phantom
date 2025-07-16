@@ -1,16 +1,9 @@
-import { Source_Sans_3 } from "next/font/google";
-
-// import "@mmhuntsberry/phantom-tokens";
 import "../global.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
-import About from "./components/about";
-
-//👇 Configure our font object
-const sourceSans3 = Source_Sans_3({
-  subsets: ["latin"],
-  display: "swap",
-});
+import styles from "./layout.module.css";
+import { InstagramLogo } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
 
 // export const metadata = {
 //   title: "Matthew Huntsberry | Design Systems Engineer",
@@ -24,13 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className={styles.body}>
         <Header />
-        <main className="container">
-          {/* <About /> */}
-          {children}
-        </main>
-        <Footer />
+        <main>{children}</main>
+        {/* <Footer /> */}
       </body>
     </html>
   );

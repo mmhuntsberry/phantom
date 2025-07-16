@@ -1,7 +1,10 @@
+// apps/author/sanity/sanity-utils.ts
+
 import { createClient, groq } from "next-sanity";
 import { Study } from "../types/Study";
 import config from "./config/client-config";
 import { Job } from "../types/Job";
+import { Writing } from "../types/Writing";
 
 // export async function getProjects(): Promise<Project[]> {
 //   const client = createClient(config);
@@ -157,4 +160,193 @@ export async function getJobs(): Promise<Job[]> {
   );
 
   return jobs;
+}
+
+export async function getWriting(params: {
+  slug?: string;
+  seriesSlug?: string;
+  season?: string | number;
+  episode?: string | number;
+}): Promise<Writing | null> {
+  const client = createClient(config);
+
+  if (params.slug) {
+    return client.fetch(
+      groq`*[_type == "writing" && slug.current == $slug][0]{
+        _id,
+        _createdAt,
+        title,
+        "slug": slug.current,
+        summary,
+        category,
+        series->{title, slug},
+        season,
+        episode,
+        episodeTitle,
+        orderInSeries,
+        tags,
+        publishedAt,
+        media {
+          type,
+          image {
+            asset->{url},
+            alt
+          },
+          video
+        },
+        content[]{
+          ...,
+          _type == "image" => {
+            ...,
+            asset->{url}
+          }
+        }
+      }`,
+      { slug: params.slug }
+    );
+  }
+
+  if (params.seriesSlug && params.season && params.episode) {
+    return client.fetch(
+      groq`*[
+        _type == "writing" &&
+        series->slug.current == $seriesSlug &&
+        season == $season &&
+        episode == $episode
+      ][0]{
+        _id,
+        _createdAt,
+        title,
+        "slug": slug.current,
+        summary,
+        category,
+        series->{title, slug},
+        season,
+        episode,
+        episodeTitle,
+        orderInSeries,
+        tags,
+        publishedAt,
+        media {
+          type,
+          image {
+            asset->{url},
+            alt
+          },
+          video
+        },
+        content[]{
+          ...,
+          _type == "image" => {
+            ...,
+            asset->{url}
+          }
+        }
+      }`,
+      {
+        seriesSlug: params.seriesSlug,
+        season: Number(params.season),
+        episode: Number(params.episode),
+      }
+    );
+  }
+
+  return null;
+}
+
+export async function getWritingsGrouped(): Promise<{
+  standalone: Writing[];
+  seriesList: {
+    title: string;
+    slug: string;
+    summary?: string;
+    coverImage?: string;
+  }[];
+}> {
+  const client = createClient(config);
+
+  const standalone = await client.fetch(
+    groq`*[_type == "writing" && !defined(series)] | order(publishedAt desc) {
+      _id,
+      _createdAt,
+      title,
+      "slug": slug.current,
+      summary,
+      category,
+      tags,
+      publishedAt,
+      media {
+        type,
+        image {
+          asset->{url},
+          alt
+        },
+        video
+      },
+    }`
+  );
+
+  const seriesList = await client.fetch(
+    groq`*[_type == "series"] | order(title asc) {
+      title,
+      "slug": slug.current,
+      description,
+      "summary": description,
+      "coverImage": coalesce(image.asset->url, null)
+    }`
+  );
+
+  return { standalone, seriesList };
+}
+
+export async function getSeriesWithEpisodes(seriesSlug: string): Promise<{
+  title: string;
+  slug: string;
+  description?: string;
+  media?: {
+    image?: {
+      asset: { url: string };
+      alt?: string;
+    };
+  };
+  episodes: {
+    _id: string;
+    title: string;
+    episodeTitle?: string;
+    season?: number;
+    episode?: number;
+  }[];
+} | null> {
+  const client = createClient(config);
+
+  const series = await client.fetch(
+    groq`*[_type == "series" && slug.current == $slug][0]{
+      title,
+      "slug": slug.current,
+      description,
+      media {
+        image {
+          alt,
+          asset->{url}
+        }
+      }
+    }`,
+    { slug: seriesSlug }
+  );
+
+  if (!series) return null;
+
+  const episodes = await client.fetch(
+    groq`*[_type == "writing" && series->slug.current == $slug]
+      | order(season asc, episode asc) {
+        _id,
+        title,
+        episodeTitle,
+        season,
+        episode
+      }`,
+    { slug: seriesSlug }
+  );
+
+  return { ...series, episodes };
 }
