@@ -15,9 +15,9 @@
   max-width: 1024px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   gap: var(--space-xs);
-  /* padding: 24px; */
+  padding: 24px;
   padding-block: 32px;
 
   margin: 0 auto;

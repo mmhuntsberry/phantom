@@ -10,12 +10,12 @@
 .first {
   /* font-weight: 400; */
   line-height: 0.8;
-  letter-spacing: 5px;
+  letter-spacing: 6px;
 }
 
 .middle {
   font-weight: 100;
-  letter-spacing: 0.2em;
+  letter-spacing: 4px;
   line-height: 0.8;
 }
 
@@ -25,10 +25,30 @@
   letter-spacing: -3px;
 }
 
+@media (min-width: 768px) {
+  .first {
+    /* font-weight: 400; */
+    letter-spacing: 7px;
+  }
+
+  .middle {
+    letter-spacing: 8px;
+  }
+
+  .last {
+    /* font-weight: 400; */
+    letter-spacing: -4px;
+  }
+}
+
 @media (min-width: 1280px) {
   .first {
     /* font-weight: 400; */
     letter-spacing: 7px;
+  }
+
+  .middle {
+    letter-spacing: 8px;
   }
 
   .last {
