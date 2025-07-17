@@ -1,7 +1,7 @@
 .title {
   font-size: var(--fs-5xl);
   line-height: 1.2;
-  margin-block: var(--space-3xl);
+  margin-block-start: var(--space-none);
   margin-block-end: var(--space-md);
 }
 
@@ -15,4 +15,14 @@
   line-height: 1.2;
   text-transform: uppercase;
   font-weight: 1000;
+}
+
+.backLink {
+  font-size: var(--fs-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  text-decoration: none;
+  color: inherit;
+  margin-block-start: var(--space-3xl);
 }

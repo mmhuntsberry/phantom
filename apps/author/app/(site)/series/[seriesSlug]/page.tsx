@@ -10,17 +10,15 @@ export default async function SeriesPage({
 }: {
   params: { seriesSlug?: string };
 }) {
-  if (!params.seriesSlug) return notFound(); // ✅ guard against undefined
+  if (!params.seriesSlug) return notFound();
 
   const series = await getSeriesWithEpisodes(params.seriesSlug);
-
-  console.log(series);
 
   if (!series) return notFound();
 
   return (
-    <>
-      <header>
+    <div className={styles.container}>
+      <section>
         <h1 className={styles.title}>{series.title}</h1>
         {series.media?.image?.asset?.url && (
           <div
@@ -33,7 +31,6 @@ export default async function SeriesPage({
                 src={series.media.image.asset.url}
                 alt={series.media.image.alt || series.title}
                 fill
-                // sizes="(max-width: 768px) 100vw, 320px"
                 className={styles.image}
                 priority
               />
@@ -43,25 +40,31 @@ export default async function SeriesPage({
             )}
           </div>
         )}
-      </header>
+      </section>
 
       <section>
-        <h2 className="text-lg font-semibold">Episodes</h2>
+        <h2 className="text-lg font-semibold">Episode List</h2>
         <ul className="space-y-2">
           {series.episodes.map((ep) => (
             <li key={ep._id}>
               <Link
                 href={`/series/${params.seriesSlug}/${ep.season}/${ep.episode}`}
-                className="hover:underline"
+                className={styles.link}
               >
-                S{String(ep.season).padStart(2, "0")}E
-                {String(ep.episode).padStart(2, "0")} —{" "}
-                {ep.episodeTitle || ep.title}
+                <span className={styles.season}>
+                  S{String(ep.season).padStart(2, "0")}
+                </span>
+                <span className={styles.episode}>
+                  E{String(ep.episode).padStart(2, "0")}:{" "}
+                </span>
+                <span className={styles.episodeTitle}>
+                  {ep.episodeTitle || ep.title}
+                </span>
               </Link>
             </li>
           ))}
         </ul>
       </section>
-    </>
+    </div>
   );
 }

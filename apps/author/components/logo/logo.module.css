@@ -1,7 +1,4 @@
 .logo {
-  --logo-color-content-default: var(--palette-neutral-1000);
-
-  color: var(--logo-color-content-default);
   display: inline-flex;
   flex-direction: column;
   font-size: 40px;

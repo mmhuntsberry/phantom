@@ -1,6 +1,4 @@
 .nav {
-  color: #1b1b1b;
-
   display: flex;
   gap: 16px;
   font-weight: 500;
@@ -15,7 +13,6 @@
 
 .link {
   font-size: var(--font-size-md);
-
   opacity: 0.8;
   cursor: pointer;
   text-transform: uppercase;

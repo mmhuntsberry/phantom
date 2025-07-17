@@ -10,14 +10,29 @@
   padding: var(--space-sm);
   font-size: var(--font-size-lg);
   font-weight: 500;
-  color: var(--palette-neutral-900);
   background-color: var(--palette-neutral-lightest);
   transition: border-color 0.2s ease-in-out;
-  /* &:focus {
+  &:focus {
     border-color: var(--palette-neutral-darkest);
-  } */
+  }
 }
 
 .root:placeholder {
   color: var(--palette-neutral-700);
+}
+
+@media (prefers-color-scheme: dark) {
+  .root {
+    background-color: var(--palette-neutral-900);
+    border-color: var(--palette-neutral-400);
+    color: var(--palette-neutral-100);
+
+    &:focus {
+      border-color: var(--palette-alert-info-400);
+    }
+  }
+
+  .root:placeholder {
+    color: var(--palette-neutral-400);
+  }
 }

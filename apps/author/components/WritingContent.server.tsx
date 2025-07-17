@@ -17,31 +17,6 @@ interface SectionProps {
   index: number;
 }
 
-const Section: React.FC<SectionProps> = ({ value, index }) => {
-  const isEven = index % 2 === 0;
-  const bgColor = isEven ? "#f5f5f5" : "#fff";
-  const textColor = "#121212";
-
-  return (
-    <section
-      style={{ backgroundColor: bgColor, color: textColor, padding: "96px 0" }}
-    >
-      <div className="container">
-        <h3
-          style={{
-            // color: isEven ? "#0a3f70" : "#6886a2",
-            color: "#0a3f70",
-            fontSize: "var(--fs-lg)",
-          }}
-        >
-          {value.title}
-        </h3>
-        <PortableText value={value.body} components={serializers} />
-      </div>
-    </section>
-  );
-};
-
 // Image renderer
 const ImageComponent = ({
   value,
@@ -157,12 +132,6 @@ const serializers: PortableTextComponents = {
     },
     image: ImageComponent,
     video: VideoComponent,
-    section: (
-      props: PortableTextTypeComponentProps<{
-        title: string;
-        body: PortableTextBlock[];
-      }>
-    ) => <Section {...props} />,
   },
 };
 
@@ -184,12 +153,10 @@ const WritingContent: React.FC<WritingContentProps> = ({ title, content }) => {
             ...serializers,
             types: {
               ...serializers.types,
-              section: (props) => <Section {...props} index={index} />,
             },
           }}
         />
       ))}
-      ;
     </>
   );
 };
