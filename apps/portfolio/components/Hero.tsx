@@ -16,7 +16,15 @@ export const HeroMedia = ({
 
   if (media.type === "image" && media.image?.asset?.url) {
     return (
-      <div style={{ position: "relative", width: "100%", height: "512px" }}>
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: "1024px",
+          height: "512px",
+          margin: "0 auto",
+        }}
+      >
         <Image
           src={media.image.asset.url}
           alt={media.image.alt || "Hero Image"}
@@ -30,7 +38,15 @@ export const HeroMedia = ({
 
   if (media.type === "video" && media.video) {
     return (
-      <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+      <div
+        style={{
+          position: "relative",
+          paddingBottom: "56.25%",
+          height: 0,
+          maxWidth: "1024px",
+          margin: "0 auto",
+        }}
+      >
         <iframe
           src={`${media.video}?hideEmbedTopBar=true&hide_share=true&hide_title=true&hide_owner=true&hide_speed=true`}
           title="Hero Video"

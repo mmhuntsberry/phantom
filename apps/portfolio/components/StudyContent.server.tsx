@@ -19,23 +19,13 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({ value, index }) => {
   const isEven = index % 2 === 0;
-  const bgColor = isEven ? "#f5f5f5" : "#fff";
-  const textColor = "#121212";
+
+  const textColor = "var(--study-section-text-color-1000)";
 
   return (
-    <section
-      style={{ backgroundColor: bgColor, color: textColor, padding: "96px 0" }}
-    >
+    <section style={{ marginBlockStart: "var(--space-md)" }}>
       <div className="container">
-        <h3
-          style={{
-            // color: isEven ? "#0a3f70" : "#6886a2",
-            color: "#0a3f70",
-            fontSize: "var(--fs-lg)",
-          }}
-        >
-          {value.title}
-        </h3>
+        <h3 style={{ color: textColor }}>{value.title}</h3>
         <PortableText value={value.body} components={serializers} />
       </div>
     </section>
@@ -109,7 +99,7 @@ const VideoComponent = ({
 const serializers: PortableTextComponents = {
   list: {
     bullet: ({ children }) => (
-      <ul style={{ fontSize: "var(--fs-sm)", paddingInlineStart: "64px" }}>
+      <ul style={{ fontSize: "var(--fs-lg)", paddingInlineStart: "64px" }}>
         {children}
       </ul>
     ),
@@ -128,9 +118,7 @@ const serializers: PortableTextComponents = {
               style={{
                 fontSize: "var(--fs-xl)",
                 lineHeight: "1.2",
-                paddingBlock: "96px",
               }}
-              className="container"
             >
               {props.value.children[0].text}
             </h1>
@@ -145,7 +133,7 @@ const serializers: PortableTextComponents = {
           return (
             <p
               style={{
-                fontSize: "var(--fs-md)",
+                fontSize: "var(--fs-lg)",
                 lineHeight: "1.2",
                 fontWeight: "300",
               }}
@@ -178,9 +166,9 @@ const StudyContent: React.FC<StudyContentProps> = ({ title, content }) => {
       <h1
         className="container"
         style={{
-          color: "#121212",
-          paddingBlockEnd: "96px",
-          fontSize: "var(--fs-xl)",
+          color: "var(--study-section-text-color-1000)",
+          paddingBlock: "var(--space-3xl)",
+          fontSize: "var(--fs-3xl)",
         }}
       >
         {title}

@@ -1,8 +1,8 @@
 .about {
-  font-size: var(--fs-md);
+  font-size: var(--fs-lg);
   font-weight: 300;
   line-height: 1.2;
-  margin-top: 96px;
+  margin-top: var(--space-3xl);
 }
 
 .title {

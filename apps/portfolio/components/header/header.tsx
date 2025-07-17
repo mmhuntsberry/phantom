@@ -11,10 +11,10 @@ export default function Header() {
   return (
     <header className={`${styles.header}`}>
       <div className={styles.headerContainer}>
+        <Nav pathname={pathname ?? ""} />
         <Link href="/">
           <Logo />
         </Link>
-        <Nav pathname={pathname ?? ""} />
       </div>
     </header>
   );

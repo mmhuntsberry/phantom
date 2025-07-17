@@ -1,11 +1,20 @@
 /* RESET */
 
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--palette-neutral-100);
+}
+
 body,
 html {
   margin: 0;
   padding: 0;
   font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
     "Arial", sans-serif;
+  background-color: var(--palette-neutral-100);
 }
 
 a {
@@ -24,23 +33,406 @@ li {
   margin: 0;
 }
 
+*:focus {
+  outline: var(--border-width-md) solid var(--palette-alert-info-500);
+  outline-offset: var(--space-2xs);
+  border-radius: var(--border-radius-2xs);
+}
+
 :root {
-  --fs-3xs: clamp(0.77rem, -0.31vi + 0.83rem, 0.63rem);
-  --fs-2xs: clamp(0.82rem, 0.05vi + 0.81rem, 0.84rem);
-  --fs-xs: clamp(0.88rem, 0.56vi + 0.77rem, 1.25rem);
-  --fs-sm: clamp(0.94rem, 1.28vi + 0.68rem, 1.5rem);
-  --fs-base: clamp(1rem, 2.27vi + 0.55rem, 1.75rem);
-  --fs-md: clamp(1.07rem, 3.63vi + 0.34rem, 2rem);
-  --fs-lg: clamp(1.14rem, 5.49vi + 0.04rem, 2.4rem);
-  --fs-xl: clamp(1.21rem, 8.01vi + -0.39rem, 4.74rem);
-  --fs-2xl: clamp(1.3rem, 11.41vi + -0.98rem, 6.31rem);
-  --fs-3xl: clamp(1.38rem, 15.99vi + -1.81rem, 8.42rem);
+  --_opacity-8: 0.08;
+  --_opacity-16: 0.16;
+  --_opacity-32: 0.32;
+  --_opacity-48: 0.48;
+  --_opacity-64: 0.64;
+  --_opacity-88: 0.88;
+  --_font-family-mac-default: SF Pro;
+  --_font-family-windows: Segoe UI;
+  --_font-family-international: Microsoft YaHei;
+  --_font-size-1: 1rem;
+  --_font-size-2: 2rem;
+  --_font-size-3: 3rem;
+  --_font-size-4: 4rem;
+  --_font-size-5: 6rem;
+  --_font-size-6: 7rem;
+  --_font-size-8: 8rem;
+  --_font-size-0_75: 0.75rem;
+  --_font-size-0_8125: 0.8125rem;
+  --_font-size-0_875: 0.875rem;
+  --_font-size-0_9375: 0.9375rem;
+  --_font-size-1_125: 1.125rem;
+  --_font-size-1_25: 1.25rem;
+  --_font-size-1_5: 1.5rem;
+  --_font-size-1_75: 1.75rem;
+  --_font-weight-31: 0.31;
+  --_font-weight-121: 1.21;
+  --_font-weight-276: 2.76;
+  --_font-weight-410: 4.1;
+  --_font-weight-510: 5.1;
+  --_font-weight-650: 6.5;
+  --_font-weight-700: 7;
+  --_font-weight-870: 8.7;
+  --_font-weight-1000: 10;
+  --_palette-gray-7: hsl(0, 0%, 7%);
+  --_palette-gray-11: hsl(0, 0%, 11%);
+  --_palette-gray-16: hsl(0, 0%, 16%);
+  --_palette-gray-23: hsl(0, 0%, 23%);
+  --_palette-gray-34: hsl(0, 0%, 34%);
+  --_palette-gray-46: hsl(0, 0%, 46%);
+  --_palette-gray-58: hsl(0, 0%, 58%);
+  --_palette-gray-74: hsl(0, 0%, 74%);
+  --_palette-gray-84: hsl(0, 0%, 84%);
+  --_palette-gray-93: hsl(0, 0%, 93%);
+  --_palette-gray-96: hsl(0, 0%, 96%);
+  --_palette-gray-100: hsl(0, 0%, 100%);
+  --_palette-red-12: hsl(1, 77%, 12%);
+  --_palette-red-19: hsl(1, 81%, 19%);
+  --_palette-red-27: hsl(2, 80%, 27%);
+  --_palette-red-38: hsl(358, 73%, 38%);
+  --_palette-red-48: hsl(0, 67%, 48%);
+  --_palette-red-63: hsl(1, 88%, 63%);
+  --_palette-red-73: hsl(2, 96%, 73%);
+  --_palette-red-82: hsl(2, 98%, 82%);
+  --_palette-red-92: hsl(0, 95%, 92%);
+  --_palette-red-96: hsl(0, 90%, 96%);
+  --_palette-green-8: hsl(153, 76%, 8%);
+  --_palette-green-11: hsl(157, 79%, 11%);
+  --_palette-green-17: hsl(157, 77%, 17%);
+  --_palette-green-22: hsl(157, 86%, 22%);
+  --_palette-green-27: hsl(157, 88%, 27%);
+  --_palette-green-39: hsl(156, 73%, 39%);
+  --_palette-green-46: hsl(157, 65%, 46%);
+  --_palette-green-66: hsl(154, 64%, 66%);
+  --_palette-green-85: hsl(152, 74%, 85%);
+  --_palette-green-93: hsl(145, 89%, 93%);
+  --_palette-blue-9: hsl(219, 87%, 9%);
+  --_palette-blue-16: hsl(220, 90%, 16%);
+  --_palette-blue-23: hsl(219, 91%, 23%);
+  --_palette-blue-31: hsl(218, 92%, 31%);
+  --_palette-blue-42: hsl(216, 88%, 42%);
+  --_palette-blue-60: hsl(215, 97%, 60%);
+  --_palette-blue-69: hsl(213, 97%, 69%);
+  --_palette-blue-83: hsl(212, 95%, 83%);
+  --_palette-blue-92: hsl(212, 95%, 92%);
+  --_palette-blue-97: hsl(212, 100%, 97%);
+  --_palette-orange-13: hsl(29, 73%, 13%);
+  --_palette-orange-18: hsl(31, 83%, 18%);
+  --_palette-orange-24: hsl(28, 87%, 24%);
+  --_palette-orange-34: hsl(28, 86%, 34%);
+  --_palette-orange-45: hsl(28, 81%, 45%);
+  --_palette-orange-55: hsl(30, 89%, 55%);
+  --_palette-orange-63: hsl(32, 95%, 63%);
+  --_palette-orange-74: hsl(34, 98%, 74%);
+  --_palette-orange-88: hsl(32, 100%, 88%);
+  --_palette-orange-93: hsl(37, 100%, 93%);
+  --_palette-yellow-11: hsl(46, 100%, 11%);
+  --_palette-yellow-16: hsl(42, 100%, 16%);
+  --_palette-yellow-23: hsl(41, 100%, 23%);
+  --_palette-yellow-29: hsl(41, 100%, 29%);
+  --_palette-yellow-37: hsl(42, 100%, 37%);
+  --_palette-yellow-43: hsl(43, 100%, 43%);
+  --_palette-yellow-50: hsl(45, 88%, 50%);
+  --_palette-yellow-71: hsl(44, 95%, 71%);
+  --_palette-yellow-83: hsl(48, 95%, 83%);
+  --_palette-yellow-90: hsl(52, 92%, 90%);
+  --_size-0: 0px;
+  --_size-1: 1px;
+  --_size-2: 2px;
+  --_size-4: 4px;
+  --_size-6: 6px;
+  --_size-8: 8px;
+  --_size-10: 10px;
+  --_size-11: 11px;
+  --_size-12: 12px;
+  --_size-13: 13px;
+  --_size-14: 14px;
+  --_size-15: 15px;
+  --_size-16: 16px;
+  --_size-17: 17px;
+  --_size-18: 18px;
+  --_size-20: 20px;
+  --_size-24: 24px;
+  --_size-28: 28px;
+  --_size-32: 32px;
+  --_size-36: 36px;
+  --_size-40: 40px;
+  --_size-44: 44px;
+  --_size-48: 48px;
+  --_size-52: 52px;
+  --_size-56: 56px;
+  --_size-60: 60px;
+  --_size-64: 64px;
+  --_size-72: 72px;
+  --_size-80: 80px;
+  --_size-96: 96px;
+  --_size-128: 128px;
+  --_size-144: 144px;
+  --_size-160: 160px;
+  --_size-192: 192px;
+  --_size-224: 224px;
+  --_size-256: 256px;
+  --_size-320: 320px;
+  --_size-384: 384px;
+  --_size-448: 448px;
+  --_size-512: 512px;
+  --_size-640: 640px;
+  --_size-768: 768px;
+  --_size-1024: 1024px;
+  --_size-1280: 1280px;
+  --_size-1600: 1600px;
+  --_size-1920: 1920px;
+  --palette-brand-2: hsl(0, 0%, 100%);
+  --palette-brand-3: hsl(0, 0%, 100%);
+  --palette-brand-4: hsl(0, 0%, 100%);
+  --palette-brand-5: hsl(0, 0%, 100%);
+  --palette-brand-6: hsl(0, 0%, 100%);
+  --palette-brand-7: hsl(0, 0%, 100%);
+  --palette-brand-8: hsl(0, 0%, 100%);
+  --palette-brand-9: hsl(0, 0%, 100%);
+  --palette-brand-10: hsl(0, 0%, 100%);
+  --palette-brand-11: hsl(0, 0%, 100%);
+  --palette-brand-12: hsl(0, 0%, 100%);
+  --palette-brand-13: hsl(0, 0%, 100%);
+  --palette-brand-14: hsl(0, 0%, 100%);
+  --palette-primary-100-alpha: hsla(0, 0%, 22%, 0.04);
+  --palette-primary-200-alpha: hsla(209, 29%, 17%, 0.08);
+  --palette-primary-300-alpha: hsla(219, 69%, 10%, 0.17);
+  --palette-primary-400-alpha: hsla(214, 75%, 11%, 0.29);
+  --palette-primary-500-alpha: hsla(215, 90%, 8%, 0.45);
+  --palette-primary-600-alpha: hsla(219, 83%, 9%, 0.59);
+  --palette-primary-700-alpha: hsla(223, 78%, 7%, 0.7);
+  --palette-primary-800-alpha: hsla(220, 90%, 4%, 0.8);
+  --palette-primary-900-alpha: hsla(220, 100%, 3%, 0.86);
+  --palette-primary-1000-alpha: hsla(229, 73%, 3%, 0.91);
+  --palette-primary-alpha-04: hsla(0, 0%, 0%, 0.04);
+  --palette-primary-alpha-08: hsla(0, 0%, 0%, 0.08);
+  --palette-primary-alpha-12: hsla(0, 0%, 0%, 0.12);
+  --palette-primary-alpha-16: hsla(0, 0%, 0%, 0.16);
+  --palette-primary-alpha-32: hsla(0, 0%, 0%, 0.32);
+  --palette-primary-alpha-48: hsla(0, 0%, 0%, 0.48);
+  --palette-primary-alpha-72: hsla(0, 0%, 0%, 0.72);
+  --palette-primary-alpha-88: hsla(0, 0%, 0%, 0.88);
+  --palette-primary-alpha-96: hsla(0, 0%, 0%, 0.96);
+  --palette-neutral-lightest-alpha: hsla(0, 0%, 100%, 0.04);
+  --palette-neutral-100-alpha: hsla(0, 0%, 22%, 0.04);
+  --palette-neutral-200-alpha: hsla(209, 29%, 17%, 0.08);
+  --palette-neutral-300-alpha: hsla(219, 69%, 10%, 0.17);
+  --palette-neutral-400-alpha: hsla(214, 75%, 11%, 0.29);
+  --palette-neutral-500-alpha: hsla(219, 91%, 9%, 0.45);
+  --palette-neutral-600-alpha: hsla(219, 83%, 9%, 0.59);
+  --palette-neutral-700-alpha: hsla(223, 78%, 7%, 0.7);
+  --palette-neutral-800-alpha: hsla(220, 90%, 4%, 0.8);
+  --palette-neutral-900-alpha: hsla(220, 100%, 3%, 0.86);
+  --palette-neutral-1000-alpha: hsla(229, 73%, 3%, 0.91);
+  --palette-neutral-darkest-alpha: hsla(0, 0%, 0%, 0.91);
+  --palette-neutral-alpha-04: hsla(0, 0%, 0%, 0.04);
+  --palette-neutral-alpha-08: hsla(0, 0%, 0%, 0.08);
+  --palette-neutral-alpha-12: hsla(0, 0%, 0%, 0.12);
+  --palette-neutral-alpha-16: hsla(0, 0%, 0%, 0.16);
+  --palette-neutral-alpha-32: hsla(0, 0%, 0%, 0.32);
+  --palette-neutral-alpha-48: hsla(0, 0%, 0%, 0.48);
+  --palette-neutral-alpha-72: hsla(0, 0%, 0%, 0.72);
+  --palette-neutral-alpha-88: hsla(0, 0%, 0%, 0.88);
+  --palette-neutral-alpha-96: hsla(0, 0%, 0%, 0.96);
+  --font-weight-normal: ;
+  --font-weight-semibold: ;
+  --font-weight-bold: ;
+  --font-letter-spacing-3xs: 0.4000000059604645em;
+  --font-letter-spacing-2xs: 0.4000000059604645em;
+  --font-letter-spacing-xs: 0.4000000059604645em;
+  --font-letter-spacing-sm: 0.20000000298023224em;
+  --font-letter-spacing-md: 0em;
+  --font-letter-spacing-lg: -0.10000000149011612em;
+  --font-letter-spacing-xl: -0.20000000298023224em;
+  --font-letter-spacing-2xl: -0.4000000059604645em;
+  --font-letter-spacing-3xl: -0.800000011920929em;
+  --font-letter-spacing-4xl: -1em;
+  --font-letter-spacing-5xl: -2em;
+  --font-letter-spacing-6xl: -2em;
+  --font-letter-spacing-7xl: -2em;
+  --font-letter-spacing-8xl: -2em;
+  --font-letter-spacing-9xl: -4em;
+  --font-line-height-3xs: 16px;
+  --font-line-height-2xs: 16px;
+  --font-line-height-xs: 16px;
+  --font-line-height-sm: 16px;
+  --font-line-height-md: 20px;
+  --font-line-height-lg: 20px;
+  --font-line-height-xl: 24px;
+  --font-line-height-2xl: 28px;
+  --font-line-height-3xl: 32px;
+  --font-line-height-4xl: 36px;
+  --font-line-height-5xl: 52px;
+  --font-line-height-6xl: 72px;
+  --font-line-height-7xl: 88px;
+  --font-line-height-8xl: 100px;
+  --font-line-height-9xl: 128px;
+  --container-card-vertical-2xs: 1.44;
+  --palette-alert-success-100: var(--_palette-green-93);
+  --palette-alert-success-200: var(--_palette-green-85);
+  --palette-alert-success-300: var(--_palette-green-66);
+  --palette-alert-success-400: var(--_palette-green-46);
+  --palette-alert-success-500: var(--_palette-green-39);
+  --palette-alert-success-600: var(--_palette-green-27);
+  --palette-alert-success-700: var(--_palette-green-22);
+  --palette-alert-success-800: var(--_palette-green-17);
+  --palette-alert-success-900: var(--_palette-green-11);
+  --palette-alert-success-1000: var(--_palette-green-8);
+  --palette-alert-danger-100: var(--_palette-red-96);
+  --palette-alert-danger-200: var(--_palette-red-92);
+  --palette-alert-danger-300: var(--_palette-red-82);
+  --palette-alert-danger-400: var(--_palette-red-73);
+  --palette-alert-danger-500: var(--_palette-red-63);
+  --palette-alert-danger-600: var(--_palette-red-48);
+  --palette-alert-danger-700: var(--_palette-red-38);
+  --palette-alert-danger-800: var(--_palette-red-27);
+  --palette-alert-danger-900: var(--_palette-red-19);
+  --palette-alert-danger-1000: var(--_palette-red-12);
+  --palette-alert-info-100: var(--_palette-blue-97);
+  --palette-alert-info-200: var(--_palette-blue-92);
+  --palette-alert-info-300: var(--_palette-blue-83);
+  --palette-alert-info-400: var(--_palette-blue-69);
+  --palette-alert-info-500: var(--_palette-blue-60);
+  --palette-alert-info-600: var(--_palette-blue-42);
+  --palette-alert-info-700: var(--_palette-blue-31);
+  --palette-alert-info-800: var(--_palette-blue-23);
+  --palette-alert-info-900: var(--_palette-blue-16);
+  --palette-alert-info-1000: var(--_palette-blue-9);
+  --palette-alert-warning-100: var(--_palette-orange-93);
+  --palette-alert-warning-200: var(--_palette-orange-88);
+  --palette-alert-warning-300: var(--_palette-orange-74);
+  --palette-alert-warning-400: var(--_palette-orange-63);
+  --palette-alert-warning-500: var(--_palette-orange-55);
+  --palette-alert-warning-600: var(--_palette-orange-45);
+  --palette-alert-warning-700: var(--_palette-orange-34);
+  --palette-alert-warning-800: var(--_palette-orange-24);
+  --palette-alert-warning-900: var(--_palette-orange-18);
+  --palette-alert-warning-1000: var(--_palette-orange-13);
+  --palette-alert-highlight-100: var(--_palette-yellow-90);
+  --palette-alert-highlight-200: var(--_palette-yellow-83);
+  --palette-alert-highlight-300: var(--_palette-yellow-71);
+  --palette-alert-highlight-400: var(--_palette-yellow-50);
+  --palette-alert-highlight-500: var(--_palette-yellow-43);
+  --palette-alert-highlight-600: var(--_palette-yellow-37);
+  --palette-alert-highlight-700: var(--_palette-yellow-29);
+  --palette-alert-highlight-800: var(--_palette-yellow-23);
+  --palette-alert-highlight-900: var(--_palette-yellow-16);
+  --palette-alert-highlight-1000: var(--_palette-yellow-11);
+  --palette-neutral-100: var(--_palette-gray-96);
+  --palette-neutral-200: var(--_palette-gray-93);
+  --palette-neutral-300: var(--_palette-gray-84);
+  --palette-neutral-400: var(--_palette-gray-74);
+  --palette-neutral-500: var(--_palette-gray-58);
+  --palette-neutral-600: var(--_palette-gray-46);
+  --palette-neutral-700: var(--_palette-gray-34);
+  --palette-neutral-800: var(--_palette-gray-23);
+  --palette-neutral-900: var(--_palette-gray-16);
+  --palette-neutral-1000: var(--_palette-gray-11);
+  --palette-neutral-lightest: var(--_palette-gray-100);
+  --palette-neutral-darkest: var(--_palette-gray-7);
+  --border-width-none: var(--_size-0);
+  --border-width-sm: var(--_size-1);
+  --border-width-md: var(--_size-2);
+  --border-width-lg: var(--_size-4);
+  --border-radius-square: var(--_size-0);
+  --border-radius-2xs: var(--_size-4);
+  --border-radius-xs: var(--_size-8);
+  --border-radius-sm: var(--_size-12);
+  --border-radius-md: var(--_size-16);
+  --border-radius-lg: var(--_size-20);
+  --border-radius-rounded: var(--_size-1024);
+  --layout-6xs: var(--_size-96);
+  --layout-5xs: var(--_size-128);
+  --layout-4xs: var(--_size-144);
+  --layout-3xs: var(--_size-192);
+  --layout-2xs: var(--_size-224);
+  --layout-xs: var(--_size-256);
+  --layout-sm: var(--_size-320);
+  --layout-md: var(--_size-384);
+  --layout-lg: var(--_size-512);
+  --layout-xl: var(--_size-768);
+  --layout-2xl: var(--_size-1024);
+  --layout-3xl: var(--_size-1280);
+  --layout-4xl: var(--_size-1600);
+  --opacity-disabled: var(--_opacity-48);
+  --font-weight-ultra-light: var(--_font-weight-31);
+  --font-weight-thin: var(--_font-weight-121);
+  --font-weight-light: var(--_font-weight-276);
+  --font-weight-regular: var(--_font-weight-410);
+  --font-weight-medium: var(--_font-weight-510);
+  --font-weight-heavy: var(--_font-weight-870);
+  --font-weight-black: var(--_font-weight-1000);
+  --font-family-default: var(--_font-family-mac-default);
+  --font-size-3xs: var(--_size-12);
+  --font-size-2xs: var(--_size-13);
+  --font-size-xs: var(--_size-14);
+  --font-size-sm: var(--_size-15);
+  --font-size-md: var(--_size-16);
+  --font-size-lg: var(--_size-18);
+  --font-size-xl: var(--_size-20);
+  --font-size-2xl: var(--_size-24);
+  --font-size-3xl: var(--_size-28);
+  --font-size-4xl: var(--_size-32);
+  --font-size-5xl: var(--_size-48);
+  --font-size-6xl: var(--_size-64);
+  --font-size-7xl: var(--_size-80);
+  --font-size-8xl: var(--_size-96);
+  --font-size-9xl: var(--_size-128);
+  --space-none: var(--_size-0);
+  --space-3xs: var(--_size-2);
+  --space-2xs: var(--_size-4);
+  --space-xs: var(--_size-8);
+  --space-sm: var(--_size-12);
+  --space-md: var(--_size-16);
+  --space-lg: var(--_size-20);
+  --space-xl: var(--_size-24);
+  --space-2xl: var(--_size-32);
+  --space-3xl: var(--_size-48);
+  --space-4xl: var(--_size-64);
+
+  --fs-3xs: clamp(0.625rem, 0.25vi + 0.5rem, var(--_size-12)); /* ~10px */
+  --fs-2xs: clamp(0.6875rem, 0.3vi + 0.55rem, var(--_size-13)); /* ~11px */
+  --fs-xs: clamp(0.75rem, 0.4vi + 0.6rem, var(--_size-14)); /* ~12px */
+  --fs-sm: clamp(0.875rem, 0.5vi + 0.65rem, var(--_size-15)); /* ~14px */
+  --fs-base: clamp(1rem, 0.7vi + 0.7rem, var(--_size-16)); /* ~16px */
+  --fs-md: clamp(1.125rem, 1vi + 0.75rem, var(--_size-18)); /* ~18px */
+  --fs-lg: clamp(1.25rem, 1.25vi + 0.75rem, var(--_size-20)); /* ~20px */
+  --fs-xl: clamp(1.5rem, 1.5vi + 0.8rem, var(--_size-24)); /* ~24px */
+  --fs-2xl: clamp(1.75rem, 2vi + 0.9rem, var(--_size-28)); /* ~28px */
+  --fs-3xl: clamp(2rem, 3vi + 1rem, var(--_size-32)); /* ~32px */
+  --fs-4xl: clamp(2.5rem, 4vi + 1rem, var(--_size-48)); /* ~48px */
+  --fs-5xl: clamp(3rem, 5vi + 1rem, var(--_size-64)); /* ~64px */
+  --fs-6xl: clamp(4rem, 6vi + 1rem, var(--_size-80)); /* ~80px */
+  --fs-7xl: clamp(6rem, 8vi + 1rem, var(--_size-96)); /* ~96px */
+  --fs-8xl: clamp(8rem, 10vi + 1rem, var(--_size-128)); /* ~128px */
+
+  --study-section-bg-color-100: var(--palette-neutral-100);
+  --study-section-bg-color-200: var(--palette-neutral-200);
+  --study-section-text-color-1000: var(--palette-neutral-1000);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --study-section-bg-color-100: var(--palette-neutral-1000);
+    --study-section-bg-color-200: var(--palette-neutral-900);
+    --study-section-text-color-1000: var(--palette-neutral-100);
+    /* --palette-neutral-1000: var(--_palette-gray-100); */
+  }
+
+  html {
+    background-color: var(--palette-neutral-1000);
+    color: var(--palette-neutral-100);
+  }
+
+  body {
+    background-color: var(--palette-neutral-1000);
+  }
 }
 
 .container {
   margin: 0 auto;
   padding-inline: 24px;
-  max-width: 1280px;
+  max-width: 1024px;
 }
 
 @media (max-width: 1024px) {
@@ -48,4 +440,39 @@ li {
     padding-inline: 24px;
     max-width: 100%;
   }
+}
+/**
+UTILITY CLASSES
+*/
+
+.flex {
+  display: flex;
+}
+
+.gap-2xs {
+  gap: var(--space-2xs);
+}
+
+.gap-xs {
+  gap: var(--space-xs);
+}
+
+.mt-xs {
+  margin-top: var(--space-xs);
+}
+
+.mt-sm {
+  margin-top: var(--space-sm);
+}
+
+.mt-md {
+  margin-top: var(--space-md);
+}
+
+.mt-2xl {
+  margin-top: var(--space-2xl);
+}
+
+.mt-4xl {
+  margin-top: var(--space-4xl);
 }

@@ -28,14 +28,14 @@ export default async function Resume() {
                 <h2>{job.company}</h2>
                 <h3>{job.title}</h3>
               </div>
-              <NextImage
+              {/* {<NextImage
                 className={getImageClass(job)}
                 src={job.image}
                 alt={job.company}
                 width={120}
                 height={70}
                 sizes="(max-width: 15rem) 100vw, (max-width: 7.5rem) 50vw, 33vw"
-              />
+              />} */}
             </div>
             <div className={styles.content}>
               <PortableText value={job.content} />

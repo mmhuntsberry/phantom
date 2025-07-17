@@ -2,7 +2,7 @@ import { getStudies } from "../../sanity/sanity-utils";
 
 import NextLink from "next/link";
 import styles from "./page.module.css";
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { Link } from "@phosphor-icons/react/dist/ssr";
 
 export default async function Index() {
   const studies = await getStudies();
@@ -14,7 +14,7 @@ export default async function Index() {
             <NextLink href={`/studies/${study.slug}`}>
               <span className={styles.linkContainer}>
                 <h2 className={styles.title}>{study.name}</h2>
-                <ArrowRight className={styles.arrow} size={48} />
+                <Link className={styles.icon} size={24} />
               </span>
             </NextLink>
             <p className={styles.about}>{study.about}</p>

@@ -1,7 +1,5 @@
 .nav {
-  color: #1b1b1b;
   font-size: 20px;
-  line-height: 0.4;
   display: flex;
   gap: 16px;
   color: #0a3f70;
@@ -14,4 +12,10 @@
 
 .link {
   opacity: 0.64;
+}
+
+@media (prefers-color-scheme: dark) {
+  .nav {
+    color: var(--palette-neutral-100);
+  }
 }
