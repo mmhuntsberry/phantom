@@ -14,7 +14,9 @@ export default function About() {
           its design system from the ground up with token pipelines, Figma
           automation, and real-time design system analytics. I don’t just build
           components—
-          <strong>I design how teams work at scale.</strong>
+          <strong style={{ fontWeight: "640" }}>
+            I design how teams work at scale.
+          </strong>
         </p>
         <h1 className={styles.title}>
           {pathname === "/" ? (

@@ -2,9 +2,11 @@
 
 import { getWriting } from "../../../../sanity/sanity-utils";
 import { notFound } from "next/navigation";
-import { PortableText } from "@portabletext/react";
+import WritingContent from "../../../../components/WritingContent.server";
+import Link from "next/link";
 
 import styles from "./page.module.css";
+import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 type Props = {
   params: { slug: string };
@@ -17,9 +19,13 @@ export default async function WritingPage({ params }: Props) {
 
   return (
     <main>
+      <Link href={`/`} className={`${styles.backLink}`}>
+        <ArrowLeft size={20} />
+        Back to Series
+      </Link>
       <h1 className={styles.title}>{post.title}</h1>
       <div className="prose prose-lg">
-        <PortableText value={post.content} />
+        <WritingContent content={post.content} title={post.title} />
       </div>
     </main>
   );

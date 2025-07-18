@@ -53,8 +53,8 @@ export default async function HomePage() {
           <h2 className={styles.category}>{category.replace("-", " ")}</h2>
           <ul className={styles.list}>
             {posts.map((post) => (
-              <li key={post._id}>
-                <Link href={`/writings/${post.slug}`}>
+              <li className={styles.item} key={post._id}>
+                <Link className={styles.link} href={`/writings/${post.slug}`}>
                   {post.title} <Signpost size={32} />
                 </Link>
               </li>

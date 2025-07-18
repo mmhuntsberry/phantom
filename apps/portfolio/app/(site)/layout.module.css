@@ -1,6 +1,6 @@
 .about {
   font-size: var(--fs-lg);
-  font-weight: 300;
+  font-weight: 320;
   line-height: 1.2;
   margin-top: var(--space-3xl);
 }
@@ -9,5 +9,5 @@
   font-size: var(--fs-3xl);
   font-weight: 1000;
   letter-spacing: -0.04em;
-  margin-bottom: 64px;
+  margin-block: var(--space-3xl);
 }

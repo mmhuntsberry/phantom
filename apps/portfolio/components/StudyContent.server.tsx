@@ -23,9 +23,11 @@ const Section: React.FC<SectionProps> = ({ value, index }) => {
   const textColor = "var(--study-section-text-color-1000)";
 
   return (
-    <section style={{ marginBlockStart: "var(--space-md)" }}>
+    <section style={{ marginBlockStart: "var(--space-4xl)" }}>
       <div className="container">
-        <h3 style={{ color: textColor }}>{value.title}</h3>
+        <h3 style={{ color: textColor, fontSize: "var(--fs-xl)" }}>
+          {value.title}
+        </h3>
         <PortableText value={value.body} components={serializers} />
       </div>
     </section>
@@ -52,7 +54,11 @@ const ImageComponent = ({
         layout="responsive"
         objectFit="cover"
       />
-      {alt && <figcaption style={{ textAlign: "center" }}>{alt}</figcaption>}
+      {alt && (
+        <figcaption style={{ textAlign: "center", fontSize: "var(--fs-xs)" }}>
+          {alt}
+        </figcaption>
+      )}
     </figure>
   );
 };
@@ -117,7 +123,7 @@ const serializers: PortableTextComponents = {
             <h1
               style={{
                 fontSize: "var(--fs-xl)",
-                lineHeight: "1.2",
+                // lineHeight: "1.2",
               }}
             >
               {props.value.children[0].text}
@@ -125,7 +131,13 @@ const serializers: PortableTextComponents = {
           );
         case "h3":
           return (
-            <h3 style={{ fontSize: "var(--fs-lg)", lineHeight: "1.2" }}>
+            <h3
+              style={{
+                fontSize: "var(--fs-xl)",
+                fontWeight: "640",
+                // lineHeight: "1.2",
+              }}
+            >
               {props.value.children[0].text}
             </h3>
           );
@@ -135,7 +147,7 @@ const serializers: PortableTextComponents = {
               style={{
                 fontSize: "var(--fs-lg)",
                 lineHeight: "1.2",
-                fontWeight: "300",
+                fontWeight: "320",
               }}
             >
               {props.value.children[0].text}
@@ -163,16 +175,6 @@ interface StudyContentProps {
 const StudyContent: React.FC<StudyContentProps> = ({ title, content }) => {
   return (
     <>
-      <h1
-        className="container"
-        style={{
-          color: "var(--study-section-text-color-1000)",
-          paddingBlock: "var(--space-3xl)",
-          fontSize: "var(--fs-3xl)",
-        }}
-      >
-        {title}
-      </h1>
       {content.map((block: any, index: number) => (
         <PortableText
           key={index}
@@ -187,7 +189,6 @@ const StudyContent: React.FC<StudyContentProps> = ({ title, content }) => {
           }}
         />
       ))}
-      ;
     </>
   );
 };

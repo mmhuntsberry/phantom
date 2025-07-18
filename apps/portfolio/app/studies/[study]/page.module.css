@@ -1,0 +1,4 @@
+.title {
+  margin-block: var(--space-2xl);
+  margin-block-end: var(--space-md);
+}

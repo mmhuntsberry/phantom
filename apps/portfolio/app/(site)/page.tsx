@@ -14,7 +14,7 @@ export default async function Index() {
             <NextLink href={`/studies/${study.slug}`}>
               <span className={styles.linkContainer}>
                 <h2 className={styles.title}>{study.name}</h2>
-                <Link className={styles.icon} size={24} />
+                <Link className={styles.icon} max={24} min={24} size={24} />
               </span>
             </NextLink>
             <p className={styles.about}>{study.about}</p>

@@ -41,8 +41,7 @@ export const HeroMedia = ({
       <div
         style={{
           position: "relative",
-          paddingBottom: "56.25%",
-          height: 0,
+          height: "480px",
           maxWidth: "1024px",
           margin: "0 auto",
         }}
@@ -57,7 +56,7 @@ export const HeroMedia = ({
             top: 0,
             left: 0,
             width: "100%",
-            height: "80%",
+            height: "100%",
             border: "none",
             borderRadius: "0",
           }}
