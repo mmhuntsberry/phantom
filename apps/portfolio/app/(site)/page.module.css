@@ -40,6 +40,10 @@
   .title {
     color: var(--palette-neutral-100);
   }
+
+  .about {
+    color: var(--palette-neutral-400);
+  }
 }
 
 /* @media (min-width: 768px) {
