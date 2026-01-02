@@ -9,8 +9,11 @@ export type NavLink = {
 };
 
 export const navLinks: NavLink[] = [
+  { href: "/start-here", label: "Start Here" },
   { href: "/", label: "Stories" },
-  { href: "/subscribe", label: "Subscribe" },
+  { href: "/books", label: "Books" },
+  { href: "/about", label: "About" },
+  { href: "/newsletter", label: "Newsletter" },
 ];
 
 export type NavProps = {
@@ -23,7 +26,13 @@ export default function Nav({ pathname }: NavProps) {
       {navLinks.map((link: NavLink) => (
         <Link
           className={`${styles.link} ${
-            link.href === pathname ? styles.active : ""
+            link.href === "/"
+              ? pathname === "/"
+                ? styles.active
+                : ""
+              : pathname.startsWith(link.href)
+              ? styles.active
+              : ""
           }`}
           href={link.href}
           key={link.href}

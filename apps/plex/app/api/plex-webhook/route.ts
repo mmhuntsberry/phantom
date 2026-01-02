@@ -2,7 +2,7 @@ export const runtime = "nodejs";
 
 import { NextRequest } from "next/server";
 import nodemailer from "nodemailer";
-import { redis } from "@/lib/redis";
+import { redis } from "../../../lib/redis";
 
 // SMTP email transport (use e.g. Gmail App Password or any SMTP provider)
 const transporter = nodemailer.createTransport({

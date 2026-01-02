@@ -389,6 +389,7 @@ li {
   --space-2xl: var(--_size-32);
   --space-3xl: var(--_size-48);
   --space-4xl: var(--_size-64);
+  --button-height: 47px;
 
   --fs-3xs: clamp(0.625rem, 0.25vi + 0.5rem, var(--_size-12)); /* ~10px */
   --fs-2xs: clamp(0.6875rem, 0.3vi + 0.55rem, var(--_size-13)); /* ~11px */

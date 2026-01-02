@@ -1,0 +1,138 @@
+.container {
+  display: grid;
+  gap: var(--space-2xl);
+}
+
+.hero {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.kicker {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin: 0;
+}
+
+.title {
+  font-size: var(--fs-4xl);
+  font-weight: 1000;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.promise {
+  font-size: var(--fs-lg);
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 640px;
+}
+
+.gridSection {
+  display: grid;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-lg);
+}
+
+.card {
+  border: var(--border-width-sm) solid var(--palette-neutral-300);
+  border-radius: var(--border-radius-2xs);
+  padding: var(--space-lg);
+  background-color: var(--palette-neutral-lightest);
+  display: grid;
+  gap: var(--space-sm);
+  min-height: 220px;
+}
+
+.cardTitle {
+  font-size: var(--fs-xl);
+  font-weight: 1000;
+  margin: 0;
+}
+
+.cardDescription {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  justify-self: start;
+  border: var(--border-width-sm) solid var(--palette-neutral-darkest);
+  border-radius: var(--border-radius-2xs);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  background-color: var(--palette-neutral-lightest);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.cardLink:hover {
+  background-color: var(--palette-neutral-200);
+}
+
+.expectations {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.sectionTitle {
+  font-size: var(--fs-2xl);
+  font-weight: 1000;
+  margin: 0;
+}
+
+.sectionIntro {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  margin: 0;
+}
+
+.list {
+  padding-left: var(--space-lg);
+  display: grid;
+  gap: var(--space-xs);
+  margin: 0;
+}
+
+.list li {
+  list-style: disc;
+  font-size: var(--fs-md);
+}
+
+.subscribe {
+  border: var(--border-width-sm) solid var(--palette-neutral-300);
+  border-radius: var(--border-radius-2xs);
+  padding: var(--space-lg);
+  background-color: var(--palette-neutral-lightest);
+  display: grid;
+  gap: var(--space-sm);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card,
+  .subscribe {
+    background-color: var(--palette-neutral-900);
+    border-color: var(--palette-neutral-600);
+  }
+
+  .cardLink {
+    background-color: var(--palette-neutral-900);
+    border-color: var(--palette-neutral-400);
+    color: var(--palette-neutral-100);
+  }
+
+  .cardLink:hover {
+    background-color: var(--palette-neutral-800);
+  }
+}

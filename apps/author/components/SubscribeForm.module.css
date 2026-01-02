@@ -1,0 +1,44 @@
+.form {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+.message {
+  font-size: var(--fs-sm);
+  margin: 0;
+}
+
+.buttonText {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .buttonText {
+    display: inline-block;
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+}

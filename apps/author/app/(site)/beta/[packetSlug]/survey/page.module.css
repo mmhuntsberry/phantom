@@ -1,0 +1,40 @@
+.container {
+  display: grid;
+  gap: var(--space-2xl);
+}
+
+.hero {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.kicker {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin: 0;
+}
+
+.title {
+  font-size: var(--fs-4xl);
+  font-weight: 1000;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--fs-lg);
+  font-weight: 300;
+  margin: 0;
+}
+
+.section {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.footerNote {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  margin: 0;
+}

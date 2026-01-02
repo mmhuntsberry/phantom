@@ -1,0 +1,9 @@
+.container {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.status {
+  font-size: var(--fs-sm);
+  margin: 0;
+}

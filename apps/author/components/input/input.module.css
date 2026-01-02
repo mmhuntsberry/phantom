@@ -6,7 +6,7 @@
   width: 100%;
   max-width: var(--layout-xl);
   max-height: var(--space-3xl);
-  height: 100%;
+  height: var(--button-height);
   padding: var(--space-sm);
   font-size: var(--font-size-lg);
   font-weight: 500;

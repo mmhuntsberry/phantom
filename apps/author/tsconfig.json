@@ -16,7 +16,10 @@
         "name": "next"
       }
     ],
-    "types": ["jest", "node"]
+    "types": ["jest", "node"],
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "include": [
     "**/*.ts",
@@ -38,8 +41,5 @@
     "jest.config.ts",
     "src/**/*.spec.ts",
     "src/**/*.test.ts"
-  ],
-  "paths": {
-    "@/*": ["./*"]
-  }
+  ]
 }

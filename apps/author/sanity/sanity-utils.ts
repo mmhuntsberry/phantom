@@ -5,6 +5,11 @@ import { Study } from "../types/Study";
 import config from "./config/client-config";
 import { Job } from "../types/Job";
 import { Writing } from "../types/Writing";
+import { StartHerePage } from "../types/StartHerePage";
+import { Book } from "../types/Book";
+import { AboutPage } from "../types/AboutPage";
+import { NewsletterPage } from "../types/NewsletterPage";
+import { BetaPacket } from "../types/BetaPacket";
 
 // export async function getProjects(): Promise<Project[]> {
 //   const client = createClient(config);
@@ -349,4 +354,185 @@ export async function getSeriesWithEpisodes(seriesSlug: string): Promise<{
   );
 
   return { ...series, episodes };
+}
+
+export async function getStartHerePage(): Promise<StartHerePage | null> {
+  const client = createClient(config);
+
+  return client.fetch(
+    groq`*[_type == "startHerePage"][0]{
+      brandPromise,
+      entryPoints[]{
+        title,
+        description,
+        ctaLabel,
+        customHref,
+        "link": link->{
+          _type,
+          title,
+          "slug": slug.current
+        }
+      },
+      expectations
+    }`
+  );
+}
+
+export async function getBooks(): Promise<Book[]> {
+  const client = createClient(config);
+
+  return client.fetch(
+    groq`*[_type == "book"] | order(status == "comingSoon" desc, publicationDate desc) {
+      _id,
+      _createdAt,
+      title,
+      "slug": slug.current,
+      status,
+      publicationDate,
+      cover{
+        asset->{url},
+        alt
+      },
+      tagline,
+      shortPitch
+    }`
+  );
+}
+
+export async function getBook(slug: string): Promise<Book | null> {
+  const client = createClient(config);
+
+  return client.fetch(
+    groq`*[_type == "book" && slug.current == $slug][0]{
+      _id,
+      _createdAt,
+      title,
+      "slug": slug.current,
+      status,
+      publicationDate,
+      cover{
+        asset->{url},
+        alt
+      },
+      tagline,
+      shortPitch,
+      longDescription,
+      contentNotes,
+      sample,
+      sampleLink,
+      buyLinks,
+      testimonials
+    }`,
+    { slug }
+  );
+}
+
+export async function getAboutPage(): Promise<AboutPage | null> {
+  const client = createClient(config);
+
+  return client.fetch(
+    groq`*[_type == "aboutPage"][0]{
+      title,
+      body,
+      photo{
+        asset->{url},
+        alt
+      }
+    }`
+  );
+}
+
+export async function getNewsletterPage(): Promise<NewsletterPage | null> {
+  const client = createClient(config);
+
+  return client.fetch(
+    groq`*[_type == "newsletterPage"][0]{
+      title,
+      intro,
+      valueProps,
+      frequency,
+      privacyNote,
+      leadMagnet
+    }`
+  );
+}
+
+export async function getActiveBetaPacket(): Promise<BetaPacket | null> {
+  const client = createClient(config);
+
+  return client.fetch(
+    groq`*[_type == "betaPacket" && isActive == true][0]{
+      _id,
+      title,
+      "slug": slug.current,
+      summary,
+      timeframe,
+      expectations,
+      contentNotes,
+      chapters,
+      files,
+      surveyCta,
+      book->{
+        title,
+        "slug": slug.current
+      }
+    }`
+  );
+}
+
+export async function getBetaPacketBySlug(
+  slug: string
+): Promise<BetaPacket | null> {
+  const client = createClient(config);
+
+  return client.fetch(
+    groq`*[_type == "betaPacket" && slug.current == $slug][0]{
+      _id,
+      title,
+      "slug": slug.current,
+      summary,
+      timeframe,
+      expectations,
+      contentNotes,
+      chapters,
+      files,
+      surveyCta,
+      book->{
+        title,
+        "slug": slug.current
+      }
+    }`,
+    { slug }
+  );
+}
+
+export async function getManuscriptChapters(params: {
+  manuscriptKey: string;
+  startOrder?: number;
+  endOrder?: number;
+}): Promise<
+  {
+    manuscriptKey: string;
+    order: number;
+    chapterLabel: string;
+    title?: string;
+    content: any[];
+  }[]
+> {
+  const client = createClient(config);
+  const { manuscriptKey, startOrder, endOrder } = params;
+
+  return client.fetch(
+    groq`*[_type == "manuscriptChapter" && manuscriptKey == $manuscriptKey
+      && (!defined($startOrder) || order >= $startOrder)
+      && (!defined($endOrder) || order <= $endOrder)
+    ] | order(order asc) {
+      manuscriptKey,
+      order,
+      chapterLabel,
+      title,
+      content
+    }`,
+    { manuscriptKey, startOrder, endOrder }
+  );
 }

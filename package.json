@@ -8,7 +8,14 @@
     "test-storybook": "npx test-storybook --url http://localhost:4400/ --coverage --config-dir packages/phantom-components/.storybook",
     "chromatic": "npx chromatic",
     "dev:portfolio": "npx nx serve portfolio --dev",
-    "dupe": "git archive -o phantom.zip HEAD"
+    "dupe": "git archive -o phantom.zip HEAD",
+    "author:db:create-enums": "cd apps/author && dotenv -e .env.local -- ts-node scripts/create-enums.ts",
+    "author:db:ensure-index": "cd apps/author && dotenv -e .env.local -- ts-node scripts/ensure-index.ts",
+    "author:db:fix-constraints": "cd apps/author && dotenv -e .env.local -- ts-node scripts/fix-constraints.ts",
+    "author:db:reset-constraints": "cd apps/author && dotenv -e .env.local -- ts-node scripts/reset-constraints.ts",
+    "author:db:generate": "cd apps/author && dotenv -e .env.local -- drizzle-kit generate",
+    "author:db:migrate": "cd apps/author && dotenv -e .env.local -- ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" scripts/run-migrations.ts",
+    "author:db:push": "cd apps/author && dotenv -e .env.local -- drizzle-kit push"
   },
   "private": true,
   "devDependencies": {
@@ -71,6 +78,7 @@
     "jest-environment-node": "^29.4.1",
     "jsdom": "~22.1.0",
     "markdown-to-jsx": "^7.3.2",
+    "nanoid": "^5.0.7",
     "nx": "17.1.2",
     "postcss": "8.4.21",
     "prettier": "^2.6.2",

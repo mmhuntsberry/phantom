@@ -1,0 +1,38 @@
+.content {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.heading {
+  font-size: var(--fs-2xl);
+  font-weight: 1000;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.subheading {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.paragraph {
+  font-size: var(--fs-lg);
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.list {
+  padding-left: var(--space-lg);
+  display: grid;
+  gap: var(--space-2xs);
+  margin: 0;
+}
+
+.listItem {
+  list-style: disc;
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+}
