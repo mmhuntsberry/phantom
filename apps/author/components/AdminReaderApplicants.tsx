@@ -13,6 +13,8 @@ export type AdminApplicant = {
   contentNotesAck: boolean;
   tasteProfile?: string | null;
   source?: string | null;
+  status?: string | null;
+  approvedAt?: string | null;
   createdAt: string;
 };
 
@@ -94,6 +96,9 @@ export default function AdminReaderApplicants({
                   {applicant.cohortType.toUpperCase()} · {applicant.program}
                 </p>
                 <p className={styles.detail}>
+                  Status: {applicant.status || "pending"}
+                </p>
+                <p className={styles.detail}>
                   Format: {applicant.formatPref || "unspecified"}
                 </p>
                 <p className={styles.detail}>
@@ -112,10 +117,14 @@ export default function AdminReaderApplicants({
               <div className={styles.actions}>
                 <Button
                   type="button"
-                  disabled={loadingId === applicant.id}
+                  disabled={
+                    loadingId === applicant.id || applicant.status === "approved"
+                  }
                   onClick={() => approve(applicant)}
                 >
-                  {loadingId === applicant.id
+                  {applicant.status === "approved"
+                    ? "Approved"
+                    : loadingId === applicant.id
                     ? "Generating"
                     : "Approve + generate"}
                 </Button>

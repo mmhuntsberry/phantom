@@ -20,6 +20,13 @@ const nextConfig = {
       },
     ],
   },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      "nanoid/index.cjs": require.resolve("nanoid"),
+    };
+    return config;
+  },
 };
 
 const plugins = [

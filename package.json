@@ -15,7 +15,9 @@
     "author:db:reset-constraints": "cd apps/author && dotenv -e .env.local -- ts-node scripts/reset-constraints.ts",
     "author:db:generate": "cd apps/author && dotenv -e .env.local -- drizzle-kit generate",
     "author:db:migrate": "cd apps/author && dotenv -e .env.local -- ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" scripts/run-migrations.ts",
-    "author:db:push": "cd apps/author && dotenv -e .env.local -- drizzle-kit push"
+    "author:db:push": "cd apps/author && dotenv -e .env.local -- drizzle-kit push",
+    "author:test:e2e": "PLAYWRIGHT_BASE_URL=http://localhost:4200 dotenv -e apps/author/.env.local -- playwright test -c apps/author/playwright.config.ts",
+    "author:test:e2e:serve": "PLAYWRIGHT_START_SERVER=1 dotenv -e apps/author/.env.local -- playwright test -c apps/author/playwright.config.ts"
   },
   "private": true,
   "devDependencies": {
@@ -33,6 +35,7 @@
     "@nx/storybook": "17.1.2",
     "@nx/vite": "17.1.2",
     "@nx/webpack": "17.1.3",
+    "@playwright/test": "^1.57.0",
     "@release-it/bumper": "^5.1.0",
     "@release-it/conventional-changelog": "^7.0.0",
     "@storybook/addon-coverage": "^0.0.9",

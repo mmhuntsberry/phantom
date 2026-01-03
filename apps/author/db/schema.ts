@@ -53,6 +53,9 @@ export const readerApplicants = pgTable("reader_applicants", {
   contentNotesAck: boolean("content_notes_ack").default(false).notNull(),
   tasteProfile: text("taste_profile"),
   source: text("source"),
+  status: text("status").default("pending").notNull(),
+  approvedAt: timestamp("approved_at"),
+  inviteId: integer("invite_id").references(() => readerInvites.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

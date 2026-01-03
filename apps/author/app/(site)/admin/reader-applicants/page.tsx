@@ -2,9 +2,12 @@ import { desc } from "drizzle-orm";
 import AdminReaderApplicants, {
   AdminApplicant,
 } from "../../../../components/AdminReaderApplicants";
+import AdminTokenSetter from "../../../../components/AdminTokenSetter";
 import { db } from "../../../../db/index";
 import { readerApplicants } from "../../../../db/schema";
 import styles from "./page.module.css";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Reader Applicants | Admin",
@@ -30,6 +33,10 @@ export default async function ReaderApplicantsPage() {
     contentNotesAck: applicant.contentNotesAck,
     tasteProfile: applicant.tasteProfile,
     source: applicant.source,
+    status: applicant.status,
+    approvedAt: applicant.approvedAt
+      ? applicant.approvedAt.toISOString()
+      : null,
     createdAt: applicant.createdAt.toISOString(),
   }));
 
@@ -43,6 +50,7 @@ export default async function ReaderApplicantsPage() {
         </p>
       </section>
 
+      <AdminTokenSetter />
       <AdminReaderApplicants applicants={formatted} />
     </div>
   );

@@ -1,0 +1,15 @@
+.content {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1rem;
+  line-height: 2;
+  color: inherit;
+}
+
+.paragraph {
+  margin: 0 0 1.5rem 0;
+  text-indent: 0;
+}
+
+.centered {
+  text-align: center;
+}

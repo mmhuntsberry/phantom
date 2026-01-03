@@ -2,6 +2,10 @@
 
 This guide is for adding private manuscript chapters to Sanity Studio. These chapters are not part of public writing content and should remain private.
 
+## Status
+- The reader pages pull from `manuscriptChapter` using `manuscriptKey="some-peoples-kids"`.
+- Partial reads use order 1–3; full reads use order >= 1.
+
 ## Where
 - Open the studio at `/cms`.
 - Create a new document of type **Manuscript Chapter**.

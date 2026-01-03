@@ -71,8 +71,17 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error("reader/apply failed", error);
+    const message =
+      process.env.NODE_ENV === "production"
+        ? "Submission failed."
+        : error instanceof Error
+          ? (error.cause instanceof Error
+              ? `${error.message} (${error.cause.message})`
+              : error.message)
+          : "Submission failed.";
     return NextResponse.json(
-      { success: false, error: "Submission failed." },
+      { success: false, error: message },
       { status: 500 }
     );
   }

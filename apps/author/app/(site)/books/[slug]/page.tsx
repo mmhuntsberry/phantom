@@ -7,8 +7,15 @@ import SubscribeForm from "../../../../components/SubscribeForm";
 import styles from "./page.module.css";
 
 export async function generateStaticParams() {
-  const books = await getBooks();
-  return books.map((book) => ({ slug: book.slug }));
+  try {
+    const books = await getBooks();
+    return books
+      .filter((book) => book.slug)
+      .map((book) => ({ slug: book.slug }));
+  } catch (error) {
+    console.error("Error generating static params for books:", error);
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {

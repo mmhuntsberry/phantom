@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
+import { eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
 import { db } from "../../../../../db/index";
-import { readerInvites } from "../../../../../db/schema";
+import { readerApplicants, readerInvites } from "../../../../../db/schema";
 
 const allowedCohorts = new Set(["beta", "arc"]);
 
@@ -41,15 +42,30 @@ export async function POST(req: Request) {
   const readingMode = resolveReadingMode(program, cohortType);
 
   try {
-    await db.insert(readerInvites).values({
-      token,
-      cohortType,
-      program,
-      readingMode,
-      active: true,
-      email: typeof email === "string" ? email : null,
-      createdAt: new Date(),
-    });
+    const invite = await db
+      .insert(readerInvites)
+      .values({
+        token,
+        cohortType,
+        program,
+        readingMode,
+        active: true,
+        email: typeof email === "string" ? email : null,
+        createdAt: new Date(),
+      })
+      .returning()
+      .then((rows) => rows[0]);
+
+    if (applicantId) {
+      await db
+        .update(readerApplicants)
+        .set({
+          status: "approved",
+          approvedAt: new Date(),
+          inviteId: invite?.id ?? null,
+        })
+        .where(eq(readerApplicants.id, applicantId));
+    }
 
     return NextResponse.json({ success: true, token, applicantId });
   } catch (error) {

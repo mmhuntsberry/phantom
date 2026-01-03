@@ -379,24 +379,40 @@ export async function getStartHerePage(): Promise<StartHerePage | null> {
 }
 
 export async function getBooks(): Promise<Book[]> {
-  const client = createClient(config);
+  try {
+    const client = createClient(config);
 
-  return client.fetch(
-    groq`*[_type == "book"] | order(status == "comingSoon" desc, publicationDate desc) {
-      _id,
-      _createdAt,
-      title,
-      "slug": slug.current,
-      status,
-      publicationDate,
-      cover{
-        asset->{url},
-        alt
-      },
-      tagline,
-      shortPitch
-    }`
-  );
+    const books = await client.fetch(
+      groq`*[_type == "book"] | order(publicationDate desc) {
+        _id,
+        _createdAt,
+        title,
+        "slug": slug.current,
+        status,
+        publicationDate,
+        cover{
+          asset->{url},
+          alt
+        },
+        tagline,
+        shortPitch
+      }`
+    );
+
+    if (!books || !Array.isArray(books)) {
+      return [];
+    }
+
+    // Sort to put "comingSoon" books first
+    return books.sort((a, b) => {
+      if (a.status === "comingSoon" && b.status !== "comingSoon") return -1;
+      if (a.status !== "comingSoon" && b.status === "comingSoon") return 1;
+      return 0; // Keep original order for same status
+    });
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    return [];
+  }
 }
 
 export async function getBook(slug: string): Promise<Book | null> {

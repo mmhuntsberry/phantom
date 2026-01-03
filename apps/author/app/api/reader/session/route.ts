@@ -11,13 +11,6 @@ export async function POST(req: Request) {
   const body = await req.json();
   const { token, sessionId, action, completionMethod } = body || {};
 
-  if (!token || typeof token !== "string") {
-    return NextResponse.json(
-      { success: false, error: "Invalid token." },
-      { status: 400 }
-    );
-  }
-
   if (!sessionId || typeof sessionId !== "string") {
     return NextResponse.json(
       { success: false, error: "Invalid session." },
@@ -43,18 +36,28 @@ export async function POST(req: Request) {
     );
   }
 
-  const invite = await db
-    .select()
-    .from(readerInvites)
-    .where(and(eq(readerInvites.token, token), eq(readerInvites.active, true)))
-    .limit(1)
-    .then((rows) => rows[0]);
+  let invite;
+  if (action === "start") {
+    if (!token || typeof token !== "string") {
+      return NextResponse.json(
+        { success: false, error: "Invalid token." },
+        { status: 400 }
+      );
+    }
 
-  if (!invite) {
-    return NextResponse.json(
-      { success: false, error: "Invite not found." },
-      { status: 404 }
-    );
+    invite = await db
+      .select()
+      .from(readerInvites)
+      .where(and(eq(readerInvites.token, token), eq(readerInvites.active, true)))
+      .limit(1)
+      .then((rows) => rows[0]);
+
+    if (!invite) {
+      return NextResponse.json(
+        { success: false, error: "Invite not found." },
+        { status: 404 }
+      );
+    }
   }
 
   try {
@@ -66,6 +69,12 @@ export async function POST(req: Request) {
       .then((rows) => rows[0]);
 
     if (!existing) {
+      if (!invite) {
+        return NextResponse.json(
+          { success: false, error: "Session not found." },
+          { status: 404 }
+        );
+      }
       await db.insert(readingSessions).values({
         sessionId,
         inviteId: invite.id,

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import ReaderApplyForm from "../../../components/ReaderApplyForm";
 import styles from "./page.module.css";
 
@@ -33,7 +34,9 @@ export default function BetaReadersPage() {
 
       <section className={styles.formSection}>
         <h2 className={styles.sectionTitle}>Apply</h2>
-        <ReaderApplyForm cohortType="beta" program="beta_partial_v1" />
+        <Suspense fallback={<div>Loading form...</div>}>
+          <ReaderApplyForm cohortType="beta" program="beta_partial_v1" />
+        </Suspense>
       </section>
     </div>
   );
