@@ -55,6 +55,33 @@
   object-fit: cover;
 }
 
+.coverPlaceholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--border-radius-2xs);
+  border: var(--border-width-sm) solid var(--palette-neutral-300);
+  background:
+    radial-gradient(
+      120% 120% at 85% 10%,
+      var(--palette-alert-warning-200),
+      transparent 60%
+    ),
+    linear-gradient(160deg, var(--palette-neutral-100), var(--palette-neutral-200));
+  color: var(--palette-neutral-700);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: var(--space-sm);
+}
+
+.coverPlaceholderText {
+  max-width: 12ch;
+  line-height: 1.4;
+}
+
 .cardBody {
   display: grid;
   gap: var(--space-sm);
@@ -133,6 +160,22 @@
   .card {
     background-color: var(--palette-neutral-900);
     border-color: var(--palette-neutral-600);
+  }
+
+  .coverPlaceholder {
+    border-color: var(--palette-neutral-700);
+    background:
+      radial-gradient(
+        120% 120% at 85% 10%,
+        var(--palette-alert-warning-800),
+        transparent 60%
+      ),
+      linear-gradient(
+        160deg,
+        var(--palette-neutral-900),
+        var(--palette-neutral-800)
+      );
+    color: var(--palette-neutral-300);
   }
 
   .cta {

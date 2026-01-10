@@ -33,7 +33,7 @@ li {
   margin: 0;
 }
 
-*:focus {
+*:focus-visible {
   outline: var(--border-width-md) solid var(--palette-alert-info-500);
   outline-offset: var(--space-2xs);
   border-radius: var(--border-radius-2xs);

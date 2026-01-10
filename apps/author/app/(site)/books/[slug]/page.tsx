@@ -49,16 +49,26 @@ export default async function BookPage({
   return (
     <div className={styles.container}>
       <section className={styles.hero}>
-        {book.cover?.asset?.url && (
-          <div className={styles.cover}>
+        <div className={styles.cover}>
+          {book.cover?.asset?.url ? (
             <Image
               src={book.cover.asset.url}
               alt={book.cover.alt || book.title}
               fill
               className={styles.coverImage}
             />
-          </div>
-        )}
+          ) : (
+            <div
+              className={styles.coverPlaceholder}
+              role="img"
+              aria-label={`${book.title} cover placeholder`}
+            >
+              <span className={styles.coverPlaceholderText}>
+                Cover in progress
+              </span>
+            </div>
+          )}
+        </div>
         <div className={styles.heroContent}>
           <p className={styles.kicker}>Book</p>
           <h1 className={styles.title}>{book.title}</h1>

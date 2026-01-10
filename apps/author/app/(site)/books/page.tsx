@@ -27,16 +27,26 @@ export default async function BooksPage() {
         ) : (
           books.map((book) => (
             <article className={styles.card} key={book._id}>
-              {book.cover?.asset?.url && (
-                <div className={styles.cover}>
+              <div className={styles.cover}>
+                {book.cover?.asset?.url ? (
                   <Image
                     src={book.cover.asset.url}
                     alt={book.cover.alt || book.title}
                     fill
                     className={styles.coverImage}
                   />
-                </div>
-              )}
+                ) : (
+                  <div
+                    className={styles.coverPlaceholder}
+                    role="img"
+                    aria-label={`${book.title} cover placeholder`}
+                  >
+                    <span className={styles.coverPlaceholderText}>
+                      Cover in progress
+                    </span>
+                  </div>
+                )}
+              </div>
               <div className={styles.cardBody}>
                 <div className={styles.cardHeader}>
                   <h2 className={styles.cardTitle}>{book.title}</h2>

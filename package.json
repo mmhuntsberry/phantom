@@ -8,6 +8,7 @@
     "test-storybook": "npx test-storybook --url http://localhost:4400/ --coverage --config-dir packages/phantom-components/.storybook",
     "chromatic": "npx chromatic",
     "dev:portfolio": "npx nx serve portfolio --dev",
+    "dev:author": "npx nx serve author --dev",
     "dupe": "git archive -o phantom.zip HEAD",
     "author:db:create-enums": "cd apps/author && dotenv -e .env.local -- ts-node scripts/create-enums.ts",
     "author:db:ensure-index": "cd apps/author && dotenv -e .env.local -- ts-node scripts/ensure-index.ts",
