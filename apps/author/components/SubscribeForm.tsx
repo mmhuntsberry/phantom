@@ -16,9 +16,9 @@ type SubscribeFormProps = {
 
 export default function SubscribeForm({
   label = "Enter Email",
-  placeholder = "For the misfits, not the masses.",
+  placeholder = "Early chapters. Clear updates. No noise.",
   buttonLabel = "Subscribe",
-  successMessage = "You're in. Flash, grit, and maybe some ghosts incoming.",
+  successMessage = "You're in. New work and updates are on the way.",
 }: SubscribeFormProps) {
   const inputId = useId();
   const [email, setEmail] = useState("");

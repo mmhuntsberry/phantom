@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { List, X } from "@phosphor-icons/react/dist/ssr";
 import styles from "./nav.module.css";
 
 export type NavLink = {
@@ -9,8 +11,8 @@ export type NavLink = {
 };
 
 export const navLinks: NavLink[] = [
-  { href: "/start-here", label: "Start Here" },
-  { href: "/", label: "Stories" },
+  { href: "/", label: "Start Here" },
+  { href: "/stories", label: "Stories" },
   { href: "/books", label: "Books" },
   { href: "/about", label: "About" },
   { href: "/newsletter", label: "Newsletter" },
@@ -21,26 +23,81 @@ export type NavProps = {
 };
 
 export default function Nav({ pathname }: NavProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
-    <nav className={styles.nav}>
-      {navLinks.map((link: NavLink) => (
-        <Link
-          className={`${styles.link} ${
-            link.href === "/"
-              ? pathname === "/"
+    <nav className={styles.nav} aria-label="Primary">
+      <button
+        className={styles.menuButton}
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls="mobile-nav"
+        aria-label={isOpen ? "Close navigation" : "Open navigation"}
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        {isOpen ? <X size={32} /> : <List size={32} />}
+      </button>
+
+      <div className={styles.links}>
+        {navLinks.map((link: NavLink) => (
+          <Link
+            className={`${styles.link} ${
+              link.href === "/"
+                ? pathname === "/"
+                  ? styles.active
+                  : ""
+                : pathname.startsWith(link.href)
                 ? styles.active
                 : ""
-              : pathname.startsWith(link.href)
-              ? styles.active
-              : ""
-          }`}
-          href={link.href}
-          key={link.href}
-          prefetch
-        >
-          {link.label}
-        </Link>
-      ))}
+            }`}
+            href={link.href}
+            key={link.href}
+            prefetch
+          >
+            {link.label}
+          </Link>
+        ))}
+      </div>
+
+      <div
+        id="mobile-nav"
+        className={`${styles.mobilePanel} ${
+          isOpen ? styles.mobilePanelOpen : ""
+        }`}
+      >
+        <div className={styles.mobileLinks}>
+          {navLinks.map((link: NavLink) => (
+            <Link
+              className={`${styles.mobileLink} ${
+                link.href === "/"
+                  ? pathname === "/"
+                    ? styles.active
+                    : ""
+                  : pathname.startsWith(link.href)
+                  ? styles.active
+                  : ""
+              }`}
+              href={link.href}
+              key={link.href}
+              prefetch
+              onClick={() => setIsOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      </div>
     </nav>
   );
 }

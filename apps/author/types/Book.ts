@@ -7,6 +7,8 @@ export type Book = {
   slug: string;
   status: "comingSoon" | "published";
   publicationDate?: string;
+  featured?: boolean;
+  priority?: number;
   cover?: {
     asset?: { url: string };
     alt?: string;

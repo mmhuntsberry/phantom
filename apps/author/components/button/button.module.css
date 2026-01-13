@@ -20,6 +20,7 @@
   background-color: var(--palette-neutral-lightest);
   transition: border-color 0.2s ease-in-out;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .root:disabled {

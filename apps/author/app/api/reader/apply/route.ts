@@ -72,14 +72,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("reader/apply failed", error);
-    const message =
-      process.env.NODE_ENV === "production"
-        ? "Submission failed."
-        : error instanceof Error
-          ? (error.cause instanceof Error
-              ? `${error.message} (${error.cause.message})`
-              : error.message)
-          : "Submission failed.";
+    let message = "Submission failed.";
+    if (process.env.NODE_ENV !== "production" && error instanceof Error) {
+      const errorAny = error as any;
+      if (errorAny.cause && typeof errorAny.cause === "object" && errorAny.cause !== null && "message" in errorAny.cause) {
+        message = `${error.message} (${String(errorAny.cause.message)})`;
+      } else {
+        message = error.message;
+      }
+    }
     return NextResponse.json(
       { success: false, error: message },
       { status: 500 }

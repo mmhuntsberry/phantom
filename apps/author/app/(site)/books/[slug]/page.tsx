@@ -88,7 +88,7 @@ export default async function BookPage({
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Buy on Amazon
+                    Amazon
                   </Link>
                 )}
                 {book.buyLinks?.direct && (
@@ -98,7 +98,7 @@ export default async function BookPage({
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Buy Direct
+                    Buy direct
                   </Link>
                 )}
                 {book.buyLinks?.other && (
@@ -108,12 +108,12 @@ export default async function BookPage({
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Other Retailers
+                    Other retailers
                   </Link>
                 )}
               </>
             ) : (
-              <span className={styles.status}>Purchase links soon</span>
+              <span className={styles.status}>Purchase links coming soon</span>
             )}
           </div>
         </div>
@@ -121,7 +121,7 @@ export default async function BookPage({
 
       {book.longDescription && (
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>What it's about</h2>
+          <h2 className={styles.sectionTitle}>Story overview</h2>
           <RichText value={book.longDescription} />
         </section>
       )}
@@ -139,10 +139,10 @@ export default async function BookPage({
 
       {(book.sampleLink || (book.sample && book.sample.length > 0)) && (
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Sample</h2>
+          <h2 className={styles.sectionTitle}>Sample chapter</h2>
           {book.sampleLink ? (
             <Link className={styles.cta} href={book.sampleLink}>
-              Read the sample
+              Read a sample
             </Link>
           ) : (
             book.sample && <RichText value={book.sample} />
@@ -151,11 +151,11 @@ export default async function BookPage({
       )}
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Get notified</h2>
+        <h2 className={styles.sectionTitle}>Stay in the loop</h2>
         <p className={styles.sectionIntro}>
           {isComingSoon
             ? "Be first in line when it lands."
-            : "Join the list for updates and new releases."}
+            : "Updates on new releases and ongoing work."}
         </p>
         <SubscribeForm
           buttonLabel={isComingSoon ? "Join for release" : "Subscribe"}

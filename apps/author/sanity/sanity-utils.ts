@@ -389,6 +389,8 @@ export async function getBooks(): Promise<Book[]> {
         title,
         "slug": slug.current,
         status,
+        featured,
+        priority,
         publicationDate,
         cover{
           asset->{url},
@@ -403,15 +405,66 @@ export async function getBooks(): Promise<Book[]> {
       return [];
     }
 
-    // Sort to put "comingSoon" books first
+    const statusRank = (status: string) =>
+      status === "comingSoon" ? 0 : 1;
+    const dateValue = (value?: string) =>
+      value ? new Date(value).getTime() : Number.POSITIVE_INFINITY;
+    const publishedDateValue = (value?: string) =>
+      value ? new Date(value).getTime() : Number.NEGATIVE_INFINITY;
+
     return books.sort((a, b) => {
-      if (a.status === "comingSoon" && b.status !== "comingSoon") return -1;
-      if (a.status !== "comingSoon" && b.status === "comingSoon") return 1;
-      return 0; // Keep original order for same status
+      const featuredRank =
+        (a.featured ? 0 : 1) - (b.featured ? 0 : 1);
+      if (featuredRank !== 0) return featuredRank;
+
+      const priorityRank =
+        (a.priority ?? Number.POSITIVE_INFINITY) -
+        (b.priority ?? Number.POSITIVE_INFINITY);
+      if (priorityRank !== 0) return priorityRank;
+
+      const statusOrder = statusRank(a.status) - statusRank(b.status);
+      if (statusOrder !== 0) return statusOrder;
+
+      if (a.status === "comingSoon" && b.status === "comingSoon") {
+        return dateValue(a.publicationDate) - dateValue(b.publicationDate);
+      }
+
+      return (
+        publishedDateValue(b.publicationDate) -
+        publishedDateValue(a.publicationDate)
+      );
     });
   } catch (error) {
     console.error("Error fetching books:", error);
     return [];
+  }
+}
+
+export async function getFeaturedBook(): Promise<Book | null> {
+  try {
+    const client = createClient(config);
+    return client.fetch(
+      groq`*[_type == "book" && (featured == true || defined(priority))]
+        | order(featured desc, priority asc, publicationDate asc)[0]{
+          _id,
+          _createdAt,
+          title,
+          "slug": slug.current,
+          status,
+          featured,
+          priority,
+          publicationDate,
+          cover{
+            asset->{url},
+            alt
+          },
+          tagline,
+          shortPitch
+        }`
+    );
+  } catch (error) {
+    console.error("Error fetching featured book:", error);
+    return null;
   }
 }
 

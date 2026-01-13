@@ -19,9 +19,9 @@ export default async function WritingPage({ params }: Props) {
 
   return (
     <main>
-      <Link href={`/`} className={`${styles.backLink}`}>
+      <Link href={`/stories`} className={`${styles.backLink}`}>
         <ArrowLeft size={20} />
-        Back to Series
+        Back to Stories
       </Link>
       <h1 className={styles.title}>{post.title}</h1>
       <div className="prose prose-lg">

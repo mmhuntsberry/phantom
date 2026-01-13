@@ -47,10 +47,6 @@
 }
 
 .subscribe {
-  border: var(--border-width-sm) solid var(--palette-neutral-300);
-  border-radius: var(--border-radius-2xs);
-  padding: var(--space-lg);
-  background-color: var(--palette-neutral-lightest);
   display: grid;
   gap: var(--space-sm);
 }
@@ -73,9 +69,3 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .subscribe {
-    background-color: var(--palette-neutral-900);
-    border-color: var(--palette-neutral-600);
-  }
-}

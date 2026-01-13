@@ -1,13 +1,25 @@
 .form {
   display: grid;
   gap: var(--space-xs);
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .controls {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--space-xs);
+  grid-template-columns: minmax(0, 512px) fit-content(100%);
+  gap: var(--space-2xs);
   align-items: center;
+  min-width: 0;
+}
+
+.controls input {
+  width: 100%;
+  min-width: 0;
+  max-width: 512px;
+  box-sizing: border-box;
 }
 
 .message {
@@ -34,11 +46,5 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
-  }
-}
-
-@media (max-width: 640px) {
-  .controls {
-    grid-template-columns: 1fr;
   }
 }

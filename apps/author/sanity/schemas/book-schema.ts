@@ -32,6 +32,20 @@ const book = {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
+      name: "featured",
+      title: "Featured",
+      type: "boolean",
+      description: "Pins this book to the top of lists and Start Here.",
+      initialValue: false,
+    },
+    {
+      name: "priority",
+      title: "Priority",
+      type: "number",
+      description:
+        "Lower numbers appear first among featured/coming-soon books (optional).",
+    },
+    {
       name: "publicationDate",
       title: "Publication Date",
       type: "datetime",

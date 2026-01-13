@@ -795,6 +795,80 @@
         "description": "100px"
       }
     },
+    "shadow": {
+      "xs": {
+        "value": {
+          "x": "0.5",
+          "y": "1",
+          "blur": "1",
+          "spread": "0",
+          "color": "hsl(0deg 0% 0% / 0.7)",
+          "type": "dropShadow"
+        },
+        "type": "boxShadow",
+        "description": "Extra small shadow - single layer"
+      },
+      "sm": {
+        "value": {
+          "x": "1",
+          "y": "2",
+          "blur": "2",
+          "spread": "0",
+          "color": "hsl(0deg 0% 0% / 0.333)",
+          "type": "dropShadow"
+        },
+        "type": "boxShadow",
+        "description": "Small shadow - first layer"
+      },
+      "md": {
+        "value": {
+          "x": "2",
+          "y": "4",
+          "blur": "4",
+          "spread": "0",
+          "color": "hsl(0deg 0% 0% / 0.2)",
+          "type": "dropShadow"
+        },
+        "type": "boxShadow",
+        "description": "Medium shadow - middle layer"
+      },
+      "lg": {
+        "value": {
+          "x": "4",
+          "y": "8",
+          "blur": "8",
+          "spread": "0",
+          "color": "hsl(0deg 0% 0% / 0.2)",
+          "type": "dropShadow"
+        },
+        "type": "boxShadow",
+        "description": "Large shadow - larger layer"
+      },
+      "xl": {
+        "value": {
+          "x": "8",
+          "y": "16",
+          "blur": "16",
+          "spread": "0",
+          "color": "hsl(0deg 0% 0% / 0.2)",
+          "type": "dropShadow"
+        },
+        "type": "boxShadow",
+        "description": "Extra large shadow - largest layer"
+      },
+      "2xl": {
+        "value": {
+          "x": "16",
+          "y": "32",
+          "blur": "32",
+          "spread": "0",
+          "color": "hsl(0deg 0% 0% / 0.2)",
+          "type": "dropShadow"
+        },
+        "type": "boxShadow",
+        "description": "2X large shadow - extra large layer"
+      }
+    },
     "fontSize": {
       "xs": {
         "value": "0.694rem",

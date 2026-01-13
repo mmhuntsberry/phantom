@@ -8,6 +8,7 @@
   grid-template-columns: minmax(240px, 320px) 1fr;
   gap: var(--space-xl);
   align-items: start;
+  min-width: 0;
 }
 
 .cover {
@@ -42,11 +43,16 @@
   text-transform: uppercase;
   text-align: center;
   padding: var(--space-sm);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .coverPlaceholderText {
-  max-width: 12ch;
+  max-width: min(12ch, 100%);
   line-height: 1.4;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .heroContent {

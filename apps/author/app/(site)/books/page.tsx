@@ -14,10 +14,9 @@ export default async function BooksPage() {
   return (
     <div className={styles.container}>
       <section className={styles.hero}>
-        <p className={styles.kicker}>Books</p>
         <h1 className={styles.title}>Books</h1>
         <p className={styles.subtitle}>
-          Long-form work, from the first draft to the shelf.
+          Long-form work across genres, from early drafts to release.
         </p>
       </section>
 
@@ -65,7 +64,7 @@ export default async function BooksPage() {
                   <p className={styles.description}>{book.shortPitch}</p>
                 )}
                 <Link className={styles.cta} href={`/books/${book.slug}`}>
-                  {book.status === "comingSoon" ? "See details" : "Buy options"}
+                  {book.status === "comingSoon" ? "View details" : "See where to buy"}
                 </Link>
               </div>
             </article>

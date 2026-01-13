@@ -41,6 +41,9 @@
   border-radius: var(--border-radius-2xs);
   padding: var(--space-lg);
   background-color: var(--palette-neutral-lightest);
+  box-shadow: var(--shadow-xs);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .cover {
@@ -62,24 +65,32 @@
   place-items: center;
   border-radius: var(--border-radius-2xs);
   border: var(--border-width-sm) solid var(--palette-neutral-300);
-  background:
-    radial-gradient(
+  background: radial-gradient(
       120% 120% at 85% 10%,
       var(--palette-alert-warning-200),
       transparent 60%
     ),
-    linear-gradient(160deg, var(--palette-neutral-100), var(--palette-neutral-200));
+    linear-gradient(
+      160deg,
+      var(--palette-neutral-100),
+      var(--palette-neutral-200)
+    );
   color: var(--palette-neutral-700);
   font-size: var(--fs-xs);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-align: center;
   padding: var(--space-sm);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .coverPlaceholderText {
-  max-width: 12ch;
+  max-width: min(12ch, 100%);
   line-height: 1.4;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .cardBody {
@@ -128,15 +139,25 @@
 }
 
 .cta {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
   justify-self: start;
+  height: var(--button-height);
+  max-height: 48px;
   border: var(--border-width-sm) solid var(--palette-neutral-darkest);
   border-radius: var(--border-radius-2xs);
-  padding: var(--space-xs) var(--space-sm);
+  padding-block: calc(
+    (
+        var(--button-height) - var(--font-line-height-sm) -
+          var(--border-width-sm) * 2
+      ) / 2
+  );
+  padding-inline: var(--space-sm);
   font-size: var(--fs-sm);
   font-weight: 600;
+  line-height: var(--font-line-height-sm);
   background-color: var(--palette-neutral-lightest);
   transition: background-color 0.2s ease-in-out;
 }
@@ -164,8 +185,7 @@
 
   .coverPlaceholder {
     border-color: var(--palette-neutral-700);
-    background:
-      radial-gradient(
+    background: radial-gradient(
         120% 120% at 85% 10%,
         var(--palette-alert-warning-800),
         transparent 60%

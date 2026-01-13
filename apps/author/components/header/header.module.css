@@ -21,6 +21,32 @@
   /* margin: 0 auto; */
 }
 
+.navAndName {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-direction: row;
+}
+
+.name {
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 901px) {
+  .navAndName {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .name {
+    padding-top: 12px;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   .header {
     background-color: var(--palette-neutral-1000);

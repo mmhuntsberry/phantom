@@ -5,10 +5,13 @@ import styles from "./layout.module.css";
 import { InstagramLogo } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
-// export const metadata = {
-//   title: "Matthew Huntsberry | Design Systems Engineer",
-//   description: "",
-// };
+export const metadata = {
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+  },
+};
 
 export default function RootLayout({
   children,

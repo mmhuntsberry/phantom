@@ -252,6 +252,23 @@
   --small-md-bold: 700 0.8rem/1.6 Arial, Helvetica, sans-serif;
   --small-lg-bold: 700 1rem/1.6 Arial, Helvetica, sans-serif;
 
+  --shadow-xs: 0.5px 1px 1px hsl(0deg 0% 0% / 0.7);
+  --shadow-sm: 1px 2px 2px hsl(0deg 0% 0% / 0.333),
+    2px 4px 4px hsl(0deg 0% 0% / 0.333), 3px 6px 6px hsl(0deg 0% 0% / 0.333);
+  --shadow-md: 1px 2px 2px hsl(0deg 0% 0% / 0.2),
+    2px 4px 4px hsl(0deg 0% 0% / 0.2), 4px 8px 8px hsl(0deg 0% 0% / 0.2),
+    8px 16px 16px hsl(0deg 0% 0% / 0.2);
+  --shadow-lg: 1px 2px 2px hsl(0deg 0% 0% / 0.2),
+    2px 4px 4px hsl(0deg 0% 0% / 0.2), 4px 8px 8px hsl(0deg 0% 0% / 0.2),
+    8px 16px 16px hsl(0deg 0% 0% / 0.2), 16px 32px 32px hsl(0deg 0% 0% / 0.2);
+  --shadow-xl: 2px 4px 4px hsl(0deg 0% 0% / 0.15),
+    4px 8px 8px hsl(0deg 0% 0% / 0.15), 8px 16px 16px hsl(0deg 0% 0% / 0.15),
+    16px 32px 32px hsl(0deg 0% 0% / 0.15), 32px 64px 64px hsl(0deg 0% 0% / 0.15);
+  --shadow-2xl: 2px 4px 4px hsl(0deg 0% 0% / 0.1),
+    4px 8px 8px hsl(0deg 0% 0% / 0.1), 8px 16px 16px hsl(0deg 0% 0% / 0.1),
+    16px 32px 32px hsl(0deg 0% 0% / 0.1), 32px 64px 64px hsl(0deg 0% 0% / 0.1),
+    64px 128px 128px hsl(0deg 0% 0% / 0.1);
+
   --letter-spacing-body: 0em;
   --letter-spacing-buttons: -0.01em;
   --letter-spacing-captions: 0em;

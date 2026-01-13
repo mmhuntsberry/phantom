@@ -15,7 +15,6 @@ export default async function AboutPage() {
   return (
     <div className={styles.container}>
       <section className={styles.hero}>
-        <p className={styles.kicker}>About</p>
         <h1 className={styles.title}>{page?.title || "About"}</h1>
       </section>
 
@@ -42,7 +41,7 @@ export default async function AboutPage() {
       <section className={styles.subscribe}>
         <h2 className={styles.sectionTitle}>Stay in the loop</h2>
         <p className={styles.sectionIntro}>
-          New releases, early chapters, and behind-the-scenes notes.
+          New releases, early chapters, and what's next.
         </p>
         <SubscribeForm />
       </section>
