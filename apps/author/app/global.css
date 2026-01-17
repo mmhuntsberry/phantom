@@ -333,13 +333,13 @@ li {
   /* Layered shadows following Josh Comeau's principles */
   /* Light source: above and slightly left (1:2 x:y ratio) */
   /* Softer, lighter shadows for a gentler appearance */
-  --shadow-xs: 0.5px 1px 1px hsl(0deg 0% 0% / 0.15);
-  --shadow-sm: 1px 2px 2px hsl(0deg 0% 0% / 0.08),
+  --shadow-xs: 0.5px 1px 4px hsl(0deg 0% 0% / 0.15);
+  --shadow-sm: 1px 2px 4px hsl(0deg 0% 0% / 0.08),
     2px 4px 4px hsl(0deg 0% 0% / 0.08), 3px 6px 6px hsl(0deg 0% 0% / 0.08);
-  --shadow-md: 1px 2px 2px hsl(0deg 0% 0% / 0.06),
+  --shadow-md: 1px 2px 4px hsl(0deg 0% 0% / 0.06),
     2px 4px 4px hsl(0deg 0% 0% / 0.06), 4px 8px 8px hsl(0deg 0% 0% / 0.06),
     8px 16px 16px hsl(0deg 0% 0% / 0.06);
-  --shadow-lg: 1px 2px 2px hsl(0deg 0% 0% / 0.05),
+  --shadow-lg: 1px 2px 4px hsl(0deg 0% 0% / 0.05),
     2px 4px 4px hsl(0deg 0% 0% / 0.05), 4px 8px 8px hsl(0deg 0% 0% / 0.05),
     8px 16px 16px hsl(0deg 0% 0% / 0.05), 16px 32px 32px hsl(0deg 0% 0% / 0.05);
   --shadow-xl: 2px 4px 4px hsl(0deg 0% 0% / 0.04),

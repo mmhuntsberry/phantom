@@ -476,8 +476,16 @@ export async function getBooksInBeta(): Promise<Book[]> {
       }
     );
 
-    console.log("📚 Books in beta (filtered):", books?.length || 0, books?.map(b => ({ title: b.title, openForBetaReaders: b.openForBetaReaders })));
-    return books || [];
+    const typedBooks = (books || []) as Book[];
+    console.log(
+      "📚 Books in beta (filtered):",
+      typedBooks.length,
+      typedBooks.map((book: Book) => ({
+        title: book.title,
+        openForBetaReaders: book.openForBetaReaders,
+      }))
+    );
+    return typedBooks;
   } catch (error) {
     console.error("Error fetching books in beta:", error);
     return [];
@@ -487,9 +495,31 @@ export async function getBooksInBeta(): Promise<Book[]> {
 export async function getFeaturedBook(): Promise<Book | null> {
   try {
     const client = createClient(config);
+    const featured = await client.fetch(
+      groq`*[_type == "book" && featured == true]
+        | order(publicationDate asc)[0]{
+          _id,
+          _createdAt,
+          title,
+          "slug": slug.current,
+          status,
+          featured,
+          priority,
+          publicationDate,
+          cover{
+            asset->{url},
+            alt
+          },
+          tagline,
+          shortPitch
+        }`
+    );
+
+    if (featured) return featured;
+
     return client.fetch(
-      groq`*[_type == "book" && (featured == true || defined(priority))]
-        | order(featured desc, priority asc, publicationDate asc)[0]{
+      groq`*[_type == "book" && defined(priority)]
+        | order(priority asc, publicationDate asc)[0]{
           _id,
           _createdAt,
           title,

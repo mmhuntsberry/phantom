@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useMemo, useId, useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "./button/button";
 import Input from "./input/input";
 import Label from "./label/label";
@@ -47,6 +48,24 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [confettiPieces, setConfettiPieces] = useState<
+    Array<{
+      id: string;
+      left: string;
+      delay: string;
+      duration: string;
+      rotation: string;
+      size: string;
+      color: string;
+    }>
+  >([]);
+  const router = useRouter();
+
+  const confettiColors = useMemo(
+    () => ["#f97316", "#f59e0b", "#fbbf24", "#10b981", "#0ea5e9"],
+    []
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -65,6 +84,44 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
       setSessionId(currentId);
     }
   }, [token]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    document.body.style.overflow = showSuccess ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showSuccess]);
+
+  useEffect(() => {
+    if (!showSuccess) return;
+    const timeout = window.setTimeout(() => {
+      setConfettiPieces([]);
+      router.push("/");
+    }, 2800);
+    return () => window.clearTimeout(timeout);
+  }, [router, showSuccess]);
+
+  function launchConfetti() {
+    const pieces = Array.from({ length: 28 }, (_, index) => {
+      const left = `${Math.random() * 100}%`;
+      const delay = `${Math.random() * 0.4}s`;
+      const duration = `${1.8 + Math.random() * 1.2}s`;
+      const rotation = `${Math.random() * 360}deg`;
+      const size = `${8 + Math.random() * 6}px`;
+      const color = confettiColors[index % confettiColors.length];
+      return {
+        id: `${Date.now()}-${index}`,
+        left,
+        delay,
+        duration,
+        rotation,
+        size,
+        color,
+      };
+    });
+    setConfettiPieces(pieces);
+  }
 
   const validate = () => {
     const nextErrors: Record<string, string> = {};
@@ -122,7 +179,9 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
 
       const data = await res.json();
       if (data.success) {
-        setMessage("Thanks for the feedback. It means a lot.");
+        setMessage("");
+        setShowSuccess(true);
+        launchConfetti();
         setHookMoment("");
         setAttentionDrop("");
         setConfusion("");
@@ -151,7 +210,7 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
   return (
     <form className={styles.form} onSubmit={onSubmit}>
       <div className={styles.field}>
-        <Label htmlFor={hookId}>Where were you most hooked?</Label>
+        <Label htmlFor={hookId}>Initial thoughts: what stood out first?</Label>
         <textarea
           id={hookId}
           className={styles.textarea}
@@ -168,7 +227,9 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
       </div>
 
       <div className={styles.field}>
-        <Label htmlFor={attentionId}>Where did your attention drop?</Label>
+        <Label htmlFor={attentionId}>
+          Where did your attention slow down or wander?
+        </Label>
         <textarea
           id={attentionId}
           className={styles.textarea}
@@ -178,7 +239,9 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
       </div>
 
       <div className={styles.field}>
-        <Label htmlFor={confusionId}>Where were you confused?</Label>
+        <Label htmlFor={confusionId}>
+          What parts raised questions or felt unclear?
+        </Label>
         <textarea
           id={confusionId}
           className={styles.textarea}
@@ -196,7 +259,7 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
 
       <div className={styles.field}>
         <Label htmlFor={characterId}>
-          Which character felt most or least real?
+          Which characters stood out to you, and why?
         </Label>
         <textarea
           id={characterId}
@@ -216,7 +279,9 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
       </div>
 
       <div className={styles.field}>
-        <Label htmlFor={keepReadingId}>Would you keep reading?</Label>
+        <Label htmlFor={keepReadingId}>
+          How likely are you to keep reading?
+        </Label>
         <select
           id={keepReadingId}
           className={styles.select}
@@ -228,9 +293,9 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
           required
         >
           <option value="">Select one</option>
-          <option value="yes">Yes</option>
-          <option value="maybe">Maybe</option>
-          <option value="no">No</option>
+          <option value="yes">Very likely</option>
+          <option value="maybe">Somewhat likely</option>
+          <option value="no">Unlikely</option>
         </select>
         {errors.keepReading && (
           <p className={styles.error} id={`${keepReadingId}-error`}>
@@ -240,7 +305,9 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
       </div>
 
       <div className={styles.field}>
-        <Label htmlFor={stopId}>If you stopped, where?</Label>
+        <Label htmlFor={stopId}>
+          If you paused or stopped, where did that happen?
+        </Label>
         <Input
           id={stopId}
           type="text"
@@ -257,9 +324,7 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
             checked={testimonialConsent}
             onChange={(event) => setTestimonialConsent(event.target.checked)}
           />
-          <Label htmlFor={permissionId}>
-            You may quote my feedback as a testimonial.
-          </Label>
+          <Label htmlFor={permissionId}>Can I quote this?</Label>
         </div>
       </div>
 
@@ -388,6 +453,37 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
           </p>
         )}
       </div>
+
+      {showSuccess && (
+        <div className={styles.successOverlay} role="dialog" aria-modal="true">
+          {confettiPieces.length > 0 && (
+            <div className={styles.confetti} aria-hidden="true">
+              {confettiPieces.map((piece) => (
+                <span
+                  key={piece.id}
+                  className={styles.confettiPiece}
+                  style={{
+                    left: piece.left,
+                    animationDelay: piece.delay,
+                    animationDuration: piece.duration,
+                    width: piece.size,
+                    height: piece.size,
+                    backgroundColor: piece.color,
+                    ["--confetti-rotate" as string]: piece.rotation,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+          <div className={styles.modal}>
+            <p className={styles.modalKicker}>Feedback received</p>
+            <h3 className={styles.modalTitle}>Thank you for the notes.</h3>
+            <p className={styles.modalBody}>
+              Redirecting you back to Start Here.
+            </p>
+          </div>
+        </div>
+      )}
     </form>
   );
 }

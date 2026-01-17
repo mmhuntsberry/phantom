@@ -64,9 +64,19 @@
 }
 
 .featuredCard {
+  grid-column: 1 / -1;
   grid-template-columns: minmax(160px, 220px) 1fr;
-  align-items: start;
-  gap: var(--space-lg);
+  align-items: center;
+  gap: var(--space-xl);
+  padding: var(--space-xl);
+  border-radius: var(--border-radius-md);
+  border-color: var(--palette-neutral-200);
+  background: linear-gradient(
+    135deg,
+    var(--palette-neutral-lightest),
+    var(--palette-neutral-100)
+  );
+  box-shadow: var(--shadow-sm);
   min-width: 0;
   overflow: hidden;
 }
@@ -86,8 +96,9 @@
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
-  border-radius: var(--border-radius-2xs);
+  border-radius: var(--border-radius-sm);
   overflow: hidden;
+  box-shadow: var(--shadow-xs);
 }
 
 .cardImage {
@@ -99,8 +110,9 @@
   inset: 0;
   display: grid;
   place-items: center;
-  border-radius: var(--border-radius-2xs);
-  border: var(--border-width-sm) solid var(--palette-neutral-300);
+  border-radius: inherit;
+  border: none;
+  box-shadow: inset 0 0 0 var(--border-width-sm) var(--palette-neutral-300);
   background: radial-gradient(
       120% 120% at 85% 10%,
       var(--palette-alert-warning-200),
@@ -130,6 +142,13 @@
 }
 
 .cardKicker {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: var(--border-width-sm) solid var(--palette-neutral-300);
+  background-color: var(--palette-neutral-100);
   font-size: var(--fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.2em;
@@ -141,6 +160,10 @@
   font-size: var(--fs-xl);
   font-weight: 1000;
   margin: 0;
+}
+
+.featuredCard .cardTitle {
+  font-size: var(--fs-2xl);
 }
 
 .cardDescription {
@@ -202,9 +225,10 @@
   gap: var(--space-sm);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 640px) {
   .featuredCard {
     grid-template-columns: 1fr;
+    align-items: start;
   }
 }
 
@@ -216,10 +240,12 @@
 
   .cardKicker {
     color: var(--palette-neutral-400);
+    border-color: var(--palette-neutral-600);
+    background-color: var(--palette-neutral-900);
   }
 
   .coverPlaceholder {
-    border-color: var(--palette-neutral-700);
+    box-shadow: inset 0 0 0 var(--border-width-sm) var(--palette-neutral-700);
     background: radial-gradient(
         120% 120% at 85% 10%,
         var(--palette-alert-warning-800),
@@ -231,6 +257,15 @@
         var(--palette-neutral-800)
       );
     color: var(--palette-neutral-300);
+  }
+
+  .featuredCard {
+    background: linear-gradient(
+      135deg,
+      var(--palette-neutral-900),
+      var(--palette-neutral-1000)
+    );
+    border-color: var(--palette-neutral-700);
   }
 
   .cardLink {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check } from "@phosphor-icons/react/dist/ssr";
 import styles from "./ReaderChapterNav.module.css";
 
@@ -22,6 +22,19 @@ export default function ReaderChapterNav({
   completedChapters = [],
 }: ReaderChapterNavProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
 
   function scrollToChapter(order: number) {
     const element = document.querySelector(`[data-chapter-order="${order}"]`);

@@ -2,9 +2,7 @@
   box-sizing: border-box;
   border: var(--border-width-sm) solid var(--palette-neutral-darkest);
   border-radius: var(--border-radius-2xs);
-  min-width: var(--layout-3xs);
   width: 100%;
-  max-width: var(--layout-xl);
   max-height: var(--space-3xl);
   height: var(--button-height);
   padding: var(--space-sm);

@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useId, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { useEffect, useMemo, useState, useId } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Button from "./button/button";
 import Input from "./input/input";
 import Label from "./label/label";
@@ -14,8 +14,8 @@ type ReaderApplyFormProps = {
 };
 
 const formatOptions = [
-  { value: "", label: "Select format (optional)" },
-  { value: "web", label: "Web" },
+  { value: "", label: "Select a format (optional)" },
+  { value: "web", label: "Web / browser" },
   { value: "epub", label: "EPUB" },
   { value: "pdf", label: "PDF" },
 ];
@@ -32,6 +32,7 @@ export default function ReaderApplyForm({
   const sourceId = useId();
   const honeypotId = useId();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [formatPref, setFormatPref] = useState("");
@@ -42,6 +43,60 @@ export default function ReaderApplyForm({
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [confettiPieces, setConfettiPieces] = useState<
+    Array<{
+      id: string;
+      left: string;
+      delay: string;
+      duration: string;
+      rotation: string;
+      size: string;
+      color: string;
+    }>
+  >([]);
+
+  const confettiColors = useMemo(
+    () => ["#f97316", "#f59e0b", "#fbbf24", "#10b981", "#0ea5e9"],
+    []
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    document.body.style.overflow = showSuccess ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showSuccess]);
+
+  useEffect(() => {
+    if (!showSuccess) return;
+    const timeout = window.setTimeout(() => {
+      setConfettiPieces([]);
+    }, 2800);
+    return () => window.clearTimeout(timeout);
+  }, [showSuccess]);
+
+  function launchConfetti() {
+    const pieces = Array.from({ length: 28 }, (_, index) => {
+      const left = `${Math.random() * 100}%`;
+      const delay = `${Math.random() * 0.4}s`;
+      const duration = `${1.8 + Math.random() * 1.2}s`;
+      const rotation = `${Math.random() * 360}deg`;
+      const size = `${8 + Math.random() * 6}px`;
+      const color = confettiColors[index % confettiColors.length];
+      return {
+        id: `${Date.now()}-${index}`,
+        left,
+        delay,
+        duration,
+        rotation,
+        size,
+        color,
+      };
+    });
+    setConfettiPieces(pieces);
+  }
 
   const validate = () => {
     const nextErrors: Record<string, string> = {};
@@ -83,7 +138,9 @@ export default function ReaderApplyForm({
 
       const data = await res.json();
       if (data.success) {
-        setMessage("If selected, you'll receive a private access link.");
+        setMessage("");
+        setShowSuccess(true);
+        launchConfetti();
         setEmail("");
         setFormatPref("");
         setContentNotesAck(false);
@@ -126,7 +183,7 @@ export default function ReaderApplyForm({
       </div>
 
       <div className={styles.field}>
-        <Label htmlFor={formatId}>Format preference</Label>
+        <Label htmlFor={formatId}>How do you usually read?</Label>
         <select
           id={formatId}
           className={styles.select}
@@ -163,7 +220,7 @@ export default function ReaderApplyForm({
       </div>
 
       <div className={styles.field}>
-        <Label htmlFor={tasteId}>What do you like to read? (Optional)</Label>
+        <Label htmlFor={tasteId}>Preferred genres (optional)</Label>
         <textarea
           id={tasteId}
           className={styles.textarea}
@@ -204,6 +261,46 @@ export default function ReaderApplyForm({
           </p>
         )}
       </div>
+
+      {showSuccess && (
+        <div className={styles.successOverlay} role="dialog" aria-modal="true">
+          {confettiPieces.length > 0 && (
+            <div className={styles.confetti} aria-hidden="true">
+              {confettiPieces.map((piece) => (
+                <span
+                  key={piece.id}
+                  className={styles.confettiPiece}
+                  style={{
+                    left: piece.left,
+                    animationDelay: piece.delay,
+                    animationDuration: piece.duration,
+                    width: piece.size,
+                    height: piece.size,
+                    backgroundColor: piece.color,
+                    ["--confetti-rotate" as string]: piece.rotation,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+          <div className={styles.modal}>
+            <p className={styles.modalKicker}>Application received</p>
+            <h3 className={styles.modalTitle}>Thanks for applying.</h3>
+            <p className={styles.modalBody}>
+              If you’re selected, you’ll get a private access link by email.
+            </p>
+            <div className={styles.modalActions}>
+              <Button
+                type="button"
+                onClick={() => router.push("/")}
+                className={styles.modalButton}
+              >
+                Back to Start Here
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   );
 }

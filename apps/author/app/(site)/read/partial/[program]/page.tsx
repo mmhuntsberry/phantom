@@ -93,16 +93,17 @@ export default async function ReadPartialPage({
       </section>
 
       <section className={styles.tracker}>
-        <h2 className={styles.sectionTitle}>Wrap up</h2>
-        <p className={styles.sectionIntro}>
-          When you finish this section, click below to mark it complete.
-        </p>
-        <ReaderSessionTracker sessionId={sessionId} />
-        {token && (
-          <a className={styles.surveyLink} href={`/r/${token}/survey`}>
-            Take the 2-minute survey
-          </a>
-        )}
+        <div className={styles.trackerHeader}>
+          <p className={styles.trackerKicker}>Wrap up</p>
+          <h2 className={styles.sectionTitle}>You made it to the end.</h2>
+          <p className={styles.sectionIntro}>
+            Mark the section complete, then share quick feedback if you have a
+            moment.
+          </p>
+        </div>
+        <div className={styles.trackerActions}>
+          <ReaderSessionTracker sessionId={sessionId} token={token} />
+        </div>
       </section>
 
       <ReaderChapterTracker sessionId={sessionId} />
