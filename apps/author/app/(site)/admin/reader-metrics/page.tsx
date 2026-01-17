@@ -1,12 +1,12 @@
 import { desc, eq } from "drizzle-orm";
 
-import { db } from "../../../../db/index";
+import { db } from "@/db/index";
 import {
   readerInvites,
   readingEvents,
   readingSessions,
   readingSurveyResponses,
-} from "../../../../db/schema";
+} from "@/db/schema";
 import styles from "./page.module.css";
 import AdminTokenSetter from "../../../../components/AdminTokenSetter";
 

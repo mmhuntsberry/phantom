@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
-import { db } from "../../../../../db/index";
-import { readingSurveyResponses } from "../../../../../db/schema";
+import { db } from "@/db/index";
+import { readingSurveyResponses } from "@/db/schema";
 import AdminTokenSetter from "../../../../../components/AdminTokenSetter";
 import styles from "./page.module.css";
 
@@ -87,6 +87,16 @@ export default async function ReaderSurveyDetailPage({
           <p className={styles.detail}>
             Attribution preference: {survey.attributionPreference || ""}
           </p>
+          {survey.firstName && (
+            <p className={styles.detail}>
+              First name: {survey.firstName}
+            </p>
+          )}
+          {survey.lastName && (
+            <p className={styles.detail}>
+              Last name: {survey.lastName}
+            </p>
+          )}
           <p className={styles.detail}>
             Attribution text: {survey.attributionText || ""}
           </p>

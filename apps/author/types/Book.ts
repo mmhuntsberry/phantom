@@ -8,6 +8,7 @@ export type Book = {
   status: "comingSoon" | "published";
   publicationDate?: string;
   featured?: boolean;
+  openForBetaReaders?: boolean;
   priority?: number;
   cover?: {
     asset?: { url: string };

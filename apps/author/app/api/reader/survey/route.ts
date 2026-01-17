@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 
-import { db } from "../../../../db/index";
+import { db } from "@/db/index";
 import {
   readerInvites,
   readingSessions,
   readingSurveyResponses,
-} from "../../../../db/schema";
+} from "@/db/schema";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -17,6 +17,8 @@ export async function POST(req: Request) {
     testimonialConsent,
     attributionPreference,
     attributionText,
+    firstName,
+    lastName,
     arcReviewIntent,
     arcReviewPosted,
     arcReviewLink,
@@ -46,6 +48,30 @@ export async function POST(req: Request) {
       { success: false, error: "Answers required." },
       { status: 400 }
     );
+  }
+
+  // Validate firstName and lastName when testimonial consent is given
+  if (testimonialConsent) {
+    if (!firstName || typeof firstName !== "string" || !firstName.trim()) {
+      return NextResponse.json(
+        { success: false, error: "First name is required when allowing testimonial use." },
+        { status: 400 }
+      );
+    }
+    if (!lastName || typeof lastName !== "string" || !lastName.trim()) {
+      return NextResponse.json(
+        { success: false, error: "Last name is required when allowing testimonial use." },
+        { status: 400 }
+      );
+    }
+  }
+
+  // Auto-generate attributionText for initials from firstName + lastName
+  let finalAttributionText = attributionText;
+  if (attributionPreference === "initials" && firstName && lastName) {
+    const firstInitial = firstName.trim().charAt(0).toUpperCase();
+    const lastInitial = lastName.trim().charAt(0).toUpperCase();
+    finalAttributionText = `${firstInitial}${lastInitial}`;
   }
 
   const invite = await db
@@ -92,7 +118,9 @@ export async function POST(req: Request) {
       answers,
       testimonialConsent: Boolean(testimonialConsent),
       attributionPreference: attributionPreference || null,
-      attributionText: attributionText || null,
+      attributionText: finalAttributionText || null,
+      firstName: firstName ? firstName.trim() : null,
+      lastName: lastName ? lastName.trim() : null,
       arcReviewIntent: arcReviewIntent ?? null,
       arcReviewPosted: arcReviewPosted ?? null,
       arcReviewLink: arcReviewLink || null,

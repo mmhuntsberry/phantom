@@ -33,6 +33,12 @@
   margin: 0;
 }
 
+.message {
+  font-size: var(--fs-sm);
+  color: var(--palette-success-600);
+  margin: 0;
+}
+
 .empty {
   font-size: var(--fs-md);
   font-weight: 300;
@@ -73,14 +79,102 @@
 }
 
 .actions {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-xs);
+  align-items: flex-start;
 }
 
 .token {
   font-size: var(--fs-sm);
   font-weight: 700;
   margin: 0;
+}
+
+.rejectButton {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  height: var(--button-height);
+  border: var(--border-width-sm) solid var(--palette-neutral-400);
+  border-radius: var(--border-radius-2xs);
+  padding-block: calc(
+    (
+        var(--button-height) - var(--font-line-height-lg) -
+          var(--border-width-sm) * 2
+      ) / 2
+  );
+  padding-inline: var(--space-sm);
+  font-family: var(--font-family-default);
+  font-size: var(--font-size-lg);
+  font-weight: 400;
+  line-height: var(--font-line-height-lg);
+  background-color: var(--palette-neutral-lightest);
+  color: var(--palette-neutral-700);
+  transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.rejectButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rejectButton:not(:disabled):hover {
+  background-color: var(--palette-neutral-200);
+  border-color: var(--palette-neutral-600);
+}
+
+.approved {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--palette-success-600);
+  margin: 0;
+}
+
+.rejected {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--palette-alert-danger-600);
+  margin: 0;
+}
+
+.resendButton {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  height: var(--button-height);
+  border: var(--border-width-sm) solid var(--palette-neutral-300);
+  border-radius: var(--border-radius-2xs);
+  padding-block: calc(
+    (
+        var(--button-height) - var(--font-line-height-lg) -
+          var(--border-width-sm) * 2
+      ) / 2
+  );
+  padding-inline: var(--space-sm);
+  font-family: var(--font-family-default);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  line-height: var(--font-line-height-lg);
+  background-color: var(--palette-neutral-lightest);
+  color: var(--palette-neutral-700);
+  transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.resendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.resendButton:not(:disabled):hover {
+  background-color: var(--palette-neutral-200);
+  border-color: var(--palette-neutral-500);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -93,5 +187,27 @@
     background-color: var(--palette-neutral-900);
     border-color: var(--palette-neutral-400);
     color: var(--palette-neutral-100);
+  }
+
+  .rejectButton {
+    background-color: var(--palette-neutral-900);
+    border-color: var(--palette-neutral-500);
+    color: var(--palette-neutral-200);
+  }
+
+  .rejectButton:not(:disabled):hover {
+    background-color: var(--palette-neutral-800);
+    border-color: var(--palette-neutral-400);
+  }
+
+  .resendButton {
+    background-color: var(--palette-neutral-900);
+    border-color: var(--palette-neutral-500);
+    color: var(--palette-neutral-200);
+  }
+
+  .resendButton:not(:disabled):hover {
+    background-color: var(--palette-neutral-800);
+    border-color: var(--palette-neutral-400);
   }
 }

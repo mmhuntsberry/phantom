@@ -20,6 +20,10 @@
   margin: 0;
 }
 
+.required {
+  color: var(--palette-alert-danger-600);
+}
+
 .select,
 .textarea {
   box-sizing: border-box;

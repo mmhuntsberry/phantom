@@ -440,6 +440,50 @@ export async function getBooks(): Promise<Book[]> {
   }
 }
 
+export async function getBooksInBeta(): Promise<Book[]> {
+  try {
+    const client = createClient(config);
+
+    // Debug: Check all books and their openForBetaReaders status
+    const allBooks = await client.fetch(
+      groq`*[_type == "book"] {
+        _id,
+        title,
+        openForBetaReaders,
+        status
+      }`,
+      {},
+      { next: { revalidate: 0 } }
+    );
+    console.log("📚 All books with openForBetaReaders status:", allBooks);
+
+    const books = await client.fetch(
+      groq`*[_type == "book" && openForBetaReaders == true] | order(priority asc, publicationDate asc) {
+        _id,
+        title,
+        "slug": slug.current,
+        status,
+        publicationDate,
+        tagline,
+        shortPitch,
+        contentNotes,
+        openForBetaReaders
+      }`,
+      {},
+      { 
+        next: { revalidate: 0 }, // Always fetch fresh data
+        perspective: "published" // Use published content
+      }
+    );
+
+    console.log("📚 Books in beta (filtered):", books?.length || 0, books?.map(b => ({ title: b.title, openForBetaReaders: b.openForBetaReaders })));
+    return books || [];
+  } catch (error) {
+    console.error("Error fetching books in beta:", error);
+    return [];
+  }
+}
+
 export async function getFeaturedBook(): Promise<Book | null> {
   try {
     const client = createClient(config);
@@ -464,6 +508,43 @@ export async function getFeaturedBook(): Promise<Book | null> {
     );
   } catch (error) {
     console.error("Error fetching featured book:", error);
+    return null;
+  }
+}
+
+export async function getBookById(id: string): Promise<Book | null> {
+  try {
+    const client = createClient(config);
+
+    const book = await client.fetch(
+      groq`*[_type == "book" && _id == $id][0]{
+        _id,
+        _createdAt,
+        title,
+        "slug": slug.current,
+        status,
+        publicationDate,
+        featured,
+        priority,
+        cover{
+          asset->{url},
+          alt
+        },
+        tagline,
+        shortPitch,
+        longDescription,
+        contentNotes,
+        sample,
+        sampleLink,
+        buyLinks,
+        testimonials
+      }`,
+      { id }
+    );
+
+    return book || null;
+  } catch (error) {
+    console.error("Error fetching book by ID:", error);
     return null;
   }
 }

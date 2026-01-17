@@ -19,8 +19,7 @@ export default async function BetaThanksPage() {
   return (
     <div className={styles.container}>
       <section className={styles.hero}>
-        <p className={styles.kicker}>Thanks</p>
-        <h1 className={styles.title}>You're in.</h1>
+        <h1 className={styles.title}>You're in</h1>
         <p className={styles.subtitle}>
           Here's your private link. Please don't share it publicly.
         </p>

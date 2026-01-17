@@ -1,10 +1,11 @@
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import AdminReaderApplicants, {
   AdminApplicant,
 } from "../../../../components/AdminReaderApplicants";
 import AdminTokenSetter from "../../../../components/AdminTokenSetter";
-import { db } from "../../../../db/index";
-import { readerApplicants } from "../../../../db/schema";
+import { db } from "@/db/index";
+import { readerApplicants, readerInvites } from "@/db/schema";
+import { getBookById } from "../../../../sanity/sanity-utils";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -24,21 +25,47 @@ export default async function ReaderApplicantsPage() {
     .from(readerApplicants)
     .orderBy(desc(readerApplicants.createdAt));
 
-  const formatted: AdminApplicant[] = applicants.map((applicant) => ({
-    id: applicant.id,
-    email: applicant.email,
-    cohortType: applicant.cohortType,
-    program: applicant.program,
-    formatPref: applicant.formatPref,
-    contentNotesAck: applicant.contentNotesAck,
-    tasteProfile: applicant.tasteProfile,
-    source: applicant.source,
-    status: applicant.status,
-    approvedAt: applicant.approvedAt
-      ? applicant.approvedAt.toISOString()
-      : null,
-    createdAt: applicant.createdAt.toISOString(),
-  }));
+  // Fetch book information and invite tokens for applicants
+  const formatted: AdminApplicant[] = await Promise.all(
+    applicants.map(async (applicant) => {
+      let bookTitle: string | null = null;
+      if (applicant.bookId) {
+        const book = await getBookById(applicant.bookId);
+        bookTitle = book?.title || null;
+      }
+
+      // Get invite token if applicant is approved
+      let inviteToken: string | null = null;
+      if (applicant.inviteId) {
+        const invite = await db
+          .select()
+          .from(readerInvites)
+          .where(eq(readerInvites.id, applicant.inviteId))
+          .limit(1)
+          .then((rows) => rows[0]);
+        inviteToken = invite?.token || null;
+      }
+
+      return {
+        id: applicant.id,
+        email: applicant.email,
+        cohortType: applicant.cohortType,
+        program: applicant.program,
+        formatPref: applicant.formatPref,
+        contentNotesAck: applicant.contentNotesAck,
+        tasteProfile: applicant.tasteProfile,
+        source: applicant.source,
+        bookId: applicant.bookId || null,
+        bookTitle,
+        status: applicant.status,
+        approvedAt: applicant.approvedAt
+          ? applicant.approvedAt.toISOString()
+          : null,
+        createdAt: applicant.createdAt.toISOString(),
+        inviteToken,
+      };
+    })
+  );
 
   return (
     <div className={styles.container}>

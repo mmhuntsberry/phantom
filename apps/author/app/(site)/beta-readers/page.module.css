@@ -56,6 +56,45 @@
   margin: 0;
 }
 
+.contentNotes {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.contentNotes :global(.content) {
+  gap: var(--space-xs);
+}
+
+.contentNotes :global(p) {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.contentNotes :global(p:last-child) {
+  margin-bottom: 0;
+}
+
+.contentNotes :global(ul) {
+  font-size: var(--fs-md);
+  font-weight: 300;
+  margin: 0 0 var(--space-xs) 0;
+  padding-left: var(--space-lg);
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.contentNotes :global(ul:last-child) {
+  margin-bottom: 0;
+}
+
+.contentNotes :global(li) {
+  font-size: var(--fs-md);
+  line-height: 1.5;
+}
+
 .formSection {
   border: var(--border-width-sm) solid var(--palette-neutral-300);
   border-radius: var(--border-radius-2xs);
@@ -65,10 +104,67 @@
   gap: var(--space-sm);
 }
 
+.bookSelection {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.bookList {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.bookCard {
+  border: var(--border-width-sm) solid var(--palette-neutral-300);
+  border-radius: var(--border-radius-2xs);
+  padding: var(--space-lg);
+  background-color: var(--palette-neutral-lightest);
+  display: grid;
+  gap: var(--space-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.bookCard:hover {
+  border-color: var(--palette-neutral-500);
+  box-shadow: var(--shadow-xs);
+}
+
+.bookTitle {
+  font-size: var(--fs-xl);
+  font-weight: 1000;
+  margin: 0;
+}
+
+.bookTagline {
+  font-size: var(--fs-md);
+  font-weight: 500;
+  margin: 0;
+  color: var(--palette-neutral-600);
+}
+
+.bookPitch {
+  font-size: var(--fs-sm);
+  font-weight: 300;
+  margin: 0;
+  line-height: 1.5;
+}
+
 @media (prefers-color-scheme: dark) {
   .detailCard,
-  .formSection {
+  .formSection,
+  .bookCard {
     background-color: var(--palette-neutral-900);
     border-color: var(--palette-neutral-600);
+  }
+
+  .bookCard:hover {
+    border-color: var(--palette-neutral-400);
+  }
+
+  .bookTagline {
+    color: var(--palette-neutral-400);
   }
 }

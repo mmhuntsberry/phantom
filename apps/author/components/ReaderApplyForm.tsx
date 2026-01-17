@@ -10,6 +10,7 @@ import styles from "./ReaderApplyForm.module.css";
 type ReaderApplyFormProps = {
   cohortType: "beta" | "arc";
   program: string;
+  bookId?: string; // Sanity book _id
 };
 
 const formatOptions = [
@@ -22,6 +23,7 @@ const formatOptions = [
 export default function ReaderApplyForm({
   cohortType,
   program,
+  bookId,
 }: ReaderApplyFormProps) {
   const emailId = useId();
   const formatId = useId();
@@ -74,6 +76,7 @@ export default function ReaderApplyForm({
           contentNotesAck,
           tasteProfile: tasteProfile.trim() || null,
           source: source.trim() || querySource || null,
+          bookId: bookId || null,
           honeypot,
         }),
       });
@@ -88,7 +91,13 @@ export default function ReaderApplyForm({
         setSource("");
         setHoneypot("");
       } else {
-        setMessage(data.error || "Something went wrong. Try again.");
+        // Show detailed error for debugging
+        const errorMsg = data.error || "Something went wrong. Try again.";
+        const details = data.details ? ` (${data.details})` : "";
+        const code = data.code ? ` [Code: ${data.code}]` : "";
+        setMessage(`${errorMsg}${details}${code}`);
+        // Also log to console for debugging
+        console.error("Submission error:", data);
       }
     } catch (error) {
       setMessage("Could not submit right now. Please try again later.");

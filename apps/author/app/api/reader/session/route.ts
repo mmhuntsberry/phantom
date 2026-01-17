@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 
-import { db } from "../../../../db/index";
-import { readerInvites, readingSessions } from "../../../../db/schema";
+import { db } from "@/db/index";
+import { readerInvites, readingSessions } from "@/db/schema";
 
 const allowedActions = new Set(["start", "heartbeat", "complete"]);
 const allowedCompletionMethods = new Set(["end_reached", "survey_submitted"]);

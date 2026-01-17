@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 
-import { db } from "../../../../db/index";
-import { readerApplicants } from "../../../../db/schema";
+import { db } from "@/db/index";
+import { readerApplicants } from "@/db/schema";
 
 export async function POST(req: Request) {
   const body = await req.json();

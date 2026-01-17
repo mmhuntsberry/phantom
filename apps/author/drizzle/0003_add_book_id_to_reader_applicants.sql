@@ -1,0 +1,1 @@
+ALTER TABLE "reader_applicants" ADD COLUMN IF NOT EXISTS "book_id" text;

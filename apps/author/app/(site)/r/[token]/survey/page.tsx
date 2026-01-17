@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
-import { db } from "../../../../../db/index";
-import { readerInvites } from "../../../../../db/schema";
+import { db } from "@/db/index";
+import { readerInvites } from "@/db/schema";
 import ReaderSurveyForm from "../../../../../components/ReaderSurveyForm";
 import styles from "./page.module.css";
 

@@ -1,0 +1,158 @@
+-- ============================================
+-- DROP ALL TABLES AND RECREATE FROM SCRATCH
+-- ============================================
+-- WARNING: This will delete all data!
+-- ============================================
+
+-- Drop tables in reverse dependency order (child tables first)
+DROP TABLE IF EXISTS "reading_survey_responses" CASCADE;
+DROP TABLE IF EXISTS "reading_events" CASCADE;
+DROP TABLE IF EXISTS "reading_sessions" CASCADE;
+DROP TABLE IF EXISTS "reader_applicants" CASCADE;
+DROP TABLE IF EXISTS "reader_invites" CASCADE;
+DROP TABLE IF EXISTS "subscribers" CASCADE;
+DROP TABLE IF EXISTS "users" CASCADE;
+
+-- Drop enums
+DROP TYPE IF EXISTS "completion_method" CASCADE;
+DROP TYPE IF EXISTS "reading_mode" CASCADE;
+DROP TYPE IF EXISTS "format_pref" CASCADE;
+DROP TYPE IF EXISTS "cohort_type" CASCADE;
+
+-- ============================================
+-- RECREATE ENUMS
+-- ============================================
+
+CREATE TYPE "cohort_type" AS ENUM ('beta', 'arc');
+CREATE TYPE "format_pref" AS ENUM ('web', 'epub', 'pdf');
+CREATE TYPE "reading_mode" AS ENUM ('partial', 'full');
+CREATE TYPE "completion_method" AS ENUM ('end_reached', 'survey_submitted');
+
+-- ============================================
+-- RECREATE TABLES
+-- ============================================
+
+-- Base tables
+CREATE TABLE "subscribers" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"email" text NOT NULL,
+	"subscribed_at" timestamp DEFAULT now() NOT NULL,
+	"unsubscribed" boolean DEFAULT false,
+	CONSTRAINT "subscribers_email_unique" UNIQUE("email")
+);
+
+CREATE TABLE "users" (
+	"id" text PRIMARY KEY NOT NULL,
+	"email" text NOT NULL,
+	"password" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "users_email_unique" UNIQUE("email")
+);
+
+-- Reader system tables
+CREATE TABLE "reader_applicants" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"cohort_type" "cohort_type" NOT NULL,
+	"program" text NOT NULL,
+	"email" text NOT NULL,
+	"format_pref" "format_pref",
+	"content_notes_ack" boolean DEFAULT false NOT NULL,
+	"taste_profile" text,
+	"source" text,
+	"book_id" text,
+	"status" text DEFAULT 'pending' NOT NULL,
+	"approved_at" timestamp,
+	"invite_id" integer,
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
+
+CREATE TABLE "reader_invites" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"token" text NOT NULL,
+	"cohort_type" "cohort_type" NOT NULL,
+	"program" text NOT NULL,
+	"reading_mode" "reading_mode" NOT NULL,
+	"active" boolean DEFAULT true NOT NULL,
+	"email" text,
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
+
+CREATE TABLE "reading_sessions" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"session_id" text NOT NULL,
+	"invite_id" integer,
+	"started_at" timestamp DEFAULT now() NOT NULL,
+	"last_seen_at" timestamp DEFAULT now() NOT NULL,
+	"completed_at" timestamp,
+	"completion_method" "completion_method"
+);
+
+CREATE TABLE "reading_events" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"session_id" text NOT NULL,
+	"event_name" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"meta" jsonb
+);
+
+CREATE TABLE "reading_survey_responses" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"session_id" text NOT NULL,
+	"cohort_type" "cohort_type" NOT NULL,
+	"program" text NOT NULL,
+	"submitted_at" timestamp DEFAULT now() NOT NULL,
+	"answers" jsonb NOT NULL,
+	"testimonial_consent" boolean DEFAULT false NOT NULL,
+	"attribution_preference" text,
+	"attribution_text" text,
+	"first_name" text,
+	"last_name" text,
+	"arc_review_intent" boolean,
+	"arc_review_posted" boolean,
+	"arc_review_link" text
+);
+
+-- ============================================
+-- ADD FOREIGN KEY CONSTRAINTS
+-- ============================================
+
+ALTER TABLE "reading_events" 
+	ADD CONSTRAINT "reading_events_session_id_reading_sessions_session_id_fk" 
+	FOREIGN KEY ("session_id") 
+	REFERENCES "reading_sessions"("session_id") 
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION;
+
+ALTER TABLE "reading_sessions" 
+	ADD CONSTRAINT "reading_sessions_invite_id_reader_invites_id_fk" 
+	FOREIGN KEY ("invite_id") 
+	REFERENCES "reader_invites"("id") 
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION;
+
+ALTER TABLE "reading_survey_responses" 
+	ADD CONSTRAINT "reading_survey_responses_session_id_reading_sessions_session_id_fk" 
+	FOREIGN KEY ("session_id") 
+	REFERENCES "reading_sessions"("session_id") 
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION;
+
+ALTER TABLE "reader_applicants" 
+	ADD CONSTRAINT "reader_applicants_invite_id_reader_invites_id_fk" 
+	FOREIGN KEY ("invite_id") 
+	REFERENCES "reader_invites"("id") 
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION;
+
+-- ============================================
+-- CREATE INDEXES
+-- ============================================
+
+CREATE UNIQUE INDEX "reader_invites_token_unique" 
+	ON "reader_invites" USING btree ("token");
+
+CREATE INDEX "reading_events_session_id_idx" 
+	ON "reading_events" USING btree ("session_id");
+
+CREATE UNIQUE INDEX "reading_sessions_session_id_unique" 
+	ON "reading_sessions" USING btree ("session_id");

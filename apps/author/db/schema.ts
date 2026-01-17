@@ -53,6 +53,7 @@ export const readerApplicants = pgTable("reader_applicants", {
   contentNotesAck: boolean("content_notes_ack").default(false).notNull(),
   tasteProfile: text("taste_profile"),
   source: text("source"),
+  bookId: text("book_id"), // Sanity book _id
   status: text("status").default("pending").notNull(),
   approvedAt: timestamp("approved_at"),
   inviteId: integer("invite_id").references(() => readerInvites.id),
@@ -130,6 +131,8 @@ export const readingSurveyResponses = pgTable("reading_survey_responses", {
   testimonialConsent: boolean("testimonial_consent").default(false).notNull(),
   attributionPreference: text("attribution_preference"),
   attributionText: text("attribution_text"),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
   arcReviewIntent: boolean("arc_review_intent"),
   arcReviewPosted: boolean("arc_review_posted"),
   arcReviewLink: text("arc_review_link"),

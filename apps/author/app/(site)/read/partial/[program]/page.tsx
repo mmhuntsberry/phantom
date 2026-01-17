@@ -2,12 +2,13 @@ import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
-import { db } from "../../../../../db/index";
-import { readerInvites, readingSessions } from "../../../../../db/schema";
+import { db } from "@/db/index";
+import { readerInvites, readingSessions } from "@/db/schema";
 import { getManuscriptChapters } from "../../../../../sanity/sanity-utils";
 import ManuscriptText from "../../../../../components/ManuscriptText";
 import ReaderChapterTracker from "../../../../../components/ReaderChapterTracker";
 import ReaderSessionTracker from "../../../../../components/ReaderSessionTracker";
+import ReaderChapterNavWithProgress from "../../../../../components/ReaderChapterNavWithProgress";
 import styles from "../../reader.module.css";
 
 const MANUSCRIPT_KEY = "some-peoples-kids";
@@ -59,6 +60,17 @@ export default async function ReadPartialPage({
           This link is private. Please do not share it publicly.
         </p>
       </section>
+
+      <div className={styles.navigationSection}>
+        <ReaderChapterNavWithProgress
+          sessionId={sessionId}
+          chapters={chapters.map((ch) => ({
+            order: ch.order,
+            chapterLabel: ch.chapterLabel,
+            title: ch.title,
+          }))}
+        />
+      </div>
 
       <section className={styles.chapterList}>
         {chapters.map((chapter) => (

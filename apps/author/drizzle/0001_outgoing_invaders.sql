@@ -78,6 +78,8 @@ CREATE TABLE IF NOT EXISTS "reading_survey_responses" (
 	"arc_review_link" text
 );
 --> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS "reading_sessions_session_id_unique" ON "reading_sessions" USING btree ("session_id");
+--> statement-breakpoint
 DO $$ BEGIN
   ALTER TABLE "reading_events" ADD CONSTRAINT "reading_events_session_id_reading_sessions_session_id_fk" FOREIGN KEY ("session_id") REFERENCES "public"."reading_sessions"("session_id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
@@ -98,4 +100,3 @@ END $$;
 --> statement-breakpoint
 CREATE UNIQUE INDEX IF NOT EXISTS "reader_invites_token_unique" ON "reader_invites" USING btree ("token");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "reading_events_session_id_idx" ON "reading_events" USING btree ("session_id");--> statement-breakpoint
-CREATE UNIQUE INDEX IF NOT EXISTS "reading_sessions_session_id_unique" ON "reading_sessions" USING btree ("session_id");

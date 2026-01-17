@@ -29,6 +29,13 @@
   margin: 0;
 }
 
+.navigationSection {
+  display: grid;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
 .chapterList {
   display: grid;
   gap: calc(var(--space-2xl) * 1.5);

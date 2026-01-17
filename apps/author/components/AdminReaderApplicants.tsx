@@ -13,9 +13,12 @@ export type AdminApplicant = {
   contentNotesAck: boolean;
   tasteProfile?: string | null;
   source?: string | null;
+  bookId?: string | null;
+  bookTitle?: string | null;
   status?: string | null;
   approvedAt?: string | null;
   createdAt: string;
+  inviteToken?: string | null;
 };
 
 type AdminReaderApplicantsProps = {
@@ -28,6 +31,7 @@ export default function AdminReaderApplicants({
   const [tokensById, setTokensById] = useState<Record<number, string>>({});
   const [loadingId, setLoadingId] = useState<number | null>(null);
   const [error, setError] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   const [adminToken, setAdminToken] = useState<string>("");
 
   const sortedApplicants = useMemo(
@@ -37,6 +41,7 @@ export default function AdminReaderApplicants({
 
   async function approve(applicant: AdminApplicant) {
     setError("");
+    setMessage("");
     setLoadingId(applicant.id);
     try {
       const res = await fetch("/api/admin/reader/approve", {
@@ -58,8 +63,83 @@ export default function AdminReaderApplicants({
       }
 
       setTokensById((prev) => ({ ...prev, [applicant.id]: data.token }));
+      
+      // Show email status
+      if (data.emailSent === false) {
+        const emailMsg = data.emailError 
+          ? `Approved, but email failed: ${data.emailError}`
+          : "Approved, but email was not sent (check RESEND_API_KEY)";
+        setError(emailMsg);
+        // Still refresh after a delay to show the status
+        setTimeout(() => window.location.reload(), 2000);
+      } else if (data.emailSent === true) {
+        setMessage("✅ Approved and welcome email sent!");
+        setTimeout(() => window.location.reload(), 1500);
+      } else {
+        // Refresh the page to show updated status
+        window.location.reload();
+      }
     } catch (err) {
       setError("Approval failed. Try again.");
+    } finally {
+      setLoadingId(null);
+    }
+  }
+
+  async function resendEmail(applicant: AdminApplicant) {
+    setError("");
+    setMessage("");
+    setLoadingId(applicant.id);
+    try {
+      const res = await fetch("/api/admin/reader/resend-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          applicantId: applicant.id,
+          adminToken: adminToken || null,
+        }),
+      });
+
+      const data = await res.json();
+      if (!data.success) {
+        setError(data.error || "Failed to resend email.");
+        return;
+      }
+
+      setMessage("✅ Email sent successfully!");
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
+    } catch (err) {
+      setError("Failed to resend email. Try again.");
+    } finally {
+      setLoadingId(null);
+    }
+  }
+
+  async function reject(applicant: AdminApplicant) {
+    setError("");
+    setLoadingId(applicant.id);
+    try {
+      const res = await fetch("/api/admin/reader/reject", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          applicantId: applicant.id,
+          adminToken: adminToken || null,
+        }),
+      });
+
+      const data = await res.json();
+      if (!data.success) {
+        setError(data.error || "Rejection failed.");
+        return;
+      }
+
+      // Refresh the page to show updated status
+      window.location.reload();
+    } catch (err) {
+      setError("Rejection failed. Try again.");
     } finally {
       setLoadingId(null);
     }
@@ -82,6 +162,7 @@ export default function AdminReaderApplicants({
           />
         </div>
         {error && <p className={styles.error}>{error}</p>}
+        {message && <p className={styles.message}>{message}</p>}
       </div>
 
       {sortedApplicants.length === 0 ? (
@@ -95,8 +176,13 @@ export default function AdminReaderApplicants({
                 <p className={styles.detail}>
                   {applicant.cohortType.toUpperCase()} · {applicant.program}
                 </p>
+                {applicant.bookTitle && (
+                  <p className={styles.detail}>
+                    <strong>Book:</strong> {applicant.bookTitle}
+                  </p>
+                )}
                 <p className={styles.detail}>
-                  Status: {applicant.status || "pending"}
+                  Status: <strong>{applicant.status || "pending"}</strong>
                 </p>
                 <p className={styles.detail}>
                   Format: {applicant.formatPref || "unspecified"}
@@ -115,23 +201,47 @@ export default function AdminReaderApplicants({
                 </p>
               </div>
               <div className={styles.actions}>
-                <Button
-                  type="button"
-                  disabled={
-                    loadingId === applicant.id || applicant.status === "approved"
-                  }
-                  onClick={() => approve(applicant)}
-                >
-                  {applicant.status === "approved"
-                    ? "Approved"
-                    : loadingId === applicant.id
-                    ? "Generating"
-                    : "Approve + generate"}
-                </Button>
-                {tokensById[applicant.id] && (
-                  <p className={styles.token}>
-                    /r/{tokensById[applicant.id]}
-                  </p>
+                {applicant.status === "approved" ? (
+                  <>
+                    <p className={styles.approved}>✓ Approved</p>
+                    {(tokensById[applicant.id] || applicant.inviteToken) && (
+                      <p className={styles.token}>
+                        /r/{tokensById[applicant.id] || applicant.inviteToken}
+                      </p>
+                    )}
+                    <button
+                      type="button"
+                      className={styles.resendButton}
+                      disabled={loadingId === applicant.id}
+                      onClick={() => resendEmail(applicant)}
+                    >
+                      {loadingId === applicant.id
+                        ? "Sending..."
+                        : "Resend email"}
+                    </button>
+                  </>
+                ) : applicant.status === "rejected" ? (
+                  <p className={styles.rejected}>✗ Rejected</p>
+                ) : (
+                  <>
+                    <Button
+                      type="button"
+                      disabled={loadingId === applicant.id}
+                      onClick={() => approve(applicant)}
+                    >
+                      {loadingId === applicant.id
+                        ? "Processing..."
+                        : "Approve + generate"}
+                    </Button>
+                    <button
+                      type="button"
+                      className={styles.rejectButton}
+                      disabled={loadingId === applicant.id}
+                      onClick={() => reject(applicant)}
+                    >
+                      Reject
+                    </button>
+                  </>
                 )}
               </div>
             </li>

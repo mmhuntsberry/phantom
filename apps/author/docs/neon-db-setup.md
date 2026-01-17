@@ -4,12 +4,21 @@
 - Local: create `apps/author/.env.local` and set `DATABASE_URL=...`.
 - CI: set `DATABASE_URL` in your CI environment (no file required).
 - Admin approvals: set `ADMIN_TOKEN` in `apps/author/.env.local` and CI to lock the `/admin/reader-applicants` approve action.
+- Email: set `RESEND_API_KEY` and `EMAIL_FROM` for sending welcome emails to approved beta readers.
 
 Example:
 ```
 DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DBNAME?sslmode=require
 ADMIN_TOKEN=admin-<random>
+RESEND_API_KEY=re_xxxxxxxxxxxxx
+EMAIL_FROM=noreply@yourdomain.com
+NEXT_PUBLIC_BASE_URL=https://yourdomain.com
 ```
+
+Notes:
+- `RESEND_API_KEY`: Get from https://resend.com/api-keys
+- `EMAIL_FROM`: Must be a verified domain in Resend (or use `onboarding@resend.dev` for testing)
+- `NEXT_PUBLIC_BASE_URL`: Your production domain (optional, will use VERCEL_URL if available)
 
 Notes:
 - `apps/author/.env.local` must include `DATABASE_URL` (the `apps/author/.env` file is not loaded by the scripts).

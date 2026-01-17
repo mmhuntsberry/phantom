@@ -39,6 +39,11 @@ export default function ReaderChapterTracker({
               meta: { chapterOrder: Number(order) },
             }),
           }).catch(() => null);
+          
+          // Dispatch custom event for progress indicator
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("chapter-viewed"));
+          }
         });
       },
       { threshold: VIEW_THRESHOLD }
@@ -60,6 +65,11 @@ export default function ReaderChapterTracker({
               meta: { chapterOrder: Number(order) },
             }),
           }).catch(() => null);
+          
+          // Dispatch custom event for progress indicator
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("chapter-ended"));
+          }
         });
       },
       { threshold: END_THRESHOLD }

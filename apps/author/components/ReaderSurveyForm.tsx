@@ -20,6 +20,8 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
   const permissionId = useId();
   const attributionPrefId = useId();
   const attributionTextId = useId();
+  const firstNameId = useId();
+  const lastNameId = useId();
   const arcIntentId = useId();
   const arcPostedId = useId();
   const arcLinkId = useId();
@@ -36,6 +38,8 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
   const [attributionPreference, setAttributionPreference] =
     useState("anonymous");
   const [attributionText, setAttributionText] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [arcReviewIntent, setArcReviewIntent] = useState(false);
   const [arcReviewPosted, setArcReviewPosted] = useState(false);
   const [arcReviewLink, setArcReviewLink] = useState("");
@@ -68,6 +72,13 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
     if (!confusion.trim()) nextErrors.confusion = "This is required.";
     if (!characterReal.trim()) nextErrors.characterReal = "This is required.";
     if (!keepReading) nextErrors.keepReading = "Select one option.";
+    
+    // Require firstName and lastName when testimonial consent is given
+    if (testimonialConsent) {
+      if (!firstName.trim()) nextErrors.firstName = "First name is required when allowing testimonial use.";
+      if (!lastName.trim()) nextErrors.lastName = "Last name is required when allowing testimonial use.";
+    }
+    
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
   };
@@ -100,6 +111,8 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
           testimonialConsent,
           attributionPreference,
           attributionText: attributionText.trim(),
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
           arcReviewIntent,
           arcReviewPosted,
           arcReviewLink: arcReviewLink.trim(),
@@ -119,6 +132,8 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
         setTestimonialConsent(false);
         setAttributionPreference("anonymous");
         setAttributionText("");
+        setFirstName("");
+        setLastName("");
         setArcReviewIntent(false);
         setArcReviewPosted(false);
         setArcReviewLink("");
@@ -262,6 +277,48 @@ export default function ReaderSurveyForm({ token }: ReaderSurveyFormProps) {
           <option value="full_name">Full name</option>
         </select>
       </div>
+
+      {testimonialConsent && (
+        <>
+          <div className={styles.field}>
+            <Label htmlFor={firstNameId}>
+              First name <span className={styles.required}>*</span>
+            </Label>
+            <Input
+              id={firstNameId}
+              type="text"
+              value={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
+              aria-describedby={errors.firstName ? `${firstNameId}-error` : undefined}
+              required
+            />
+            {errors.firstName && (
+              <p className={styles.error} id={`${firstNameId}-error`}>
+                {errors.firstName}
+              </p>
+            )}
+          </div>
+
+          <div className={styles.field}>
+            <Label htmlFor={lastNameId}>
+              Last name <span className={styles.required}>*</span>
+            </Label>
+            <Input
+              id={lastNameId}
+              type="text"
+              value={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+              aria-describedby={errors.lastName ? `${lastNameId}-error` : undefined}
+              required
+            />
+            {errors.lastName && (
+              <p className={styles.error} id={`${lastNameId}-error`}>
+                {errors.lastName}
+              </p>
+            )}
+          </div>
+        </>
+      )}
 
       <div className={styles.field}>
         <Label htmlFor={attributionTextId}>Attribution text (optional)</Label>

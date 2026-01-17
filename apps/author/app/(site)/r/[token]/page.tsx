@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
-import { db } from "../../../../db/index";
-import { readerInvites } from "../../../../db/schema";
+import { db } from "@/db/index";
+import { readerInvites } from "@/db/schema";
 import ReaderTokenGate from "../../../../components/ReaderTokenGate";
 import styles from "./page.module.css";
 
@@ -20,14 +20,30 @@ export default async function ReaderTokenPage({
 }: {
   params: { token: string };
 }) {
-  const invite = await db
-    .select()
-    .from(readerInvites)
-    .where(eq(readerInvites.token, params.token))
-    .limit(1)
-    .then((rows) => rows[0]);
+  let invite;
+  try {
+    invite = await db
+      .select()
+      .from(readerInvites)
+      .where(eq(readerInvites.token, params.token))
+      .limit(1)
+      .then((rows) => rows[0]);
 
-  if (!invite || !invite.active) return notFound();
+    if (!invite) {
+      console.error(`❌ Token not found: ${params.token}`);
+      return notFound();
+    }
+
+    if (!invite.active) {
+      console.error(`❌ Token found but inactive: ${params.token} (active: ${invite.active})`);
+      return notFound();
+    }
+
+    console.log(`✅ Valid token: ${params.token} for program: ${invite.program}`);
+  } catch (error) {
+    console.error(`❌ Database error checking token ${params.token}:`, error);
+    return notFound();
+  }
 
   return (
     <div className={styles.container}>

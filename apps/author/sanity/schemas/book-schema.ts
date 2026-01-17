@@ -39,6 +39,13 @@ const book = {
       initialValue: false,
     },
     {
+      name: "openForBetaReaders",
+      title: "Open for Beta Readers",
+      type: "boolean",
+      description: "Shows this book on the beta readers page for applications.",
+      initialValue: false,
+    },
+    {
       name: "priority",
       title: "Priority",
       type: "number",
