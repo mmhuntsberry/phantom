@@ -62,7 +62,6 @@ export default async function StartHerePage() {
               key={featuredBook._id}
             >
               <div className={styles.featuredMedia}>
-                <p className={styles.cardKicker}>Featured book</p>
                 <div className={styles.cardMedia}>
                   {featuredBook.cover?.asset?.url ? (
                     <Image
@@ -85,6 +84,7 @@ export default async function StartHerePage() {
                 </div>
               </div>
               <div className={styles.featuredContent}>
+                <p className={styles.cardKicker}>Featured book</p>
                 <h2 className={styles.cardTitle}>{featuredBook.title}</h2>
                 {(featuredBook.shortPitch || featuredBook.tagline) && (
                   <p className={styles.cardDescription}>

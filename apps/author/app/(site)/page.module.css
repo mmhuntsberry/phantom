@@ -1,11 +1,35 @@
 .container {
   display: grid;
   gap: var(--space-2xl);
+  position: relative;
+}
+
+.container > * {
+  position: relative;
+  z-index: 1;
 }
 
 .hero {
   display: grid;
   gap: var(--space-sm);
+  position: relative;
+  padding-top: calc(var(--space-lg) + var(--space-sm));
+  overflow: visible;
+}
+
+.hero::before {
+  content: "Start";
+  position: absolute;
+  top: -0.05em;
+  left: 0.4em;
+  font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: var(--font-weight-light);
+  letter-spacing: 0.08em;
+  color: var(--palette-neutral-400);
+  opacity: var(--_opacity-24);
+  line-height: 0.9;
+  pointer-events: none;
+  text-transform: uppercase;
 }
 
 .kicker {
@@ -20,6 +44,7 @@
   font-weight: 1000;
   letter-spacing: -0.04em;
   margin: 0;
+  position: relative;
 }
 
 .promise {
@@ -66,7 +91,7 @@
 .featuredCard {
   grid-column: 1 / -1;
   grid-template-columns: minmax(160px, 220px) 1fr;
-  align-items: center;
+  align-items: stretch;
   gap: var(--space-xl);
   padding: var(--space-xl);
   border-radius: var(--border-radius-md);
@@ -84,6 +109,7 @@
 .featuredMedia {
   display: grid;
   gap: var(--space-sm);
+  height: 100%;
 }
 
 .featuredContent {
@@ -96,6 +122,8 @@
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
+  height: auto;
+  align-self: start;
   border-radius: var(--border-radius-sm);
   overflow: hidden;
   box-shadow: var(--shadow-xs);
@@ -257,6 +285,10 @@
         var(--palette-neutral-800)
       );
     color: var(--palette-neutral-300);
+  }
+
+  .hero::before {
+    color: var(--palette-neutral-800);
   }
 
   .featuredCard {

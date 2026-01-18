@@ -42,6 +42,7 @@ li {
 :root {
   --_opacity-8: 0.08;
   --_opacity-16: 0.16;
+  --_opacity-24: 0.24;
   --_opacity-32: 0.32;
   --_opacity-48: 0.48;
   --_opacity-64: 0.64;
@@ -64,15 +65,15 @@ li {
   --_font-size-1_25: 1.25rem;
   --_font-size-1_5: 1.5rem;
   --_font-size-1_75: 1.75rem;
-  --_font-weight-31: 0.31;
-  --_font-weight-121: 1.21;
-  --_font-weight-276: 2.76;
-  --_font-weight-410: 4.1;
-  --_font-weight-510: 5.1;
-  --_font-weight-650: 6.5;
-  --_font-weight-700: 7;
-  --_font-weight-870: 8.7;
-  --_font-weight-1000: 10;
+  --_font-weight-31: 100;
+  --_font-weight-121: 200;
+  --_font-weight-276: 300;
+  --_font-weight-410: 400;
+  --_font-weight-510: 500;
+  --_font-weight-650: 600;
+  --_font-weight-700: 700;
+  --_font-weight-870: 800;
+  --_font-weight-1000: 900;
   --_palette-gray-7: hsl(0, 0%, 7%);
   --_palette-gray-11: hsl(0, 0%, 11%);
   --_palette-gray-16: hsl(0, 0%, 16%);

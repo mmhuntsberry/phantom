@@ -23,10 +23,13 @@
 }
 
 .bodySection {
-  display: grid;
-  grid-template-columns: minmax(200px, 320px) 1fr;
-  gap: var(--space-xl);
-  align-items: start;
+  display: block;
+}
+
+.photoWrap {
+  float: right;
+  width: min(320px, 40vw);
+  margin: 0 0 var(--space-lg) var(--space-xl);
 }
 
 .photo {
@@ -64,8 +67,10 @@
 }
 
 @media (max-width: 900px) {
-  .bodySection {
-    grid-template-columns: 1fr;
+  .photoWrap {
+    float: none;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto var(--space-lg);
   }
 }
-

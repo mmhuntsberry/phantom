@@ -20,13 +20,15 @@ export default async function AboutPage() {
 
       <section className={styles.bodySection}>
         {page?.photo?.asset?.url && (
-          <div className={styles.photo}>
-            <Image
-              src={page.photo.asset.url}
-              alt={page.photo.alt || "Author photo"}
-              fill
-              className={styles.photoImage}
-            />
+          <div className={styles.photoWrap}>
+            <div className={styles.photo}>
+              <Image
+                src={page.photo.asset.url}
+                alt={page.photo.alt || "Author photo"}
+                fill
+                className={styles.photoImage}
+              />
+            </div>
           </div>
         )}
         {page?.body ? (
