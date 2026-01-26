@@ -2,10 +2,10 @@ import { desc, eq } from "drizzle-orm";
 import AdminReaderApplicants, {
   AdminApplicant,
 } from "../../../../components/AdminReaderApplicants";
-import AdminTokenSetter from "../../../../components/AdminTokenSetter";
 import { db } from "@/db/index";
 import { readerApplicants, readerInvites } from "@/db/schema";
 import { getBookById } from "../../../../sanity/sanity-utils";
+import AdminSectionNav from "../../../../components/AdminSectionNav";
 import styles from "./page.module.css";
 
 export const dynamic = "force-dynamic";
@@ -77,7 +77,7 @@ export default async function ReaderApplicantsPage() {
         </p>
       </section>
 
-      <AdminTokenSetter />
+      <AdminSectionNav />
       <AdminReaderApplicants applicants={formatted} />
     </div>
   );

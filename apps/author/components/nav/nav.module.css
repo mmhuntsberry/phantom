@@ -19,6 +19,14 @@
   text-transform: uppercase;
 }
 
+.buttonLink {
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+}
+
 .links {
   display: flex;
   gap: 16px;
@@ -67,6 +75,10 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   text-align: center;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
 }
 
 @media (max-width: 900px) {

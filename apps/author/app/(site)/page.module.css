@@ -288,7 +288,7 @@
   }
 
   .hero::before {
-    color: var(--palette-neutral-800);
+    color: var(--palette-neutral-6z00);
   }
 
   .featuredCard {

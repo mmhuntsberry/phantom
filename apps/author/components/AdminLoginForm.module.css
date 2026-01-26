@@ -1,0 +1,42 @@
+.form {
+  display: grid;
+  gap: var(--space-sm);
+  max-width: 560px;
+}
+
+.label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.input {
+  width: 100%;
+  border-radius: var(--border-radius-2xs);
+  border: var(--border-width-sm) solid var(--palette-neutral-300);
+  padding: var(--space-sm);
+  font-size: var(--fs-md);
+  background: transparent;
+  color: inherit;
+}
+
+.actions {
+  margin-top: var(--space-sm);
+}
+
+.error {
+  margin: 0;
+  color: #b91c1c;
+  font-size: var(--fs-sm);
+}
+
+@media (prefers-color-scheme: dark) {
+  .input {
+    border-color: var(--palette-neutral-600);
+  }
+
+  .error {
+    color: #fca5a5;
+  }
+}

@@ -1,0 +1,22 @@
+.title {
+  font-size: var(--fs-5xl);
+  line-height: 1.2;
+  margin-block-start: var(--space-none);
+  margin-block-end: var(--space-lg);
+}
+
+.backLink {
+  font-size: var(--fs-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  text-decoration: none;
+  color: inherit;
+  margin-block-start: var(--space-3xl);
+  margin-block-end: var(--space-xl);
+}
+
+.poem :global(p) {
+  white-space: pre-wrap;
+}
+

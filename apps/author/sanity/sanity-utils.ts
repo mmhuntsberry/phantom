@@ -10,6 +10,7 @@ import { Book } from "../types/Book";
 import { AboutPage } from "../types/AboutPage";
 import { NewsletterPage } from "../types/NewsletterPage";
 import { BetaPacket } from "../types/BetaPacket";
+import { Poem } from "../types/Poem";
 
 // export async function getProjects(): Promise<Project[]> {
 //   const client = createClient(config);
@@ -257,6 +258,48 @@ export async function getWriting(params: {
   }
 
   return null;
+}
+
+export async function getPoems(): Promise<Poem[]> {
+  const client = createClient(config);
+
+  return client.fetch(
+    groq`*[_type == "poem"]|order(publishedAt desc){
+      _id,
+      _createdAt,
+      title,
+      "slug": slug.current,
+      summary,
+      tags,
+      publishedAt
+    }`,
+    {},
+    { next: { revalidate: 3600 } }
+  );
+}
+
+export async function getPoem(slug: string): Promise<Poem | null> {
+  const client = createClient(config);
+
+  return client.fetch(
+    groq`*[_type == "poem" && slug.current == $slug][0]{
+      _id,
+      _createdAt,
+      title,
+      "slug": slug.current,
+      summary,
+      tags,
+      publishedAt,
+      content[]{
+        ...,
+        _type == "image" => {
+          ...,
+          asset->{url}
+        }
+      }
+    }`,
+    { slug }
+  );
 }
 
 export async function getWritingsGrouped(): Promise<{

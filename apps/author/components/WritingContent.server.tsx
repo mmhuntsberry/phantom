@@ -80,8 +80,7 @@ const VideoComponent = ({
   );
 };
 
-// Portable Text serializers
-const serializers: PortableTextComponents = {
+const components: PortableTextComponents = {
   list: {
     bullet: ({ children }) => (
       <ul style={{ fontSize: "var(--fs-sm)", paddingInlineStart: "64px" }}>
@@ -94,42 +93,37 @@ const serializers: PortableTextComponents = {
       <li style={{ listStyleType: "disc" }}>{children}</li>
     ),
   },
+  block: {
+    h1: ({ children }) => (
+      <h1
+        style={{
+          fontSize: "var(--fs-xl)",
+          lineHeight: "1.2",
+          paddingBlock: "96px",
+        }}
+        className="container"
+      >
+        {children}
+      </h1>
+    ),
+    h3: ({ children }) => (
+      <h3 style={{ fontSize: "var(--fs-lg)", lineHeight: "1.2" }}>
+        {children}
+      </h3>
+    ),
+    normal: ({ children }) => (
+      <p
+        style={{
+          fontSize: "var(--fs-xl)",
+          lineHeight: "1.2",
+          fontWeight: "300",
+        }}
+      >
+        {children}
+      </p>
+    ),
+  },
   types: {
-    block: (props) => {
-      switch (props.value.style) {
-        case "h1":
-          return (
-            <h1
-              style={{
-                fontSize: "var(--fs-xl)",
-                lineHeight: "1.2",
-                paddingBlock: "96px",
-              }}
-              className="container"
-            >
-              {props.value.children[0].text}
-            </h1>
-          );
-        case "h3":
-          return (
-            <h3 style={{ fontSize: "var(--fs-lg)", lineHeight: "1.2" }}>
-              {props.value.children[0].text}
-            </h3>
-          );
-        default:
-          return (
-            <p
-              style={{
-                fontSize: "var(--fs-xl)",
-                lineHeight: "1.2",
-                fontWeight: "300",
-              }}
-            >
-              {props.value.children[0].text}
-            </p>
-          );
-      }
-    },
     image: ImageComponent,
     video: VideoComponent,
   },
@@ -144,19 +138,11 @@ interface WritingContentProps {
 const WritingContent: React.FC<WritingContentProps> = ({ title, content }) => {
   return (
     <>
-      {content.map((block: any, index: number) => (
-        <PortableText
-          key={index}
-          value={[block]}
-          onMissingComponent={false}
-          components={{
-            ...serializers,
-            types: {
-              ...serializers.types,
-            },
-          }}
-        />
-      ))}
+      <PortableText
+        value={content}
+        onMissingComponent={false}
+        components={components}
+      />
     </>
   );
 };

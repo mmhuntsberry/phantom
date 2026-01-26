@@ -1,21 +1,18 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 
 import { db } from "@/db/index";
 import { readerApplicants, readerInvites } from "@/db/schema";
 import { getBookById } from "../../../../../sanity/sanity-utils";
 import { sendBetaReaderWelcomeEmail } from "../../../../../lib/email";
+import { requireAdmin } from "../../../../../lib/require-admin";
 
-export async function POST(req: Request) {
-  const body = await req.json();
-  const { applicantId, adminToken } = body || {};
+export async function POST(req: NextRequest) {
+  const authed = await requireAdmin(req);
+  if (authed instanceof NextResponse) return authed;
 
-  if (process.env.ADMIN_TOKEN && adminToken !== process.env.ADMIN_TOKEN) {
-    return NextResponse.json(
-      { success: false, error: "Unauthorized." },
-      { status: 401 }
-    );
-  }
+  const body = await req.json().catch(() => null);
+  const { applicantId } = body || {};
 
   if (!applicantId || typeof applicantId !== "number") {
     return NextResponse.json(

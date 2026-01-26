@@ -17,6 +17,7 @@
     "author:db:generate": "cd apps/author && dotenv -e .env.local -- drizzle-kit generate",
     "author:db:migrate": "cd apps/author && dotenv -e .env.local -- ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" scripts/run-migrations.ts",
     "author:db:push": "cd apps/author && dotenv -e .env.local -- drizzle-kit push",
+    "author:admin:create-user": "cd apps/author && dotenv -e .env.local -- ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" scripts/create-admin-user.ts",
     "author:test:e2e": "PLAYWRIGHT_BASE_URL=http://localhost:4200 dotenv -e apps/author/.env.local -- playwright test -c apps/author/playwright.config.ts",
     "author:test:e2e:serve": "PLAYWRIGHT_START_SERVER=1 dotenv -e apps/author/.env.local -- playwright test -c apps/author/playwright.config.ts"
   },
@@ -101,6 +102,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "d3": "^7.9.0",
     "@graphql-tools/schema": "^10.0.2",
     "@kofile/gds-foundations": "^1.2.2",
     "@kofile/gds-react": "^1.2.2",

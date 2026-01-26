@@ -8,7 +8,7 @@ import {
   readingSurveyResponses,
 } from "@/db/schema";
 import styles from "./page.module.css";
-import AdminTokenSetter from "../../../../components/AdminTokenSetter";
+import AdminSectionNav from "../../../../components/AdminSectionNav";
 
 export const dynamic = "force-dynamic";
 
@@ -25,10 +25,10 @@ export default async function ReaderMetricsPage({
   searchParams,
 }: {
   searchParams?: {
-    range?: string;
-    program?: string;
-    cohort?: string;
-    mode?: string;
+      range?: string;
+      program?: string;
+      cohort?: string;
+      mode?: string;
   };
 }) {
   const invites = await db.select().from(readerInvites);
@@ -111,7 +111,9 @@ export default async function ReaderMetricsPage({
   });
 
   const filteredSessions = sessions.filter((session) => {
-    const invite = session.inviteId ? inviteById.get(session.inviteId) : null;
+    const invite = session.inviteId
+      ? inviteById.get(session.inviteId) ?? null
+      : null;
     if (!matchesFilters(invite)) return false;
     if (!cutoff) return true;
     return session.startedAt ? session.startedAt >= cutoff : true;
@@ -187,7 +189,10 @@ export default async function ReaderMetricsPage({
       const submitted = new Date(survey.submittedAt).getTime();
       return submitted - completed;
     })
-    .filter((value): value is number => Number.isFinite(value) && value >= 0);
+    .filter(
+      (value): value is number =>
+        value !== null && Number.isFinite(value) && value >= 0
+    );
 
   function medianMs(values: number[]) {
     if (!values.length) return null;
@@ -258,8 +263,7 @@ export default async function ReaderMetricsPage({
         </p>
       </section>
 
-      <AdminTokenSetter />
-
+      <AdminSectionNav />
       <section className={styles.filters}>
         <div className={styles.filterHeader}>
           <p className={styles.filterKicker}>Filters</p>

@@ -12,6 +12,7 @@ import betaPacket from "./beta-packet-schema";
 import betaApplicant from "./beta-applicant-schema";
 import betaFeedback from "./beta-feedback-schema";
 import manuscriptChapter from "./manuscript-chapter-schema";
+import poem from "./poem-schema";
 
 const schemas = [
   snippet,
@@ -28,6 +29,7 @@ const schemas = [
   betaApplicant,
   betaFeedback,
   manuscriptChapter,
+  poem,
 ];
 
 export default schemas;

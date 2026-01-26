@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { db } from "@/db/index";
 import { readingSurveyResponses } from "@/db/schema";
-import AdminTokenSetter from "../../../../../components/AdminTokenSetter";
+import AdminSectionNav from "../../../../../components/AdminSectionNav";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -47,7 +47,7 @@ export default async function ReaderSurveyDetailPage({
         </p>
       </section>
 
-      <AdminTokenSetter />
+      <AdminSectionNav />
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Answers</h2>
         <div className={styles.answers}>

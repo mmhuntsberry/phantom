@@ -1,19 +1,22 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { eq } from "drizzle-orm";
+import { NextRequest } from "next/server";
 
 import { db } from "@/db/index";
 import { readingEvents, readingSessions } from "@/db/schema";
+import { verifyAdminSession } from "../../../../../lib/session";
 
-export async function POST(req: Request) {
-  const body = await req.json();
-  const { sessionId, adminToken } = body || {};
+export async function POST(req: NextRequest) {
+  const body = await req.json().catch(() => null);
+  const { sessionId } = body || {};
   const cookieSessionId = cookies().get("reader_session")?.value;
+  const adminSessionToken = req.cookies.get("admin_session")?.value;
+  const isAdmin = Boolean(await verifyAdminSession(adminSessionToken));
 
   // Allow reset if:
-  // 1. Admin token is provided and valid, OR
+  // 1. Admin is authed, OR
   // 2. Session ID matches the current user's session cookie
-  const isAdmin = process.env.ADMIN_TOKEN && adminToken === process.env.ADMIN_TOKEN;
   const isOwnSession = sessionId && sessionId === cookieSessionId;
 
   if (!isAdmin && !isOwnSession) {

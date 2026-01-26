@@ -4,11 +4,20 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import path from "path";
 import fs from "fs";
+import { verifyAdminSession } from "../../../../lib/session";
 
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN;
 
 export async function POST(req: Request) {
-  // Verify admin token
+  // Verify admin session (preferred) or legacy admin token
+  const cookieHeader = req.headers.get("cookie") || "";
+  const sessionMatch = cookieHeader.match(/(?:^|;\\s*)admin_session=([^;]+)/);
+  const sessionToken = sessionMatch ? decodeURIComponent(sessionMatch[1]) : null;
+  const session = await verifyAdminSession(sessionToken);
+  if (session) {
+    // ok
+  } else {
+    // Verify admin token
   const authHeader = req.headers.get("authorization");
   const body = await req.json().catch(() => ({}));
   const token = authHeader?.replace("Bearer ", "") || body.token;
@@ -18,6 +27,7 @@ export async function POST(req: Request) {
       { success: false, error: "Unauthorized" },
       { status: 401 }
     );
+  }
   }
 
   const databaseUrl =

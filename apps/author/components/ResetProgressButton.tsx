@@ -6,12 +6,10 @@ import styles from "./ResetProgressButton.module.css";
 
 type ResetProgressButtonProps = {
   sessionId: string;
-  adminToken?: string;
 };
 
 export default function ResetProgressButton({
   sessionId,
-  adminToken,
 }: ResetProgressButtonProps) {
   const [status, setStatus] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -30,7 +28,6 @@ export default function ResetProgressButton({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           sessionId: sessionId || undefined,
-          adminToken: adminToken || undefined,
         }),
       });
 

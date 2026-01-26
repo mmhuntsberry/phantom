@@ -1,30 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
+import { verifyAdminSession } from "./lib/session";
 
-export function middleware(request: NextRequest) {
-  const { pathname, searchParams } = request.nextUrl;
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
   if (!pathname.startsWith("/admin")) {
     return NextResponse.next();
   }
 
-  const adminToken = process.env.ADMIN_TOKEN;
-  if (!adminToken) {
+  if (pathname === "/admin/login") {
     return NextResponse.next();
   }
 
-  const tokenFromQuery = searchParams.get("admin");
-  const tokenFromHeader = request.headers.get("x-admin-token");
-  const tokenFromCookie = request.cookies.get("admin_token")?.value;
+  const sessionToken = request.cookies.get("admin_session")?.value;
+  const session = await verifyAdminSession(sessionToken);
+  if (session) return NextResponse.next();
 
-  if (
-    tokenFromQuery === adminToken ||
-    tokenFromHeader === adminToken ||
-    tokenFromCookie === adminToken
-  ) {
-    return NextResponse.next();
-  }
-
-  return new NextResponse("Not Found", { status: 404 });
+  const loginUrl = new URL("/admin/login", request.url);
+  return NextResponse.redirect(loginUrl);
 }
 
 export const config = {

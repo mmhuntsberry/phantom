@@ -136,19 +136,27 @@ export default async function ReaderSessionPage({
           <p className={styles.empty}>No events yet.</p>
         ) : (
           <ul className={styles.eventList}>
-            {events.map((event) => (
-              <li key={event.id} className={styles.eventItem}>
-                <div>
-                  <p className={styles.detail}>{event.eventName}</p>
-                  {event.meta?.chapterOrder && (
-                    <p className={styles.meta}>
-                      Chapter {String(event.meta.chapterOrder)}
-                    </p>
-                  )}
-                </div>
-                <p className={styles.meta}>{formatDate(event.createdAt)}</p>
-              </li>
-            ))}
+            {events.map((event) => {
+              const chapterOrder =
+                event.meta &&
+                typeof event.meta === "object" &&
+                "chapterOrder" in event.meta
+                  ? event.meta.chapterOrder
+                  : null;
+              return (
+                <li key={event.id} className={styles.eventItem}>
+                  <div>
+                    <p className={styles.detail}>{event.eventName}</p>
+                    {chapterOrder != null && (
+                      <p className={styles.meta}>
+                        Chapter {String(chapterOrder)}
+                      </p>
+                    )}
+                  </div>
+                  <p className={styles.meta}>{formatDate(event.createdAt)}</p>
+                </li>
+              );
+            })}
           </ul>
         )}
       </section>
