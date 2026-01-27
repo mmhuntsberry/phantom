@@ -1,0 +1,102 @@
+.section {
+  padding-block: clamp(28px, 4vw, 56px);
+  margin-top: clamp(28px, 5vw, 64px);
+  border-top: 1px solid var(--border-1);
+}
+
+.section[data-variant="b"] {
+  background: color-mix(in oklab, var(--surface-3) 55%, transparent);
+}
+
+.sectionInner {
+  display: grid;
+  gap: 14px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: var(--fs-2xl);
+  letter-spacing: -0.03em;
+}
+
+.prose {
+  display: grid;
+  gap: 12px;
+}
+
+.block {
+  padding-block: 14px;
+}
+
+.h2 {
+  margin: 22px 0 8px;
+  font-size: var(--fs-xl);
+  letter-spacing: -0.02em;
+}
+
+.h3 {
+  margin: 18px 0 6px;
+  font-size: var(--fs-lg);
+  letter-spacing: -0.02em;
+}
+
+.p {
+  margin: 0;
+  font-size: var(--fs-md);
+  color: var(--text-2);
+  line-height: 1.35;
+}
+
+.ul {
+  margin: 8px 0 0;
+  padding-left: 22px;
+  display: grid;
+  gap: 8px;
+}
+
+.li {
+  list-style: disc;
+  font-size: var(--fs-md);
+  color: var(--text-2);
+  line-height: 1.3;
+}
+
+.figure {
+  margin: 14px 0;
+  display: grid;
+  gap: 8px;
+}
+
+.figureMedia {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-1);
+  box-shadow: var(--shadow-1);
+}
+
+.figcaption {
+  margin: 0;
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.video {
+  margin: 22px 0;
+}
+
+.videoFrame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-1);
+  box-shadow: var(--shadow-1);
+}
+
+.videoCaption {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}

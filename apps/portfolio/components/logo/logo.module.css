@@ -1,52 +1,15 @@
 .logo {
-  display: inline-flex;
-  flex-direction: column;
-  font-size: 40px;
+  display: inline-block;
+  font-size: var(--fs-2xl);
   margin: 0;
   text-transform: uppercase;
   font-weight: 1000;
+  line-height: 1;
+  letter-spacing: -0.08em;
+  white-space: nowrap;
 }
 
-.first {
-  line-height: 0.8;
-  letter-spacing: 6px;
-}
-
-.middle {
-  font-weight: 100;
-  letter-spacing: 4px;
-  line-height: 0.8;
-}
-
-.last {
-  line-height: 0.8;
-  letter-spacing: -3px;
-}
 
 @media (min-width: 768px) {
-  .first {
-    letter-spacing: 7px;
-  }
 
-  .middle {
-    letter-spacing: 8px;
-  }
-
-  .last {
-    letter-spacing: -4px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .first {
-    letter-spacing: 7px;
-  }
-
-  .middle {
-    letter-spacing: 8px;
-  }
-
-  .last {
-    letter-spacing: -4px;
-  }
 }

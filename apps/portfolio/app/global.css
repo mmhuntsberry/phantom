@@ -5,7 +5,8 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: var(--palette-neutral-100);
+  background: var(--page-bg);
+  overflow-x: clip;
 }
 
 body,
@@ -14,12 +15,21 @@ html {
   padding: 0;
   font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
     "Arial", sans-serif;
-  background-color: var(--palette-neutral-100);
+  color: var(--text-1);
+  background: var(--page-bg);
+  line-height: 1.4;
+  overflow-x: clip;
 }
 
 a {
-  all: unset;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  text-underline-offset: 0.2em;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--palette-alert-info-500) 35%, transparent);
 }
 
 ul {
@@ -39,7 +49,71 @@ li {
   border-radius: var(--border-radius-2xs);
 }
 
+.skipLink {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  padding: 10px 12px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-1);
+  transform: translateY(-160%);
+  transition: transform 160ms ease;
+  z-index: 2000;
+}
+
+.skipLink:focus {
+  transform: translateY(0);
+}
+
 :root {
+  --page-bg: radial-gradient(
+      1200px 600px at 12% -10%,
+      color-mix(in oklab, var(--palette-alert-info-500) 18%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 500px at 110% 20%,
+      color-mix(in oklab, var(--palette-alert-highlight-500) 14%, transparent),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      var(--palette-neutral-100),
+      color-mix(in oklab, var(--palette-neutral-100) 85%, var(--palette-neutral-200))
+    );
+
+  --surface-1: var(--palette-neutral-100);
+  --surface-2: color-mix(in oklab, var(--palette-neutral-100) 70%, transparent);
+  --surface-3: var(--palette-neutral-200);
+
+  --text-1: var(--palette-neutral-1000);
+  --text-2: var(--palette-neutral-700);
+  --text-3: var(--palette-neutral-500);
+
+  --border-1: color-mix(in oklab, var(--palette-neutral-300) 70%, transparent);
+  --shadow-1: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-2: 0 18px 60px rgba(0, 0, 0, 0.12);
+
+  --radius-lg: var(--border-radius-lg);
+  --radius-md: var(--border-radius-md);
+  --radius-sm: var(--border-radius-sm);
+
+  --control-height: 44px;
+  --control-radius: var(--radius-sm);
+  --control-gap: 10px;
+  --control-pad-inline: 16px;
+  --control-border: 1px solid var(--border-1);
+  --control-bg: var(--surface-2);
+  --control-bg-hover: color-mix(in oklab, var(--surface-2) 65%, var(--surface-1));
+  --control-bg-active: var(--surface-3);
+  --control-shadow: var(--shadow-1);
+  --control-shadow-hover: var(--shadow-2);
+  --control-primary-bg: color-mix(in oklab, var(--text-1) 6%, var(--surface-1));
+  --control-primary-fg: var(--text-1);
+  --control-primary-border: color-mix(in oklab, var(--text-1) 22%, var(--border-1));
+
   --_opacity-8: 0.08;
   --_opacity-16: 0.16;
   --_opacity-32: 0.32;
@@ -413,6 +487,38 @@ li {
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --page-bg: radial-gradient(
+        1200px 600px at 12% -10%,
+        color-mix(in oklab, var(--palette-alert-info-500) 24%, transparent),
+        transparent 60%
+      ),
+      radial-gradient(
+        900px 500px at 110% 20%,
+        color-mix(in oklab, var(--palette-alert-highlight-500) 18%, transparent),
+        transparent 55%
+      ),
+      linear-gradient(
+        180deg,
+        var(--palette-neutral-1000),
+        color-mix(in oklab, var(--palette-neutral-1000) 75%, var(--palette-neutral-900))
+      );
+
+    --surface-1: var(--palette-neutral-1000);
+    --surface-2: color-mix(in oklab, var(--palette-neutral-900) 75%, transparent);
+    --surface-3: var(--palette-neutral-900);
+
+    --text-1: var(--palette-neutral-100);
+    --text-2: var(--palette-neutral-300);
+    --text-3: var(--palette-neutral-500);
+
+    --border-1: color-mix(in oklab, var(--palette-neutral-700) 45%, transparent);
+    --shadow-1: 0 10px 30px rgba(0, 0, 0, 0.35);
+    --shadow-2: 0 18px 60px rgba(0, 0, 0, 0.5);
+
+    --control-bg-hover: color-mix(in oklab, var(--surface-2) 65%, var(--surface-1));
+    --control-primary-bg: color-mix(in oklab, var(--text-1) 10%, var(--surface-1));
+    --control-primary-border: color-mix(in oklab, var(--text-1) 22%, var(--border-1));
+
     --study-section-bg-color-100: var(--palette-neutral-1000);
     --study-section-bg-color-200: var(--palette-neutral-900);
     --study-section-text-color-1000: var(--palette-neutral-100);
@@ -420,24 +526,70 @@ li {
   }
 
   html {
-    background-color: var(--palette-neutral-1000);
-    color: var(--palette-neutral-100);
+    background: var(--page-bg);
+    color: var(--text-1);
   }
 
   body {
-    background-color: var(--palette-neutral-1000);
+    background: var(--page-bg);
   }
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
+.control {
+  height: var(--control-height);
+  padding-inline: var(--control-pad-inline);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--control-gap);
+  border-radius: var(--control-radius);
+  border: var(--control-border);
+  background: var(--control-bg);
+  box-shadow: var(--control-shadow);
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease,
+    border-color 120ms ease, opacity 120ms ease;
+}
+
+.control:hover {
+  background: var(--control-bg-hover);
+  box-shadow: var(--control-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.control:active {
+  transform: translateY(0);
+}
+
+.control--primary {
+  background: var(--control-primary-bg);
+  color: var(--control-primary-fg);
+  border-color: var(--control-primary-border);
+}
+
+.control--active {
+  background: var(--control-bg-active);
+  border-color: color-mix(in oklab, var(--text-1) 18%, var(--border-1));
+  opacity: 1;
 }
 
 .container {
   margin: 0 auto;
-  padding-inline: 24px;
-  max-width: 1024px;
+  padding-inline: clamp(20px, 3vw, 32px);
+  max-width: 1120px;
 }
 
 @media (max-width: 1024px) {
   .container {
-    padding-inline: 24px;
+    padding-inline: clamp(20px, 3vw, 32px);
     max-width: 100%;
   }
 }

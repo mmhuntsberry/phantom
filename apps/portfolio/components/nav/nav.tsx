@@ -17,15 +17,20 @@ export type NavProps = {
   pathname: string;
 };
 
-export default function Nav({  pathname }: NavProps) {
+export default function Nav({ pathname }: NavProps) {
   return (
     <nav className={styles.nav}>
       {navLinks.map((link: NavLink) => (
         <Link
-          className={link.href === pathname ? styles.active : styles.link}
+          className={
+            link.href === pathname
+              ? `control control--active ${styles.link}`
+              : `control ${styles.link}`
+          }
           href={link.href}
           key={link.href}
           prefetch
+          aria-current={link.href === pathname ? "page" : undefined}
         >
           {link.label}
         </Link>

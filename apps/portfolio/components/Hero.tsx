@@ -1,4 +1,5 @@
 import Image from "next/image";
+import styles from "./Hero.module.css";
 
 export const HeroMedia = ({
   media,
@@ -16,20 +17,12 @@ export const HeroMedia = ({
 
   if (media.type === "image" && media.image?.asset?.url) {
     return (
-      <div
-        style={{
-          position: "relative",
-          width: "100%",
-          maxWidth: "1024px",
-          height: "512px",
-          margin: "0 auto",
-        }}
-      >
+      <div className={styles.frame}>
         <Image
           src={media.image.asset.url}
-          alt={media.image.alt || "Hero Image"}
+          alt={media.image.alt || ""}
           fill
-          style={{ objectFit: "cover", objectPosition: "bottom" }}
+          className={styles.image}
           priority
         />
       </div>
@@ -38,28 +31,13 @@ export const HeroMedia = ({
 
   if (media.type === "video" && media.video) {
     return (
-      <div
-        style={{
-          position: "relative",
-          height: "480px",
-          maxWidth: "1024px",
-          margin: "0 auto",
-        }}
-      >
+      <div className={styles.frame}>
         <iframe
           src={`${media.video}?hideEmbedTopBar=true&hide_share=true&hide_title=true&hide_owner=true&hide_speed=true`}
           title="Hero Video"
           allow="autoplay; fullscreen"
           allowFullScreen
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            border: "none",
-            borderRadius: "0",
-          }}
+          className={styles.iframe}
         />
       </div>
     );

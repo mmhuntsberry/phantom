@@ -1,13 +1,7 @@
-import { Source_Sans_3 } from "next/font/google";
-
 // import "@mmhuntsberry/phantom-tokens";
 import "../global.css";
 import Header from "../../components/header/header";
-
-const sourceSans3 = Source_Sans_3({
-  subsets: ["latin"],
-  display: "swap",
-});
+import Footer from "../../components/footer/footer";
 
 // export const metadata = {
 //   title: "Matthew Huntsberry | Design Systems Engineer",
@@ -20,10 +14,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={sourceSans3.className}>
+    <html lang="en">
       <body>
+        <a className="skipLink" href="#content">
+          Skip to content
+        </a>
         <Header />
-        <main>{children}</main>
+        <main id="content">{children}</main>
+        <Footer />
       </body>
     </html>
   );

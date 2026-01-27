@@ -1,16 +1,41 @@
+.page {
+  padding-block: clamp(32px, 5vw, 72px);
+}
+
+.header {
+  margin-bottom: 28px;
+}
+
+.pageTitle {
+  margin: 0;
+  font-size: var(--fs-4xl);
+  letter-spacing: -0.04em;
+}
+
+.pageLede {
+  margin: 12px 0 0;
+  color: var(--text-2);
+  max-width: 70ch;
+  font-size: var(--fs-md);
+}
+
 .card {
   margin-bottom: 2rem;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-1);
+  background: color-mix(in oklab, var(--surface-1) 70%, transparent);
+  box-shadow: var(--shadow-1);
+  padding: 18px 18px 12px;
 }
 
 .topper {
   display: flex;
   gap: 2rem;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   @media (max-width: 640px) {
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     gap: 0.5rem;
   }
 }
@@ -26,7 +51,7 @@
 .title h3 {
   font-weight: 400;
   font-size: var(--fs-md);
-  color: var(--palette-neutral-700);
+  color: var(--text-2);
   margin: 0;
   white-space: nowrap;
   transition: font-size 0.3s ease;
@@ -67,7 +92,7 @@
 
 .content {
   line-height: 1.2;
-  font-weight: 300;
+  font-weight: 320;
   margin-bottom: var(--space-md);
   font-size: var(--fs-md);
   transition: font-size 0.3s ease;

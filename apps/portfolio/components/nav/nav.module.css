@@ -1,21 +1,15 @@
 .nav {
-  font-size: 20px;
+  font-size: var(--fs-md);
   display: flex;
-  gap: 16px;
-  color: #0a3f70;
-  font-weight: 500;
+  gap: var(--space-xs);
 }
 
-/* .active {
-  color: #1b1b1b;
-} */
-
 .link {
-  opacity: 0.64;
+  opacity: 0.85;
 }
 
 @media (prefers-color-scheme: dark) {
   .nav {
-    color: var(--palette-neutral-100);
+    color: var(--text-1);
   }
 }
