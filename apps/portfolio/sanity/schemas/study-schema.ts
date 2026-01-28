@@ -1,4 +1,5 @@
 import type { Rule } from "sanity";
+import NormalizeArrayInput from "../components/NormalizeArrayInput";
 
 const study = {
   name: "study",
@@ -93,8 +94,12 @@ const study = {
       title: "Tags",
       type: "array",
       of: [{ type: "string" }],
+      initialValue: [],
       options: {
         layout: "tags",
+      },
+      components: {
+        input: NormalizeArrayInput,
       },
     },
     {

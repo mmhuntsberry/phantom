@@ -2,7 +2,14 @@ import { getStudies } from "../../sanity/sanity-utils";
 
 import NextLink from "next/link";
 import styles from "./page.module.css";
-import { ArrowRight, Compass, Link, Sparkle, ShieldCheck } from "@phosphor-icons/react/dist/ssr";
+import {
+  ArrowRight,
+  Compass,
+  Cpu,
+  Link,
+  ShieldCheck,
+  UsersThree,
+} from "@phosphor-icons/react/dist/ssr";
 import LogoWall from "../../components/LogoWall";
 import type { Study } from "../../types/Study";
 
@@ -10,31 +17,99 @@ function normalize(value: string) {
   return value.toLowerCase();
 }
 
-function pickStartHere(studies: Study[]) {
-  const by = (predicate: (study: Study) => boolean) => studies.find(predicate);
-  const has = (study: Study, needle: string) =>
-    normalize(study.name).includes(needle) ||
-    normalize(study.summary || "").includes(needle) ||
-    (study.tags || []).some((t) => normalize(t).includes(needle));
+function scoreStudy(study: Study, keywords: readonly string[]) {
+  const hay = [
+    normalize(study.name),
+    normalize(study.summary || ""),
+    normalize(study.about || ""),
+    ...(study.tags || []).map((t) => normalize(t)),
+  ].join(" | ");
 
-  const designSystems = by((s) => has(s, "design system") || has(s, "component"));
-  const accessibility = by((s) => has(s, "a11y") || has(s, "accessibility"));
-  const automation = by((s) => has(s, "mcp") || has(s, "ai") || has(s, "automation"));
+  let score = 0;
+  for (const kw of keywords) {
+    if (hay.includes(kw)) score += 1;
+  }
+  return score;
+}
 
-  const unique: Study[] = [];
-  for (const candidate of [designSystems, accessibility, automation]) {
-    if (!candidate) continue;
-    if (unique.some((s) => s._id === candidate._id)) continue;
-    unique.push(candidate);
+function pickBestStudy(
+  studies: Study[],
+  keywords: readonly string[],
+  excludeIds: Set<string>
+) {
+  let best: Study | null = null;
+  let bestScore = 0;
+
+  for (const study of studies) {
+    if (excludeIds.has(study._id)) continue;
+    const s = scoreStudy(study, keywords);
+    if (s > bestScore) {
+      bestScore = s;
+      best = study;
+    }
   }
 
+  return { best, bestScore };
+}
+
+type StartHereItem = {
+  label: string;
+  icon: React.ReactNode;
+  study: Study;
+};
+
+function pickStartHere(studies: Study[]): StartHereItem[] {
+  const categories = [
+    {
+      label: "Architecture",
+      icon: <Compass size={20} />,
+      keywords: ["token", "tokens", "theming", "theme", "architecture", "primitives", "alias"],
+    },
+    {
+      label: "Accessibility",
+      icon: <ShieldCheck size={20} />,
+      keywords: ["a11y", "accessibility", "wcag", "aria", "keyboard", "screen reader"],
+    },
+    {
+      label: "AI workflows",
+      icon: <Cpu size={20} />,
+      keywords: ["mcp", "ai", "automation", "workflow", "llm", "prompt", "token aware"],
+    },
+    {
+      label: "Leadership",
+      icon: <UsersThree size={20} />,
+      keywords: ["lead", "leading", "leadership", "teams", "ownership", "trust", "governance"],
+    },
+  ] as const;
+
+  const used = new Set<string>();
+  const picked: StartHereItem[] = [];
+
+  for (const category of categories) {
+    const { best, bestScore } = pickBestStudy(studies, category.keywords, used);
+    if (best && bestScore > 0) {
+      used.add(best._id);
+      picked.push({
+        label: category.label,
+        icon: category.icon,
+        study: best,
+      });
+    }
+  }
+
+  // Fill any remaining slots (up to 4) with the most recent studies not yet used.
   for (const s of studies) {
-    if (unique.length >= 3) break;
-    if (unique.some((u) => u._id === s._id)) continue;
-    unique.push(s);
+    if (picked.length >= 4) break;
+    if (used.has(s._id)) continue;
+    used.add(s._id);
+    picked.push({
+      label: "Case study",
+      icon: <ArrowRight size={20} />,
+      study: s,
+    });
   }
 
-  return unique.slice(0, 3);
+  return picked.slice(0, 4);
 }
 
 export default async function Index() {
@@ -89,7 +164,7 @@ export default async function Index() {
 
       <section className={`${styles.section} container`}>
         <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Credibility</h2>
+          <h2 className={styles.sectionTitle}>Where I’ve shipped</h2>
           <p className={styles.sectionSubtitle}>
             Design systems work across publishing brands and enterprise platforms.
           </p>
@@ -115,42 +190,22 @@ export default async function Index() {
               </p>
             </div>
             <div className={styles.startHereGrid}>
-              <NextLink className={styles.startHereCard} href={`/studies/${startHere[0].slug}`}>
-                <div className={styles.startHereIcon} aria-hidden="true">
-                  <Compass size={20} />
-                </div>
-                <div className={styles.startHereText}>
-                  <p className={styles.startHereCardKicker}>Design systems</p>
-                  <p className={styles.startHereCardTitle}>{startHere[0].name}</p>
-                </div>
-                <ArrowRight className={styles.startHereArrow} size={24} aria-hidden="true" />
-              </NextLink>
-
-              {startHere[1] && (
-                <NextLink className={styles.startHereCard} href={`/studies/${startHere[1].slug}`}>
+              {startHere.map((item) => (
+                <NextLink
+                  key={`${item.label}-${item.study._id}`}
+                  className={styles.startHereCard}
+                  href={`/studies/${item.study.slug}`}
+                >
                   <div className={styles.startHereIcon} aria-hidden="true">
-                    <ShieldCheck size={20} />
+                    {item.icon}
                   </div>
                   <div className={styles.startHereText}>
-                    <p className={styles.startHereCardKicker}>Accessibility</p>
-                    <p className={styles.startHereCardTitle}>{startHere[1].name}</p>
+                    <p className={styles.startHereCardKicker}>{item.label}</p>
+                    <p className={styles.startHereCardTitle}>{item.study.name}</p>
                   </div>
                   <ArrowRight className={styles.startHereArrow} size={24} aria-hidden="true" />
                 </NextLink>
-              )}
-
-              {startHere[2] && (
-                <NextLink className={styles.startHereCard} href={`/studies/${startHere[2].slug}`}>
-                  <div className={styles.startHereIcon} aria-hidden="true">
-                    <Sparkle size={20} />
-                  </div>
-                  <div className={styles.startHereText}>
-                    <p className={styles.startHereCardKicker}>Automation</p>
-                    <p className={styles.startHereCardTitle}>{startHere[2].name}</p>
-                  </div>
-                  <ArrowRight className={styles.startHereArrow} size={24} aria-hidden="true" />
-                </NextLink>
-              )}
+              ))}
             </div>
           </div>
         )}

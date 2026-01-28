@@ -187,10 +187,6 @@ export default function LogoWall() {
         <BrandRow items={featured} ariaLabel="Featured brands" direction={1} />
         <BrandRow items={hearst} ariaLabel="More brands" direction={-1} />
       </div>
-
-      <p className={styles.note}>
-        Replace these wordmarks with approved SVGs in `apps/portfolio/public/logos` when available.
-      </p>
     </section>
   );
 }
