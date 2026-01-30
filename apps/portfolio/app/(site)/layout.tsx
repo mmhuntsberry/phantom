@@ -3,6 +3,15 @@ import "../global.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 
+export const metadata = {
+  title: "Matthew Huntsberry | Design Systems Engineer",
+  description:
+    "Developer and design systems engineer building scalable, accessible front-end platforms.",
+  icons: {
+    icon: "/favicon.svg",
+  },
+};
+
 // export const metadata = {
 //   title: "Matthew Huntsberry | Design Systems Engineer",
 //   description: "",

@@ -12,8 +12,9 @@ import type { PortableTextComponents } from "@portabletext/react";
 
 export default async function Resume() {
   const jobs: Job[] = await getJobs();
+  // Sort in chronological order (oldest first)
   const sortedJobs = [...jobs].sort(
-    (a, b) => new Date(b._createdAt).getTime() - new Date(a._createdAt).getTime()
+    (a, b) => new Date(a._createdAt).getTime() - new Date(b._createdAt).getTime()
   );
 
   const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "mmhuntsberry@gmail.com";
@@ -43,8 +44,8 @@ export default async function Resume() {
           <div>
             <h1 className={styles.pageTitle}>Resume</h1>
             <p className={styles.pageLede}>
-              Design systems leadership, front end engineering, and platform-minded
-              delivery.
+              Design systems architecture, end-to-end platform development, and 
+              cross-functional leadership that bridges design and engineering.
             </p>
           </div>
 

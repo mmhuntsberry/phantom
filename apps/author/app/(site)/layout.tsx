@@ -6,10 +6,16 @@ import { InstagramLogo } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
 export const metadata = {
+  title: "Matthew Huntsberry | Author",
+  description:
+    "Fiction, stories, and books by Matthew Huntsberry. Read, subscribe, and stay close to the work.",
   viewport: {
     width: "device-width",
     initialScale: 1,
     maximumScale: 5,
+  },
+  icons: {
+    icon: "/favicon.svg",
   },
 };
 

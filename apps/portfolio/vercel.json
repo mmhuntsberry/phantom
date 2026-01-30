@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npx nx build portfolio",
-  "devCommand": "npx nx serve portfolio",
+  "buildCommand": "cd ../.. && npx nx build portfolio",
+  "devCommand": "cd ../.. && npx nx serve portfolio",
   "framework": "nextjs",
-  "outputDirectory": "dist/apps/portfolio/.next"
+  "outputDirectory": "../../dist/apps/portfolio/.next"
 }

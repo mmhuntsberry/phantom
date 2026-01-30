@@ -12,6 +12,26 @@ import { NewsletterPage } from "../types/NewsletterPage";
 import { BetaPacket } from "../types/BetaPacket";
 import { Poem } from "../types/Poem";
 
+type SanityFetchParams = Record<string, unknown>;
+
+async function safeSanityFetch<T>(
+  label: string,
+  query: string,
+  params: SanityFetchParams | undefined,
+  options: Record<string, unknown> | undefined,
+  fallback: T
+): Promise<T> {
+  try {
+    const client = createClient(config);
+    // next-sanity has a couple overloads; keep the call shape flexible.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return await (client.fetch as any)(query, params ?? {}, options);
+  } catch (error) {
+    console.error(`Error fetching ${label}:`, error);
+    return fallback;
+  }
+}
+
 // export async function getProjects(): Promise<Project[]> {
 //   const client = createClient(config);
 
@@ -79,93 +99,111 @@ import { Poem } from "../types/Poem";
 // }
 
 export async function getStudies(): Promise<Study[]> {
-  const client = createClient(config);
+  try {
+    const client = createClient(config);
 
-  return client.fetch(
-    groq`*[_type == "study"]|order(_createdAt desc){
-      _id,
-      _createdAt,
-      name,
-      about,
-      "slug": slug.current,
-      content,
-      media {
-        type,
-        image{
-          asset-> { url },
-          alt
+    return await client.fetch(
+      groq`*[_type == "study"]|order(_createdAt desc){
+        _id,
+        _createdAt,
+        name,
+        about,
+        "slug": slug.current,
+        content,
+        media {
+          type,
+          image{
+            asset-> { url },
+            alt
+          },
+          video
         },
-        video
-      },
-      url,
-      "excerpt": 
-        array::join(
-          string::split(pt::text(content), "")[0..255],
-          ""
-        ) + "..."
-    }`,
-    {},
-    { next: { revalidate: 3600 } }
-  );
+        url,
+        "excerpt": 
+          array::join(
+            string::split(pt::text(content), "")[0..255],
+            ""
+          ) + "..."
+      }`,
+      {},
+      { next: { revalidate: 3600 } }
+    );
+  } catch (error) {
+    console.error("Error fetching studies:", error);
+    return [];
+  }
 }
 
 export async function getStudy(slug: string): Promise<Study> {
-  const client = createClient(config);
+  try {
+    const client = createClient(config);
 
-  return client.fetch(
-    groq`*[_type=="study" && slug.current == $slug][0]{
-      _id,
-      _createdAt,
-      name,
-      about,
-      "slug": slug.current,
-      url,
-      media {
-        type,
-        image {
-          asset-> { _id, url },
-          alt
+    return await client.fetch(
+      groq`*[_type=="study" && slug.current == $slug][0]{
+        _id,
+        _createdAt,
+        name,
+        about,
+        "slug": slug.current,
+        url,
+        media {
+          type,
+          image {
+            asset-> { _id, url },
+            alt
+          },
+          video
         },
-        video
-      },
-      content[]{
-        ...,
-        _type == "image" => {
+        content[]{
           ...,
-          asset->{url}
-        },
-        _type == "section" => {
-          ...,
-          body[]{
+          _type == "image" => {
             ...,
-            _type == "image" => {
+            asset->{url}
+          },
+          _type == "section" => {
+            ...,
+            body[]{
               ...,
-              asset->{url}
+              _type == "image" => {
+                ...,
+                asset->{url}
+              }
             }
           }
         }
-      }
-    }`,
-    { slug }
-  );
+      }`,
+      { slug }
+    );
+  } catch (error) {
+    console.error("Error fetching study:", error);
+    return {
+      _id: "",
+      _createdAt: new Date().toISOString(),
+      name: "Case study",
+      about: "",
+      slug,
+      content: [],
+      media: { type: "image" },
+    } as Study;
+  }
 }
 
 export async function getJobs(): Promise<Job[]> {
-  const client = createClient(config);
-
-  const jobs = await client.fetch(
+  return safeSanityFetch<Job[]>(
+    "jobs",
     groq`*[_type == "job"]{
-      _id,
-      _createdAt,
-      name,
-      company,
-      title,
-      content,
-      "image": image.asset->url,
-    }`
+        _id,
+        _createdAt,
+        name,
+        company,
+        title,
+        content,
+        "image": image.asset->url,
+      }`,
+    {},
+    { next: { revalidate: 3600 } },
+    []
   );
-
-  return jobs;
 }
 
 export async function getWriting(params: {
@@ -174,86 +212,90 @@ export async function getWriting(params: {
   season?: string | number;
   episode?: string | number;
 }): Promise<Writing | null> {
-  const client = createClient(config);
-
   if (params.slug) {
-    return client.fetch(
+    return safeSanityFetch<Writing | null>(
+      `writing (${params.slug})`,
       groq`*[_type == "writing" && slug.current == $slug][0]{
-        _id,
-        _createdAt,
-        title,
-        "slug": slug.current,
-        summary,
-        category,
-        series->{title, slug},
-        season,
-        episode,
-        episodeTitle,
-        orderInSeries,
-        tags,
-        publishedAt,
-        media {
-          type,
-          image {
-            asset->{url},
-            alt
+          _id,
+          _createdAt,
+          title,
+          "slug": slug.current,
+          summary,
+          category,
+          series->{title, slug},
+          season,
+          episode,
+          episodeTitle,
+          orderInSeries,
+          tags,
+          publishedAt,
+          media {
+            type,
+            image {
+              asset->{url},
+              alt
+            },
+            video
           },
-          video
-        },
-        content[]{
-          ...,
-          _type == "image" => {
+          content[]{
             ...,
-            asset->{url}
+            _type == "image" => {
+              ...,
+              asset->{url}
+            }
           }
-        }
-      }`,
-      { slug: params.slug }
+        }`,
+      { slug: params.slug },
+      { next: { revalidate: 3600 } },
+      null
     );
   }
 
   if (params.seriesSlug && params.season && params.episode) {
-    return client.fetch(
+    return safeSanityFetch<Writing | null>(
+      `writing (${params.seriesSlug} S${params.season}E${params.episode})`,
       groq`*[
-        _type == "writing" &&
-        series->slug.current == $seriesSlug &&
-        season == $season &&
-        episode == $episode
-      ][0]{
-        _id,
-        _createdAt,
-        title,
-        "slug": slug.current,
-        summary,
-        category,
-        series->{title, slug},
-        season,
-        episode,
-        episodeTitle,
-        orderInSeries,
-        tags,
-        publishedAt,
-        media {
-          type,
-          image {
-            asset->{url},
-            alt
+          _type == "writing" &&
+          series->slug.current == $seriesSlug &&
+          season == $season &&
+          episode == $episode
+        ][0]{
+          _id,
+          _createdAt,
+          title,
+          "slug": slug.current,
+          summary,
+          category,
+          series->{title, slug},
+          season,
+          episode,
+          episodeTitle,
+          orderInSeries,
+          tags,
+          publishedAt,
+          media {
+            type,
+            image {
+              asset->{url},
+              alt
+            },
+            video
           },
-          video
-        },
-        content[]{
-          ...,
-          _type == "image" => {
+          content[]{
             ...,
-            asset->{url}
+            _type == "image" => {
+              ...,
+              asset->{url}
+            }
           }
-        }
-      }`,
+        }`,
       {
         seriesSlug: params.seriesSlug,
         season: Number(params.season),
         episode: Number(params.episode),
-      }
+      },
+      { next: { revalidate: 3600 } },
+      null
     );
   }
 
@@ -261,44 +303,45 @@ export async function getWriting(params: {
 }
 
 export async function getPoems(): Promise<Poem[]> {
-  const client = createClient(config);
-
-  return client.fetch(
+  return safeSanityFetch<Poem[]>(
+    "poems",
     groq`*[_type == "poem"]|order(publishedAt desc){
-      _id,
-      _createdAt,
-      title,
-      "slug": slug.current,
-      summary,
-      tags,
-      publishedAt
-    }`,
+        _id,
+        _createdAt,
+        title,
+        "slug": slug.current,
+        summary,
+        tags,
+        publishedAt
+      }`,
     {},
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 3600 } },
+    []
   );
 }
 
 export async function getPoem(slug: string): Promise<Poem | null> {
-  const client = createClient(config);
-
-  return client.fetch(
+  return safeSanityFetch<Poem | null>(
+    `poem (${slug})`,
     groq`*[_type == "poem" && slug.current == $slug][0]{
-      _id,
-      _createdAt,
-      title,
-      "slug": slug.current,
-      summary,
-      tags,
-      publishedAt,
-      content[]{
-        ...,
-        _type == "image" => {
+        _id,
+        _createdAt,
+        title,
+        "slug": slug.current,
+        summary,
+        tags,
+        publishedAt,
+        content[]{
           ...,
-          asset->{url}
+          _type == "image" => {
+            ...,
+            asset->{url}
+          }
         }
-      }
-    }`,
-    { slug }
+      }`,
+    { slug },
+    { next: { revalidate: 3600 } },
+    null
   );
 }
 
@@ -311,37 +354,50 @@ export async function getWritingsGrouped(): Promise<{
     coverImage?: string;
   }[];
 }> {
-  const client = createClient(config);
-
-  const standalone = await client.fetch(
+  const standalone = await safeSanityFetch<Writing[]>(
+    "standalone writings",
     groq`*[_type == "writing" && !defined(series)] | order(publishedAt desc) {
-      _id,
-      _createdAt,
-      title,
-      "slug": slug.current,
-      summary,
-      category,
-      tags,
-      publishedAt,
-      media {
-        type,
-        image {
-          asset->{url},
-          alt
+        _id,
+        _createdAt,
+        title,
+        "slug": slug.current,
+        summary,
+        category,
+        tags,
+        publishedAt,
+        media {
+          type,
+          image {
+            asset->{url},
+            alt
+          },
+          video
         },
-        video
-      },
-    }`
+      }`,
+    {},
+    { next: { revalidate: 3600 } },
+    []
   );
 
-  const seriesList = await client.fetch(
+  const seriesList = await safeSanityFetch<
+    {
+      title: string;
+      slug: string;
+      summary?: string;
+      coverImage?: string;
+    }[]
+  >(
+    "series list",
     groq`*[_type == "series"] | order(title asc) {
-      title,
-      "slug": slug.current,
-      description,
-      "summary": description,
-      "coverImage": coalesce(image.asset->url, null)
-    }`
+        title,
+        "slug": slug.current,
+        description,
+        "summary": description,
+        "coverImage": coalesce(image.asset->url, null)
+      }`,
+    {},
+    { next: { revalidate: 3600 } },
+    []
   );
 
   return { standalone, seriesList };
@@ -365,59 +421,86 @@ export async function getSeriesWithEpisodes(seriesSlug: string): Promise<{
     episode?: number;
   }[];
 } | null> {
-  const client = createClient(config);
-
-  const series = await client.fetch(
-    groq`*[_type == "series" && slug.current == $slug][0]{
-      title,
-      "slug": slug.current,
-      description,
-      media {
-        image {
-          alt,
-          asset->{url}
-        }
+  const series = await safeSanityFetch<
+    | {
+        title: string;
+        slug: string;
+        description?: string;
+        media?: {
+          image?: {
+            alt?: string;
+            asset: { url: string };
+          };
+        };
       }
-    }`,
-    { slug: seriesSlug }
+    | null
+  >(
+    `series (${seriesSlug})`,
+    groq`*[_type == "series" && slug.current == $slug][0]{
+        title,
+        "slug": slug.current,
+        description,
+        media {
+          image {
+            alt,
+            asset->{url}
+          }
+        }
+      }`,
+    { slug: seriesSlug },
+    { next: { revalidate: 3600 } },
+    null
   );
 
   if (!series) return null;
 
-  const episodes = await client.fetch(
+  const episodes = await safeSanityFetch<
+    {
+      _id: string;
+      title: string;
+      episodeTitle?: string;
+      season?: number;
+      episode?: number;
+    }[]
+  >(
+    `episodes (${seriesSlug})`,
     groq`*[_type == "writing" && series->slug.current == $slug]
-      | order(season asc, episode asc) {
-        _id,
-        title,
-        episodeTitle,
-        season,
-        episode
-      }`,
-    { slug: seriesSlug }
+        | order(season asc, episode asc) {
+          _id,
+          title,
+          episodeTitle,
+          season,
+          episode
+        }`,
+    { slug: seriesSlug },
+    { next: { revalidate: 3600 } },
+    []
   );
 
   return { ...series, episodes };
 }
 
 export async function getStartHerePage(): Promise<StartHerePage | null> {
-  const client = createClient(config);
-
-  return client.fetch(
+  return safeSanityFetch<StartHerePage | null>(
+    "start here page",
     groq`*[_type == "startHerePage"][0]{
-      brandPromise,
-      entryPoints[]{
-        title,
-        description,
-        ctaLabel,
-        customHref,
-        "link": link->{
-          _type,
+        brandPromise,
+        entryPoints[]{
           title,
-          "slug": slug.current
-        }
-      },
-      expectations
-    }`
+          description,
+          ctaLabel,
+          customHref,
+          "link": link->{
+            _type,
+            title,
+            "slug": slug.current
+          }
+        },
+        expectations
+      }`,
+    {},
+    { next: { revalidate: 3600 } },
+    null
   );
 }
 
@@ -623,109 +706,117 @@ export async function getBookById(id: string): Promise<Book | null> {
 }
 
 export async function getBook(slug: string): Promise<Book | null> {
-  const client = createClient(config);
-
-  return client.fetch(
+  return safeSanityFetch<Book | null>(
+    `book (${slug})`,
     groq`*[_type == "book" && slug.current == $slug][0]{
-      _id,
-      _createdAt,
-      title,
-      "slug": slug.current,
-      status,
-      publicationDate,
-      cover{
-        asset->{url},
-        alt
-      },
-      tagline,
-      shortPitch,
-      longDescription,
-      contentNotes,
-      sample,
-      sampleLink,
-      buyLinks,
-      testimonials
-    }`,
-    { slug }
+        _id,
+        _createdAt,
+        title,
+        "slug": slug.current,
+        status,
+        publicationDate,
+        cover{
+          asset->{url},
+          alt
+        },
+        tagline,
+        shortPitch,
+        longDescription,
+        contentNotes,
+        sample,
+        sampleLink,
+        buyLinks,
+        testimonials
+      }`,
+    { slug },
+    { next: { revalidate: 3600 } },
+    null
   );
 }
 
 export async function getAboutPage(): Promise<AboutPage | null> {
-  const client = createClient(config);
-
-  return client.fetch(
+  return safeSanityFetch<AboutPage | null>(
+    "about page",
     groq`*[_type == "aboutPage"][0]{
-      title,
-      body,
-      photo{
-        asset->{url},
-        alt
-      }
-    }`
+        title,
+        body,
+        photo{
+          asset->{url},
+          alt
+        }
+      }`,
+    {},
+    { next: { revalidate: 3600 } },
+    null
   );
 }
 
 export async function getNewsletterPage(): Promise<NewsletterPage | null> {
-  const client = createClient(config);
-
-  return client.fetch(
+  return safeSanityFetch<NewsletterPage | null>(
+    "newsletter page",
     groq`*[_type == "newsletterPage"][0]{
-      title,
-      intro,
-      valueProps,
-      frequency,
-      privacyNote,
-      leadMagnet
-    }`
+        title,
+        intro,
+        valueProps,
+        frequency,
+        privacyNote,
+        leadMagnet
+      }`,
+    {},
+    { next: { revalidate: 3600 } },
+    null
   );
 }
 
 export async function getActiveBetaPacket(): Promise<BetaPacket | null> {
-  const client = createClient(config);
-
-  return client.fetch(
+  return safeSanityFetch<BetaPacket | null>(
+    "active beta packet",
     groq`*[_type == "betaPacket" && isActive == true][0]{
-      _id,
-      title,
-      "slug": slug.current,
-      summary,
-      timeframe,
-      expectations,
-      contentNotes,
-      chapters,
-      files,
-      surveyCta,
-      book->{
+        _id,
         title,
-        "slug": slug.current
-      }
-    }`
+        "slug": slug.current,
+        summary,
+        timeframe,
+        expectations,
+        contentNotes,
+        chapters,
+        files,
+        surveyCta,
+        book->{
+          title,
+          "slug": slug.current
+        }
+      }`,
+    {},
+    { next: { revalidate: 3600 } },
+    null
   );
 }
 
 export async function getBetaPacketBySlug(
   slug: string
 ): Promise<BetaPacket | null> {
-  const client = createClient(config);
-
-  return client.fetch(
+  return safeSanityFetch<BetaPacket | null>(
+    `beta packet (${slug})`,
     groq`*[_type == "betaPacket" && slug.current == $slug][0]{
-      _id,
-      title,
-      "slug": slug.current,
-      summary,
-      timeframe,
-      expectations,
-      contentNotes,
-      chapters,
-      files,
-      surveyCta,
-      book->{
+        _id,
         title,
-        "slug": slug.current
-      }
-    }`,
-    { slug }
+        "slug": slug.current,
+        summary,
+        timeframe,
+        expectations,
+        contentNotes,
+        chapters,
+        files,
+        surveyCta,
+        book->{
+          title,
+          "slug": slug.current
+        }
+      }`,
+    { slug },
+    { next: { revalidate: 3600 } },
+    null
   );
 }
 
@@ -742,20 +833,30 @@ export async function getManuscriptChapters(params: {
     content: any[];
   }[]
 > {
-  const client = createClient(config);
   const { manuscriptKey, startOrder, endOrder } = params;
 
-  return client.fetch(
+  return safeSanityFetch<
+    {
+      manuscriptKey: string;
+      order: number;
+      chapterLabel: string;
+      title?: string;
+      content: any[];
+    }[]
+  >(
+    `manuscript chapters (${manuscriptKey})`,
     groq`*[_type == "manuscriptChapter" && manuscriptKey == $manuscriptKey
-      && (!defined($startOrder) || order >= $startOrder)
-      && (!defined($endOrder) || order <= $endOrder)
-    ] | order(order asc) {
-      manuscriptKey,
-      order,
-      chapterLabel,
-      title,
-      content
-    }`,
-    { manuscriptKey, startOrder, endOrder }
+        && (!defined($startOrder) || order >= $startOrder)
+        && (!defined($endOrder) || order <= $endOrder)
+      ] | order(order asc) {
+        manuscriptKey,
+        order,
+        chapterLabel,
+        title,
+        content
+      }`,
+    { manuscriptKey, startOrder, endOrder },
+    { next: { revalidate: 3600 } },
+    []
   );
 }

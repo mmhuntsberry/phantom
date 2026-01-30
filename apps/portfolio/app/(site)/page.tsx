@@ -119,13 +119,13 @@ export default async function Index() {
   return (
     <>
       <section className={`${styles.hero} container`}>
-        <p className={styles.kicker}>Design systems engineer and platform builder</p>
+        <p className={styles.kicker}>Design systems architect and platform builder</p>
         <h1 className={styles.headline}>
           I design systems that help teams ship faster with confidence
         </h1>
         <p className={styles.lede}>
-          I build token-driven foundations, accessible component libraries, and the
-          ops that keep them healthy as products and teams grow.
+          I architect end-to-end platform solutions—from design tokens and component libraries to 
+          infrastructure and automation—that scale with products and teams.
         </p>
 
         <div className={styles.ctaRow}>

@@ -19,7 +19,9 @@
     "author:db:push": "cd apps/author && dotenv -e .env.local -- drizzle-kit push",
     "author:admin:create-user": "cd apps/author && dotenv -e .env.local -- ts-node --compiler-options \"{\\\"module\\\":\\\"CommonJS\\\"}\" scripts/create-admin-user.ts",
     "author:test:e2e": "PLAYWRIGHT_BASE_URL=http://localhost:4200 dotenv -e apps/author/.env.local -- playwright test -c apps/author/playwright.config.ts",
-    "author:test:e2e:serve": "PLAYWRIGHT_START_SERVER=1 dotenv -e apps/author/.env.local -- playwright test -c apps/author/playwright.config.ts"
+    "author:test:e2e:serve": "PLAYWRIGHT_START_SERVER=1 dotenv -e apps/author/.env.local -- playwright test -c apps/author/playwright.config.ts",
+    "deploy:author": "bash scripts/deploy-author.sh",
+    "deploy:portfolio": "bash scripts/deploy-portfolio.sh"
   },
   "private": true,
   "devDependencies": {

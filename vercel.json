@@ -1,6 +1,0 @@
-{
-  "buildCommand": "npx nx build author",
-  "devCommand": "npx nx serve author",
-  "framework": "nextjs",
-  "outputDirectory": "dist/apps/author/.next"
-}
