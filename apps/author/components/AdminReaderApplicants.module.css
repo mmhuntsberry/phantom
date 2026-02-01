@@ -91,13 +91,6 @@
   text-align: right;
 }
 
-.actionStack {
-  display: inline-flex;
-  flex-direction: column;
-  gap: var(--space-2xs);
-  align-items: flex-end;
-}
-
 .actionRow {
   display: flex;
   gap: var(--space-xs);
@@ -110,8 +103,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: var(--button-height);
-  width: var(--button-height);
+  height: 32px;
+  width: 32px;
   border: var(--border-width-sm) solid var(--palette-neutral-300);
   border-radius: var(--border-radius-2xs);
   background-color: var(--palette-neutral-lightest);
@@ -136,7 +129,7 @@
 }
 
 .rejectIconButton {
-  border-color: color-mix(in srgb, var(--palette-alert-danger-600) 40%, white);
+  border-color: color-mix(in srgb, var(--palette-alert-danger-500) 30%, white);
 }
 
 .emailCell {
@@ -161,6 +154,7 @@
 }
 
 .status {
+
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
@@ -184,6 +178,7 @@
 .statusRejected {
   background-color: color-mix(in srgb, var(--palette-alert-danger-600) 12%, white);
   border-color: color-mix(in srgb, var(--palette-alert-danger-600) 40%, white);
+  color: var(--palette-alert-danger-700);
 }
 
 .detailsRow td {
@@ -336,27 +331,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2xs);
-  height: var(--button-height);
-  width: var(--button-height);
+  height: 32px;
+  width: 32px;
   border: var(--border-width-sm) solid var(--palette-neutral-300);
   border-radius: var(--border-radius-2xs);
-  padding-block: calc(
-    (
-        var(--button-height) - var(--font-line-height-lg) -
-          var(--border-width-sm) * 2
-      ) / 2
-  );
-  padding-inline: var(--space-xs);
-  font-family: var(--font-family-default);
-  font-size: var(--font-size-sm);
-  font-weight: 400;
-  line-height: var(--font-line-height-lg);
   background-color: var(--palette-neutral-lightest);
   color: var(--palette-neutral-700);
   transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
   cursor: pointer;
-  white-space: nowrap;
+  padding: 0;
 }
 
 .resendButton:disabled {
@@ -409,7 +392,8 @@
   }
 
   .rejectIconButton {
-    border-color: color-mix(in srgb, var(--palette-alert-danger-600) 55%, black);
+    /* border-color: color-mix(in srgb, var(--palette-alert-danger-500) 35%, black); */
+    border-color: var(--palette-alert-danger-500);
   }
 
   .card {

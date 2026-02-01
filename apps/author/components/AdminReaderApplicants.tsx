@@ -168,6 +168,7 @@ export default function AdminReaderApplicants({
                 <th>Book</th>
                 <th>Status</th>
                 <th>Submitted</th>
+                <th>URL</th>
                 <th className={styles.actionsHeader}>Actions</th>
               </tr>
             </thead>
@@ -216,23 +217,25 @@ export default function AdminReaderApplicants({
                           minute: "2-digit",
                         })}
                       </td>
+                      <td>
+                        {status === "approved" && inviteToken ? (
+                          <p className={styles.token}>/r/{inviteToken}</p>
+                        ) : (
+                          "—"
+                        )}
+                      </td>
                       <td className={styles.actionsCell}>
                         {status === "approved" ? (
-                          <div className={styles.actionStack}>
-                            {inviteToken && (
-                              <p className={styles.token}>/r/{inviteToken}</p>
-                            )}
-                            <button
-                              type="button"
-                              className={styles.resendButton}
-                              disabled={loadingId === applicant.id}
-                              onClick={() => resendEmail(applicant)}
-                              aria-label="Resend welcome email"
-                              title="Resend welcome email"
-                            >
-                              <PaperPlaneTilt size={24} aria-hidden="true" />
-                            </button>
-                          </div>
+                          <button
+                            type="button"
+                            className={styles.resendButton}
+                            disabled={loadingId === applicant.id}
+                            onClick={() => resendEmail(applicant)}
+                            aria-label="Resend welcome email"
+                            title="Resend welcome email"
+                          >
+                            <PaperPlaneTilt size={20} aria-hidden="true" />
+                          </button>
                         ) : status === "rejected" ? (
                           <span className={styles.rejected}>Rejected</span>
                         ) : (
@@ -245,7 +248,7 @@ export default function AdminReaderApplicants({
                               aria-label={`Approve ${applicant.email}`}
                               title="Approve"
                             >
-                              <Plus size={24} aria-hidden="true" />
+                              <Plus size={20} aria-hidden="true" />
                             </button>
                             <button
                               type="button"
@@ -255,7 +258,7 @@ export default function AdminReaderApplicants({
                               aria-label={`Reject ${applicant.email}`}
                               title="Reject"
                             >
-                              <Trash size={24} aria-hidden="true" />
+                              <Trash size={20} aria-hidden="true" />
                             </button>
                           </div>
                         )}
