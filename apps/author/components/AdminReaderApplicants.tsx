@@ -207,7 +207,15 @@ export default function AdminReaderApplicants({
                           {status}
                         </span>
                       </td>
-                      <td>{new Date(applicant.createdAt).toLocaleString()}</td>
+                      <td>
+                        {new Date(applicant.createdAt).toLocaleString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                          hour: "numeric",
+                          minute: "2-digit",
+                        })}
+                      </td>
                       <td className={styles.actionsCell}>
                         {status === "approved" ? (
                           <div className={styles.actionStack}>
@@ -280,7 +288,13 @@ export default function AdminReaderApplicants({
                               <p className={styles.detailLabel}>Approved at</p>
                               <p className={styles.detailValue}>
                                 {applicant.approvedAt
-                                  ? new Date(applicant.approvedAt).toLocaleString()
+                                  ? new Date(applicant.approvedAt).toLocaleString("en-US", {
+                                      year: "numeric",
+                                      month: "short",
+                                      day: "numeric",
+                                      hour: "numeric",
+                                      minute: "2-digit",
+                                    })
                                   : "—"}
                               </p>
                             </div>

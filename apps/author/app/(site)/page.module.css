@@ -2,6 +2,11 @@
   display: grid;
   gap: var(--space-2xl);
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 .container > * {
@@ -30,6 +35,9 @@
   line-height: 0.9;
   pointer-events: none;
   text-transform: uppercase;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .kicker {
@@ -73,8 +81,12 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
   gap: var(--space-lg);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .card {
@@ -90,7 +102,7 @@
 
 .featuredCard {
   grid-column: 1 / -1;
-  grid-template-columns: minmax(160px, 220px) 1fr;
+  grid-template-columns: minmax(min(160px, 100%), 220px) 1fr;
   align-items: stretch;
   gap: var(--space-xl);
   padding: var(--space-xl);
@@ -104,6 +116,9 @@
   box-shadow: var(--shadow-sm);
   min-width: 0;
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .featuredMedia {
@@ -254,9 +269,18 @@
 }
 
 @media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
   .featuredCard {
     grid-template-columns: 1fr;
     align-items: start;
+  }
+  
+  .hero::before {
+    left: 0;
+    font-size: clamp(3rem, 10vw, 6rem);
   }
 }
 

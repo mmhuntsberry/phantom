@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { List, X } from "@phosphor-icons/react/dist/ssr";
 import styles from "./nav.module.css";
 import { useRouter } from "next/navigation";
@@ -27,7 +28,12 @@ export type NavProps = {
 export default function Nav({ pathname }: NavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [adminAuthed, setAdminAuthed] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setIsOpen(false);
@@ -110,43 +116,47 @@ export default function Nav({ pathname }: NavProps) {
         )}
       </div>
 
-      <div
-        id="mobile-nav"
-        className={`${styles.mobilePanel} ${
-          isOpen ? styles.mobilePanelOpen : ""
-        }`}
-      >
-        <div className={styles.mobileLinks}>
-          {allLinks.map((link: NavLink) => (
-            <Link
-              className={`${styles.mobileLink} ${
-                link.href === "/"
-                  ? pathname === "/"
-                    ? styles.active
-                    : ""
-                  : pathname.startsWith(link.href)
-                  ? styles.active
-                  : ""
-              }`}
-              href={link.href}
-              key={link.href}
-              prefetch
-              onClick={() => setIsOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          {adminAuthed && (
-            <button
-              type="button"
-              className={styles.mobileLink}
-              onClick={signOut}
-            >
-              Sign out
-            </button>
-          )}
-        </div>
-      </div>
+      {mounted &&
+        createPortal(
+          <div
+            id="mobile-nav"
+            className={`${styles.mobilePanel} ${
+              isOpen ? styles.mobilePanelOpen : ""
+            }`}
+          >
+            <div className={styles.mobileLinks}>
+              {allLinks.map((link: NavLink) => (
+                <Link
+                  className={`${styles.mobileLink} ${
+                    link.href === "/"
+                      ? pathname === "/"
+                        ? styles.active
+                        : ""
+                      : pathname.startsWith(link.href)
+                      ? styles.active
+                      : ""
+                  }`}
+                  href={link.href}
+                  key={link.href}
+                  prefetch
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              {adminAuthed && (
+                <button
+                  type="button"
+                  className={styles.mobileLink}
+                  onClick={signOut}
+                >
+                  Sign out
+                </button>
+              )}
+            </div>
+          </div>,
+          document.body
+        )}
     </nav>
   );
 }

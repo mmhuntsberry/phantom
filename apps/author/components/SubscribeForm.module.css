@@ -3,22 +3,37 @@
   gap: var(--space-xs);
   min-width: 0;
   width: 100%;
-  max-width: 100%;
+  max-width: 640px;
   box-sizing: border-box;
 }
 
 .controls {
   display: grid;
-  grid-template-columns: minmax(0, 512px) fit-content(100%);
+  grid-template-columns: 1fr auto;
   gap: var(--space-2xs);
   align-items: center;
   min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .controls {
+    grid-template-columns: 1fr auto;
+    gap: var(--space-xs);
+  }
+}
+
+@media (max-width: 360px) {
+  .controls {
+    gap: var(--space-2xs);
+  }
 }
 
 .controls input {
   width: 100%;
   min-width: 0;
-  max-width: 512px;
   box-sizing: border-box;
 }
 
@@ -28,12 +43,23 @@
 }
 
 .buttonText {
-  display: none;
+  display: inline-block;
 }
 
-@media (min-width: 768px) {
-  .buttonText {
-    display: inline-block;
+.submitButton {
+  justify-content: flex-start;
+}
+
+@media (max-width: 640px) {
+  .controls {
+    grid-template-columns: 1fr;
+    gap: var(--space-xs);
+  }
+  
+  .controls button,
+  .submitButton {
+    width: 100%;
+    justify-content: center;
   }
 }
 

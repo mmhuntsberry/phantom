@@ -14,12 +14,43 @@
 
 .body {
   max-width: 1280px;
-  /* margin-block-start: 64px; */
-  margin: var(--space-lg);
+  margin: 0 auto;
+  padding: var(--space-lg);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.body > header,
+.body > main {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .body {
+    padding: var(--space-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .body {
+    padding: var(--space-xs);
+  }
+}
+
+@media (max-width: 360px) {
+  .body {
+    padding: var(--space-2xs);
+  }
 }
 
 @media (min-width: 1280px) {
   .body {
-    margin: var(--space-lg) var(--layout-6xs);
+    padding: var(--space-lg) var(--layout-6xs);
   }
 }

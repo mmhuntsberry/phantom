@@ -66,15 +66,16 @@ export default function SubscribeForm({
           type="submit"
           aria-label={loading ? "Sending" : buttonLabel}
           disabled={loading || !email.trim()}
+          className={styles.submitButton}
         >
-          <span className={styles.buttonText}>
-            {loading ? "Sending" : buttonLabel}
-          </span>
           {loading ? (
             <CircleNotch className={styles.spin} size={24} />
           ) : (
             <PaperPlaneTilt strokeWidth={2} size={24} />
           )}
+          <span className={styles.buttonText}>
+            {loading ? "Sending" : buttonLabel}
+          </span>
         </Button>
       </div>
       {message && (

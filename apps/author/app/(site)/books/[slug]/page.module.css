@@ -5,10 +5,13 @@
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(240px, 320px) 1fr;
+  grid-template-columns: minmax(min(240px, 100%), 320px) 1fr;
   gap: var(--space-xl);
   align-items: start;
   min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .cover {

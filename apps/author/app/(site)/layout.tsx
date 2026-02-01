@@ -26,10 +26,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={styles.body}>
-        <Header />
-        <main>{children}</main>
-        {/* <Footer /> */}
+      <body>
+        <div className={styles.body}>
+          <Header />
+          <main>{children}</main>
+          {/* <Footer /> */}
+        </div>
       </body>
     </html>
   );

@@ -15,13 +15,7 @@ export default function Header() {
           <Nav pathname={pathname ?? ""} />
           <p className={styles.name}>Matthew Huntsberry</p>
         </div>
-        <div
-          style={{
-            marginBlockStart: "var(--space-md)",
-            marginBlockEnd: "var(--space-xl)",
-            display: "flex",
-          }}
-        >
+        <div className={styles.iconContainer}>
           <Link
             className={styles.iconLink}
             href="https://www.instagram.com/matt_huntsberry/"

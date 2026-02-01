@@ -46,11 +46,13 @@ export async function POST(req: NextRequest) {
   }
 
   const res = NextResponse.json({ success: true });
+  // Use secure cookies only on HTTPS (Vercel always uses HTTPS)
+  const isSecure = req.url.startsWith("https://");
   res.cookies.set({
     name: "admin_session",
     value: sessionToken,
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: isSecure,
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
