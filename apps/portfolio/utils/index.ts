@@ -8,7 +8,9 @@ export function toTitleCase(str: string) {
     .join(" ");
 }
 
-export function slugify(input: string) {
+export function slugify(input: unknown) {
+  if (typeof input !== "string") return "";
+
   return input
     .toLowerCase()
     .trim()

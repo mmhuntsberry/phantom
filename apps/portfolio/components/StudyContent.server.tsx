@@ -20,9 +20,11 @@ interface SectionProps {
 }
 
 const Section: React.FC<SectionProps> = ({ value, index }) => {
+  const sectionId = value?.title ? slugify(value.title) : `section-${index}`;
+
   return (
     <section
-      id={slugify(value.title)}
+      id={sectionId}
       className={styles.section}
       data-variant={index % 2 === 0 ? "a" : "b"}
     >
