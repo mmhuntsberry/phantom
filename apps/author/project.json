@@ -10,7 +10,7 @@
       "defaultConfiguration": "production",
       "options": {
         "root": "apps/author",
-        "outputPath": "dist/apps/author"
+        "outputPath": "apps/author"
       },
       "configurations": {
         "development": {

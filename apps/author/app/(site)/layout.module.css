@@ -8,6 +8,7 @@
 .title {
   font-size: var(--fs-8xl);
   font-weight: 1000;
+  font-family: var(--font-family-display);
   letter-spacing: -0.04em;
   margin-bottom: 64px;
 }
@@ -47,6 +48,10 @@
   .body {
     padding: var(--space-2xs);
   }
+}
+
+.main {
+  padding-top: var(--space-2xl);
 }
 
 @media (min-width: 1280px) {
