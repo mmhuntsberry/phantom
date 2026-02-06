@@ -1,0 +1,60 @@
+.container {
+  display: grid;
+  gap: var(--space-2xl);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0; /* Prevents grid overflow */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .title {
+    font-size: var(--fs-3xl);
+  }
+  
+  .subtitle {
+    font-size: var(--fs-md);
+  }
+}
+
+.hero {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.kicker {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin: 0;
+}
+
+.title {
+  font-size: var(--fs-4xl);
+  font-weight: 1000;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--fs-lg);
+  font-weight: 300;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 680px;
+}

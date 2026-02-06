@@ -2,7 +2,7 @@ export const runtime = "nodejs";
 
 import { NextRequest } from "next/server";
 import nodemailer from "nodemailer";
-import { redis } from "@/lib/redis";
+import { redis } from "../../../../lib/redis";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST!,

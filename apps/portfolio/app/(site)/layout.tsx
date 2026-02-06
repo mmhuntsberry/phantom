@@ -1,16 +1,16 @@
-import { Source_Sans_3 } from "next/font/google";
-
 // import "@mmhuntsberry/phantom-tokens";
 import "../global.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
-import About from "./components/about";
 
-//👇 Configure our font object
-const sourceSans3 = Source_Sans_3({
-  subsets: ["latin"],
-  display: "swap",
-});
+export const metadata = {
+  title: "Matthew Huntsberry | Design Systems Engineer",
+  description:
+    "Developer and design systems engineer building scalable, accessible front-end platforms.",
+  icons: {
+    icon: "/favicon.svg",
+  },
+};
 
 // export const metadata = {
 //   title: "Matthew Huntsberry | Design Systems Engineer",
@@ -25,11 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <a className="skipLink" href="#content">
+          Skip to content
+        </a>
         <Header />
-        <main className="container">
-          <About />
-          {children}
-        </main>
+        <main id="content">{children}</main>
+        <Footer />
       </body>
     </html>
   );

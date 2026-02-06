@@ -15,6 +15,16 @@ html {
   font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
     "Arial", sans-serif;
   background-color: var(--palette-neutral-100);
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  position: relative;
+}
+
+body {
+  min-width: 0;
+  overflow-x: clip;
 }
 
 a {
@@ -33,15 +43,34 @@ li {
   margin: 0;
 }
 
-*:focus {
+*:focus-visible {
   outline: var(--border-width-md) solid var(--palette-alert-info-500);
   outline-offset: var(--space-2xs);
   border-radius: var(--border-radius-2xs);
 }
 
+/* Prevent overflow on common elements */
+input,
+textarea,
+select,
+button,
+img,
+video,
+iframe {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+img,
+video,
+iframe {
+  height: auto;
+}
+
 :root {
   --_opacity-8: 0.08;
   --_opacity-16: 0.16;
+  --_opacity-24: 0.24;
   --_opacity-32: 0.32;
   --_opacity-48: 0.48;
   --_opacity-64: 0.64;
@@ -64,15 +93,15 @@ li {
   --_font-size-1_25: 1.25rem;
   --_font-size-1_5: 1.5rem;
   --_font-size-1_75: 1.75rem;
-  --_font-weight-31: 0.31;
-  --_font-weight-121: 1.21;
-  --_font-weight-276: 2.76;
-  --_font-weight-410: 4.1;
-  --_font-weight-510: 5.1;
-  --_font-weight-650: 6.5;
-  --_font-weight-700: 7;
-  --_font-weight-870: 8.7;
-  --_font-weight-1000: 10;
+  --_font-weight-31: 100;
+  --_font-weight-121: 200;
+  --_font-weight-276: 300;
+  --_font-weight-410: 400;
+  --_font-weight-510: 500;
+  --_font-weight-650: 600;
+  --_font-weight-700: 700;
+  --_font-weight-870: 800;
+  --_font-weight-1000: 900;
   --_palette-gray-7: hsl(0, 0%, 7%);
   --_palette-gray-11: hsl(0, 0%, 11%);
   --_palette-gray-16: hsl(0, 0%, 16%);
@@ -330,6 +359,25 @@ li {
   --palette-neutral-1000: var(--_palette-gray-11);
   --palette-neutral-lightest: var(--_palette-gray-100);
   --palette-neutral-darkest: var(--_palette-gray-7);
+  /* Layered shadows following Josh Comeau's principles */
+  /* Light source: above and slightly left (1:2 x:y ratio) */
+  /* Softer, lighter shadows for a gentler appearance */
+  --shadow-xs: 0.5px 1px 4px hsl(0deg 0% 0% / 0.15);
+  --shadow-sm: 1px 2px 4px hsl(0deg 0% 0% / 0.08),
+    2px 4px 4px hsl(0deg 0% 0% / 0.08), 3px 6px 6px hsl(0deg 0% 0% / 0.08);
+  --shadow-md: 1px 2px 4px hsl(0deg 0% 0% / 0.06),
+    2px 4px 4px hsl(0deg 0% 0% / 0.06), 4px 8px 8px hsl(0deg 0% 0% / 0.06),
+    8px 16px 16px hsl(0deg 0% 0% / 0.06);
+  --shadow-lg: 1px 2px 4px hsl(0deg 0% 0% / 0.05),
+    2px 4px 4px hsl(0deg 0% 0% / 0.05), 4px 8px 8px hsl(0deg 0% 0% / 0.05),
+    8px 16px 16px hsl(0deg 0% 0% / 0.05), 16px 32px 32px hsl(0deg 0% 0% / 0.05);
+  --shadow-xl: 2px 4px 4px hsl(0deg 0% 0% / 0.04),
+    4px 8px 8px hsl(0deg 0% 0% / 0.04), 8px 16px 16px hsl(0deg 0% 0% / 0.04),
+    16px 32px 32px hsl(0deg 0% 0% / 0.04), 32px 64px 64px hsl(0deg 0% 0% / 0.04);
+  --shadow-2xl: 2px 4px 4px hsl(0deg 0% 0% / 0.03),
+    4px 8px 8px hsl(0deg 0% 0% / 0.03), 8px 16px 16px hsl(0deg 0% 0% / 0.03),
+    16px 32px 32px hsl(0deg 0% 0% / 0.03), 32px 64px 64px hsl(0deg 0% 0% / 0.03),
+    64px 128px 128px hsl(0deg 0% 0% / 0.03);
   --border-width-none: var(--_size-0);
   --border-width-sm: var(--_size-1);
   --border-width-md: var(--_size-2);
@@ -389,6 +437,7 @@ li {
   --space-2xl: var(--_size-32);
   --space-3xl: var(--_size-48);
   --space-4xl: var(--_size-64);
+  --button-height: 47px;
 
   --fs-3xs: clamp(0.625rem, 0.25vi + 0.5rem, var(--_size-12)); /* ~10px */
   --fs-2xs: clamp(0.6875rem, 0.3vi + 0.55rem, var(--_size-13)); /* ~11px */
@@ -423,15 +472,106 @@ li {
 }
 
 .container {
-  margin: 0 auto;
-  padding-inline: 24px;
-  max-width: 1280px;
+  margin: 0;
+  padding-inline: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
-@media (max-width: 1024px) {
-  .container {
-    padding-inline: 24px;
-    max-width: 100%;
+/* Ensure all page containers respect viewport width */
+[class*="container"],
+[class*="Container"] {
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* Apply overflow prevention at all breakpoints */
+html {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+body > main {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Force all containers to respect viewport */
+[class*="container"],
+[class*="Container"],
+main > *,
+section,
+article,
+div[class*="page"],
+div[class*="Page"] {
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Ensure text wraps and doesn't overflow */
+h1, h2, h3, h4, h5, h6, p, span, a, li, td, th {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Prevent fixed widths from breaking layout */
+img, video, iframe, svg {
+  max-width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
+
+/* Force inputs and forms to fit */
+input, textarea, select, button, form {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Grid and flex containers */
+[class*="grid"],
+[class*="Grid"],
+[class*="flex"],
+[class*="Flex"] {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 360px) {
+  /* Aggressive 360px constraints - prevent ALL overflow */
+  body {
+    margin: 0 !important;
+    padding: var(--space-2xs) !important;
+  }
+  
+  /* Force all containers to respect viewport */
+  [class*="container"],
+  [class*="Container"],
+  main > *,
+  section,
+  article,
+  div[class*="page"],
+  div[class*="Page"] {
+    width: 100% !important;
   }
 }
 /**

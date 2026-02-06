@@ -7,6 +7,8 @@ import {
 } from "@portabletext/react";
 
 import Image from "next/image";
+import styles from "./StudyContent.module.css";
+import { slugify } from "../utils";
 
 // Section renderer
 interface SectionProps {
@@ -18,17 +20,19 @@ interface SectionProps {
 }
 
 const Section: React.FC<SectionProps> = ({ value, index }) => {
-  const isEven = index % 2 === 0;
-
-  const textColor = "var(--study-section-text-color-1000)";
+  const sectionId = value?.title ? slugify(value.title) : `section-${index}`;
 
   return (
-    <section style={{ marginBlockStart: "var(--space-4xl)" }}>
-      <div className="container">
-        <h3 style={{ color: textColor, fontSize: "var(--fs-xl)" }}>
-          {value.title}
-        </h3>
-        <PortableText value={value.body} components={serializers} />
+    <section
+      id={sectionId}
+      className={styles.section}
+      data-variant={index % 2 === 0 ? "a" : "b"}
+    >
+      <div className={`container ${styles.sectionInner}`}>
+        <h2 className={styles.sectionTitle}>{value.title}</h2>
+        <div className={styles.prose}>
+          <PortableText value={value.body} components={serializers} />
+        </div>
       </div>
     </section>
   );
@@ -45,19 +49,16 @@ const ImageComponent = ({
   if (!asset?.url) return null;
 
   return (
-    <figure style={{ margin: "20px 0" }}>
+    <figure className={styles.figure}>
       <Image
         src={asset.url}
-        alt={alt || "Image"}
+        alt={alt || ""}
         width={800}
         height={450}
-        layout="responsive"
-        objectFit="cover"
+        className={styles.figureMedia}
       />
       {alt && (
-        <figcaption style={{ textAlign: "center", fontSize: "var(--fs-xs)" }}>
-          {alt}
-        </figcaption>
+        <figcaption className={styles.figcaption}>{alt}</figcaption>
       )}
     </figure>
   );
@@ -73,29 +74,16 @@ const VideoComponent = ({
   if (!value?.url) return null;
 
   return (
-    <div className="video-wrapper" style={{ margin: "48px 0" }}>
+    <div className={styles.video}>
       <iframe
         src={`${value.url}?hideEmbedTopBar=true&hide_share=true&hide_title=true&hide_owner=true&hide_speed=true`}
         title={value.title || "Embedded Video"}
-        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        style={{
-          width: "100%",
-          height: "600px",
-          borderRadius: "0px",
-        }}
+        className={styles.videoFrame}
       />
       {value.title && (
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: "var(--fs-xs)",
-            marginTop: "8px",
-          }}
-        >
-          {value.title}
-        </p>
+        <p className={styles.videoCaption}>{value.title}</p>
       )}
     </div>
   );
@@ -104,57 +92,18 @@ const VideoComponent = ({
 // Portable Text serializers
 const serializers: PortableTextComponents = {
   list: {
-    bullet: ({ children }) => (
-      <ul style={{ fontSize: "var(--fs-lg)", paddingInlineStart: "64px" }}>
-        {children}
-      </ul>
-    ),
+    bullet: ({ children }) => <ul className={styles.ul}>{children}</ul>,
   },
   listItem: {
-    bullet: ({ children }) => (
-      <li style={{ listStyleType: "disc" }}>{children}</li>
-    ),
+    bullet: ({ children }) => <li className={styles.li}>{children}</li>,
+  },
+  block: {
+    h1: ({ children }) => <h2 className={styles.h2}>{children}</h2>,
+    h2: ({ children }) => <h2 className={styles.h2}>{children}</h2>,
+    h3: ({ children }) => <h3 className={styles.h3}>{children}</h3>,
+    normal: ({ children }) => <p className={styles.p}>{children}</p>,
   },
   types: {
-    block: (props) => {
-      switch (props.value.style) {
-        case "h1":
-          return (
-            <h1
-              style={{
-                fontSize: "var(--fs-xl)",
-                // lineHeight: "1.2",
-              }}
-            >
-              {props.value.children[0].text}
-            </h1>
-          );
-        case "h3":
-          return (
-            <h3
-              style={{
-                fontSize: "var(--fs-xl)",
-                fontWeight: "640",
-                // lineHeight: "1.2",
-              }}
-            >
-              {props.value.children[0].text}
-            </h3>
-          );
-        default:
-          return (
-            <p
-              style={{
-                fontSize: "var(--fs-lg)",
-                lineHeight: "1.2",
-                fontWeight: "320",
-              }}
-            >
-              {props.value.children[0].text}
-            </p>
-          );
-      }
-    },
     image: ImageComponent,
     video: VideoComponent,
     section: (
@@ -175,20 +124,40 @@ interface StudyContentProps {
 const StudyContent: React.FC<StudyContentProps> = ({ title, content }) => {
   return (
     <>
-      {content.map((block: any, index: number) => (
-        <PortableText
-          key={index}
-          value={[block]}
-          onMissingComponent={false}
-          components={{
-            ...serializers,
-            types: {
-              ...serializers.types,
-              section: (props) => <Section {...props} index={index} />,
-            },
-          }}
-        />
-      ))}
+      {content.map((block: any, index: number) => {
+        const isSection = block?._type === "section";
+
+        const components = {
+          ...serializers,
+          types: {
+            ...serializers.types,
+            section: (props: any) => <Section {...props} index={index} />,
+          },
+        };
+
+        if (isSection) {
+          return (
+            <PortableText
+              key={index}
+              value={[block]}
+              onMissingComponent={false}
+              components={components}
+            />
+          );
+        }
+
+        return (
+          <div key={index} className={`container ${styles.block}`}>
+            <div className={styles.prose}>
+              <PortableText
+                value={[block]}
+                onMissingComponent={false}
+                components={components}
+              />
+            </div>
+          </div>
+        );
+      })}
     </>
   );
 };

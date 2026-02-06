@@ -3,11 +3,12 @@
   display: flex;
   align-items: center;
   gap: var(--space-2xs);
+  height: var(--button-height);
   border: var(--border-width-sm) solid var(--palette-neutral-darkest);
   border-radius: var(--border-radius-2xs);
   padding-block: calc(
     (
-        var(--button-height) - var(--font-size-lg) * var(--font-line-height-lg) -
+        var(--button-height) - var(--font-line-height-lg) -
           var(--border-width-sm) * 2
       ) / 2
   );
@@ -19,6 +20,7 @@
   background-color: var(--palette-neutral-lightest);
   transition: border-color 0.2s ease-in-out;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .root:disabled {

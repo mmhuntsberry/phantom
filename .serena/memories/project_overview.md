@@ -1,0 +1,12 @@
+# Project Overview
+- Repo: `phantom` (Nx monorepo).
+- Apps: `apps/author` (author site + beta/ARC platform), `apps/portfolio`, `apps/plex`.
+- Tech stack: TypeScript, Next.js (App Router) in `apps/author`, Sanity CMS, Drizzle ORM + Neon (Postgres), Playwright e2e, Jest.
+- Purpose: Author platform with public site (start-here/books/about/newsletter) plus private beta/ARC reader flows, surveys, and admin metrics.
+- Structure highlights (author app):
+  - Routes: `apps/author/app/(site)` public pages, `apps/author/app/(studio)` Sanity studio.
+  - Components: `apps/author/components` primitives (button/input/label) and site widgets.
+  - CMS: `apps/author/sanity/schemas` + queries in `apps/author/sanity/sanity-utils.ts`.
+  - DB: `apps/author/db/schema.ts` + migrations in `apps/author/drizzle`.
+  - Tests: `apps/author/tests/e2e/reader-flow.spec.ts`.
+  - Docs: `apps/author/docs/author-platform-beta-arc-plan.md`, `apps/author/docs/smoke-test.md`.

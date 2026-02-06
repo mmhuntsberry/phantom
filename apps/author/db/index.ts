@@ -5,15 +5,21 @@ import { Pool } from "pg";
 
 import * as schema from "./schema";
 
+const databaseUrl = process.env.DATABASE_URL;
+const shouldUseSsl =
+  typeof databaseUrl === "string" &&
+  (databaseUrl.includes("neon.tech") || databaseUrl.includes("sslmode=require"));
+
 export const db = process.env.VERCEL
   ? drizzleNeon({
-      client: neon(process.env.DATABASE_URL!),
+      client: neon(databaseUrl!),
       schema,
       casing: "snake_case",
     })
   : drizzlePostgres(
       new Pool({
-        connectionString: process.env.DATABASE_URL,
+        connectionString: databaseUrl,
+        ssl: shouldUseSsl ? { rejectUnauthorized: false } : undefined,
       }),
       { schema, casing: "snake_case" }
     );

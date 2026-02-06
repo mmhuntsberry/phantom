@@ -72,89 +72,114 @@ import { Job } from "../types/Job";
 export async function getStudies(): Promise<Study[]> {
   const client = createClient(config);
 
-  return client.fetch(
-    groq`*[_type == "study"]|order(_createdAt desc){
-      _id,
-      _createdAt,
-      name,
-      about,
-      "slug": slug.current,
-      content,
-      media {
-        type,
-        image{
-          asset-> { url },
-          alt
+  try {
+    return await client.fetch(
+      groq`*[_type == "study"]|order(_createdAt desc){
+        _id,
+        _createdAt,
+        name,
+        about,
+        summary,
+        role,
+        tags,
+        "slug": slug.current,
+        media {
+          type,
+          image{
+            asset-> { url },
+            alt
+          },
+          video
         },
-        video
-      },
-      url,
-      "excerpt": 
-        array::join(
-          string::split(pt::text(content), "")[0..255],
-          ""
-        ) + "..."
-    }`,
-    {},
-    { next: { revalidate: 3600 } }
-  );
+        url,
+        "excerpt": 
+          array::join(
+            string::split(pt::text(content), "")[0..255],
+            ""
+          ) + "..."
+      }`,
+      {},
+      { next: { revalidate: 3600 } }
+    );
+  } catch {
+    return [];
+  }
 }
 
 export async function getStudy(slug: string): Promise<Study> {
   const client = createClient(config);
 
-  return client.fetch(
-    groq`*[_type=="study" && slug.current == $slug][0]{
-      _id,
-      _createdAt,
-      name,
-      about,
-      "slug": slug.current,
-      url,
-      media {
-        type,
-        image {
-          asset-> { _id, url },
-          alt
+  try {
+    return await client.fetch(
+      groq`*[_type=="study" && slug.current == $slug][0]{
+        _id,
+        _createdAt,
+        name,
+        about,
+        summary,
+        role,
+        tags,
+        "slug": slug.current,
+        url,
+        media {
+          type,
+          image {
+            asset-> { _id, url },
+            alt
+          },
+          video
         },
-        video
-      },
-      content[]{
-        ...,
-        _type == "image" => {
+        content[]{
           ...,
-          asset->{url}
-        },
-        _type == "section" => {
-          ...,
-          body[]{
+          _type == "image" => {
             ...,
-            _type == "image" => {
+            asset->{url}
+          },
+          _type == "section" => {
+            ...,
+            body[]{
               ...,
-              asset->{url}
+              _type == "image" => {
+                ...,
+                asset->{url}
+              }
             }
           }
         }
-      }
-    }`,
-    { slug }
-  );
+      }`,
+      { slug }
+    );
+  } catch {
+    return {
+      _id: "",
+      _createdAt: new Date().toISOString(),
+      name: "Case study",
+      about: "",
+      slug,
+      content: [],
+      media: { type: "image" },
+    } as Study;
+  }
 }
 
 export async function getJobs(): Promise<Job[]> {
   const client = createClient(config);
 
-  const jobs = await client.fetch(
-    groq`*[_type == "job"]{
-      _id,
-      _createdAt,
-      name,
-      company,
-      title,
-      content,
-      "image": image.asset->url,
-    }`
-  );
+  try {
+    const jobs = await client.fetch(
+      groq`*[_type == "job"]{
+        _id,
+        _createdAt,
+        name,
+        company,
+        title,
+        content,
+        "image": image.asset->url,
+      }`
+    );
 
-  return jobs;
+    return jobs;
+  } catch {
+    return [];
+  }
 }

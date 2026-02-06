@@ -14,7 +14,7 @@ export default function Footer() {
       </span>
 
       <div className={styles.icon}>
-        <Link href="https:s//www.instagram.com/matt_huntsberry/">
+        <Link href="https://www.instagram.com/matt_huntsberry/">
           <InstagramLogo size={48} />
         </Link>
       </div>

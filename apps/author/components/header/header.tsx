@@ -1,6 +1,5 @@
 "use client";
 
-import Logo from "../logo/logo";
 import Nav from "../nav/nav";
 import styles from "./header.module.css";
 import { usePathname } from "next/navigation";
@@ -12,20 +11,14 @@ export default function Header() {
   return (
     <header className={`${styles.header}`}>
       <div className={styles.headerContainer}>
-        <Nav pathname={pathname ?? ""} />
-        <Link href="/">
-          <Logo />
-        </Link>
-        <div
-          style={{
-            marginBlockStart: "var(--space-md)",
-            marginBlockEnd: "var(--space-xl)",
-            display: "flex",
-          }}
-        >
+        <div className={styles.navAndName}>
+          <Nav pathname={pathname ?? ""} />
+          <p className={styles.name}>Matthew Huntsberry</p>
+        </div>
+        <div className={styles.iconContainer}>
           <Link
             className={styles.iconLink}
-            href="https:s//www.instagram.com/matt_huntsberry/"
+            href="https://www.instagram.com/matt_huntsberry/"
           >
             <InstagramLogo size={48} />
           </Link>

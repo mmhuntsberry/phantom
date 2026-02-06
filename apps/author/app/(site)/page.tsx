@@ -1,81 +1,139 @@
-import { getWritingsGrouped } from "../../sanity/sanity-utils";
+import Image from "next/image";
 import Link from "next/link";
-import { Writing } from "../../types/Writing";
+import { getFeaturedBook, getStartHerePage } from "../../sanity/sanity-utils";
+import SubscribeForm from "../../components/SubscribeForm";
 import styles from "./page.module.css";
-import { Signpost } from "@phosphor-icons/react/dist/ssr";
 
-export default async function HomePage() {
-  const { standalone, seriesList } = await getWritingsGrouped();
+export const metadata = {
+  title: "Start Here | Matthew Huntsberry",
+  description:
+    "New here? Start with a best-of story, a flagship serial, or the coming novel.",
+};
 
-  const grouped = standalone.reduce((acc, post) => {
-    const key = post.category || "Uncategorized";
-    if (!acc[key]) acc[key] = [];
-    acc[key].push(post);
-    return acc;
-  }, {} as Record<string, Writing[]>);
+const getEntryHref = (entry: {
+  customHref?: string;
+  link?: { _type?: string; slug?: string };
+}) => {
+  if (entry.customHref) return entry.customHref;
+  if (!entry.link?.slug) return "#";
 
-  // Groupings based on your categories and tags
-  // const flashAndPoetry = writing?.filter((w) =>
-  //   w.tags?.some((tag) =>
-  //     ["flash-fiction", "poetry", "emotional horror"].includes(tag)
-  //   )
-  // );
+  switch (entry.link._type) {
+    case "writing":
+      return `/writings/${entry.link.slug}`;
+    case "series":
+      return `/series/${entry.link.slug}`;
+    case "book":
+      return `/books/${entry.link.slug}`;
+    default:
+      return "#";
+  }
+};
 
-  // const serialized = writing?.filter((w) =>
-  //   w.tags?.some((tag) =>
-  //     ["serialized", "flash-fiction", "poetry", "emotional horror"].includes(
-  //       tag
-  //     )
-  //   )
-  // );
-
-  // const novels = writings.filter(
-  //   (w) =>
-  //     w.category === "novel" ||
-  //     w.tags?.includes("novel") ||
-  //     w.title.toLowerCase().includes("some people") // temporary fallback
-  // );
-
-  // const screenplays = writings.filter(
-  //   (w) =>
-  //     w.category === "screenplay" ||
-  //     w.tags?.includes("pilot") ||
-  //     w.title.toLowerCase().includes("oliver")
-  // );
+export default async function StartHerePage() {
+  const page = await getStartHerePage();
+  const featuredBook = await getFeaturedBook();
 
   return (
-    <div>
-      <h1 className={styles.title}>WORDS FOR THE OUTSIDERS</h1>
+    <div className={styles.container}>
+      <section className={styles.hero}>
+        <h1 className={styles.title}>Start Here</h1>
+        <p className={styles.promise}>
+          {page?.brandPromise || (
+            <>
+              If you're new here, start with a{" "}
+              <Link href="/stories" className={styles.inlineLink}>
+                short story
+              </Link>{" "}
+              - or{" "}
+              <Link href="/stories" className={styles.inlineLink}>
+                pick a series
+              </Link>{" "}
+              and read from the beginning.
+            </>
+          )}
+        </p>
+      </section>
 
-      {/* 1. Standalone Writings by Category */}
-      {Object.entries(grouped).map(([category, posts]) => (
-        <section className={styles.section} key={category}>
-          <h2 className={styles.category}>{category.replace("-", " ")}</h2>
-          <ul className={styles.list}>
-            {posts.map((post) => (
-              <li className={styles.item} key={post._id}>
-                <Link className={styles.link} href={`/writings/${post.slug}`}>
-                  {post.title} <Signpost size={32} />
+      <section className={styles.gridSection}>
+        <div className={styles.grid}>
+          {featuredBook && featuredBook.slug && (
+            <article
+              className={`${styles.card} ${styles.featuredCard}`}
+              key={featuredBook._id}
+            >
+              <div className={styles.featuredMedia}>
+                <div className={styles.cardMedia}>
+                  {featuredBook.cover?.asset?.url ? (
+                    <Image
+                      src={featuredBook.cover.asset.url}
+                      alt={featuredBook.cover.alt || featuredBook.title}
+                      fill
+                      className={styles.cardImage}
+                    />
+                  ) : (
+                    <div
+                      className={styles.coverPlaceholder}
+                      role="img"
+                      aria-label={`${featuredBook.title} cover placeholder`}
+                    >
+                      <span className={styles.coverPlaceholderText}>
+                        Cover in progress
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className={styles.featuredContent}>
+                <p className={styles.cardKicker}>Featured book</p>
+                <h2 className={styles.cardTitle}>{featuredBook.title}</h2>
+                {(featuredBook.shortPitch || featuredBook.tagline) && (
+                  <p className={styles.cardDescription}>
+                    {featuredBook.shortPitch || featuredBook.tagline}
+                  </p>
+                )}
+                <Link
+                  className={styles.cardLink}
+                  href={`/books/${featuredBook.slug}`}
+                >
+                  See the book
                 </Link>
-              </li>
+              </div>
+            </article>
+          )}
+          {(page?.entryPoints || []).map((entry) => {
+            const href = getEntryHref(entry);
+            return (
+              <article className={styles.card} key={entry.title}>
+                <h2 className={styles.cardTitle}>{entry.title}</h2>
+                {entry.description && (
+                  <p className={styles.cardDescription}>{entry.description}</p>
+                )}
+                <Link className={styles.cardLink} href={href}>
+                  {entry.ctaLabel || "Read now"}
+                </Link>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {page?.expectations && page.expectations.length > 0 && (
+        <section className={styles.expectations}>
+          <h2 className={styles.sectionTitle}>What to expect</h2>
+          <ul className={styles.list}>
+            {page.expectations.map((item) => (
+              <li key={item}>{item}</li>
             ))}
           </ul>
         </section>
-      ))}
+      )}
 
-      {/* 2. Serialized Series Overview */}
-      <section className={styles.section}>
-        <h2 className={styles.category}>Series</h2>
-        <ul className={styles.list}>
-          {seriesList.map((series) => (
-            <li className={styles.item} key={series.slug}>
-              <Link className={styles.link} href={`/series/${series.slug}`}>
-                {series.title}
-                <Signpost size={32} />
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <section className={styles.subscribe}>
+        <h2 className={styles.sectionTitle}>Stay close to the work</h2>
+        <p className={styles.sectionIntro}>
+          Fresh work, early chapters, and a few notes from the writing desk.
+        </p>
+        <SubscribeForm />
       </section>
     </div>
   );
