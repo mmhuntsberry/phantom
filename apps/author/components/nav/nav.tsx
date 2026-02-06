@@ -17,8 +17,11 @@ export const navLinks: NavLink[] = [
   { href: "/stories", label: "Stories" },
   { href: "/poems", label: "Poems" },
   { href: "/books", label: "Books" },
+  { href: "/series", label: "Series" },
+  { href: "/writings", label: "Writings" },
   { href: "/about", label: "About" },
   { href: "/newsletter", label: "Newsletter" },
+  { href: "/subscribe", label: "Subscribe" },
 ];
 
 export type NavProps = {

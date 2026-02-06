@@ -50,6 +50,10 @@
   }
 }
 
+.main {
+  padding-top: var(--space-2xl);
+}
+
 @media (min-width: 1280px) {
   .body {
     padding: var(--space-lg) var(--layout-6xs);
