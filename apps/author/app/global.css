@@ -671,22 +671,22 @@ UTILITY CLASSES
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --neo-bg: #0c0b08;
-    --neo-surface: #161410;
-    --neo-ink: #fff2c2;
+    --neo-bg: #0b1020;
+    --neo-surface: #111a33;
+    --neo-ink: #fff6d8;
     --neo-shadow: #000000;
 
-    --palette-neutral-100: #fff6d8;
+    --palette-neutral-100: var(--neo-ink);
     --palette-neutral-200: #f2dfa8;
     --palette-neutral-300: #e8cf9a;
-    --palette-neutral-400: #b49b70;
-    --palette-neutral-500: #a58d66;
-    --palette-neutral-600: #9a835f;
-    --palette-neutral-700: #8f7958;
-    --palette-neutral-800: #7a6a52;
-    --palette-neutral-900: #51483a;
+    --palette-neutral-400: #cdb487;
+    --palette-neutral-500: #9a835f;
+    --palette-neutral-600: #6f5f57;
+    --palette-neutral-700: #2a3456;
+    --palette-neutral-800: #1b2645;
+    --palette-neutral-900: var(--neo-surface);
     --palette-neutral-1000: var(--neo-bg);
-    --palette-neutral-lightest: var(--neo-surface);
-    --palette-neutral-darkest: var(--palette-neutral-100);
+    --palette-neutral-lightest: #16224a;
+    --palette-neutral-darkest: #ffffff;
   }
 }
