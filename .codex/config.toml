@@ -1,0 +1,4 @@
+[mcp_servers.vercel]
+url = "https://mcp.vercel.com"
+enabled = true
+
