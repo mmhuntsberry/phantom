@@ -1,6 +1,7 @@
 .title {
   font-size: var(--fs-8xl);
   font-weight: 1000;
+  font-family: var(--font-family-display);
   letter-spacing: -0.04em;
   margin-bottom: 64px;
 }

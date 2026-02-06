@@ -1,6 +1,6 @@
 .root {
   box-sizing: border-box;
-  border: var(--border-width-sm) solid var(--palette-neutral-darkest);
+  border: var(--border-width-md) solid var(--palette-neutral-darkest);
   border-radius: var(--border-radius-2xs);
   width: 100%;
   max-height: var(--space-3xl);
@@ -9,14 +9,21 @@
   font-size: var(--font-size-lg);
   font-weight: 500;
   background-color: var(--palette-neutral-lightest);
-  transition: border-color 0.2s ease-in-out;
+  box-shadow: var(--shadow-brutal-sm);
+  transition: transform 0.08s ease, box-shadow 0.08s ease,
+    border-color 0.2s ease, background-color 0.2s ease;
   &:focus {
     border-color: var(--palette-neutral-darkest);
   }
 }
 
-.root:placeholder {
+.root::placeholder {
   color: var(--palette-neutral-700);
+}
+
+.root:focus {
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,7 +37,7 @@
     }
   }
 
-  .root:placeholder {
+  .root::placeholder {
     color: var(--palette-neutral-400);
   }
 }

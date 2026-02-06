@@ -15,9 +15,7 @@
 
 .active {
   opacity: 1;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 2px;
+  background-color: var(--palette-alert-highlight-400);
 }
 
 .link {
@@ -25,6 +23,22 @@
   opacity: 0.8;
   cursor: pointer;
   text-transform: uppercase;
+  border: var(--border-width-md) solid var(--palette-neutral-darkest);
+  background-color: var(--palette-neutral-lightest);
+  box-shadow: var(--shadow-brutal-sm);
+  padding: var(--space-2xs) var(--space-xs);
+  transition: transform 0.08s ease, box-shadow 0.08s ease,
+    background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.link:hover {
+  opacity: 1;
+  background-color: var(--palette-neutral-200);
+}
+
+.link:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 
 .buttonLink {
