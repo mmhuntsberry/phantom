@@ -33,7 +33,7 @@
     color: var(--palette-neutral-100);
 
     &:focus {
-      border-color: var(--palette-alert-info-400);
+      border-color: var(--palette-alert-info-500);
     }
   }
 

@@ -16,6 +16,7 @@
 .active {
   opacity: 1;
   background-color: var(--palette-alert-highlight-400);
+  color: var(--palette-neutral-1000);
 }
 
 .link {
