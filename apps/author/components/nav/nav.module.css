@@ -169,8 +169,8 @@
   color: var(--palette-neutral-lightest);
 }
 
-/* Large screens - allow wrapping */
-@media (min-width: 1101px) {
+/* All screens above mobile - allow wrapping */
+@media (min-width: 901px) {
   .links {
     flex-wrap: wrap;
     gap: 16px;
@@ -178,30 +178,8 @@
   }
 }
 
-/* Medium screens - horizontal scroll, no wrap */
-@media (min-width: 901px) and (max-width: 1100px) {
-  .links {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    gap: 12px;
-  }
-
-  .links::-webkit-scrollbar {
-    display: none;
-  }
-
-  .link {
-    font-size: calc(var(--font-size-md) * 0.9);
-    padding: var(--space-2xs) calc(var(--space-xs) * 0.85);
-    flex-shrink: 0;
-  }
-}
-
-/* Small adjustments for medium-large screens */
-@media (min-width: 1101px) and (max-width: 1200px) {
+/* Adjustments for medium screens */
+@media (min-width: 901px) and (max-width: 1200px) {
   .links {
     gap: 12px;
     row-gap: 10px;
