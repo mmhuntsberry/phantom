@@ -54,7 +54,8 @@
   opacity: 1;
   transform: translateY(-1px);
   box-shadow: var(--shadow-2);
-  background: color-mix(in oklab, var(--surface-2) 85%, transparent);
+  background: var(--control-bg-hover);
+  border-color: var(--control-border-hover);
 }
 
 .snapshot {

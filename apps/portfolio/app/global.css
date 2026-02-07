@@ -108,6 +108,7 @@ li {
   --control-bg: var(--surface-2);
   --control-bg-hover: color-mix(in oklab, var(--surface-2) 65%, var(--surface-1));
   --control-bg-active: var(--surface-3);
+  --control-border-hover: color-mix(in oklab, var(--text-1) 12%, var(--border-1));
   --control-shadow: var(--shadow-1);
   --control-shadow-hover: var(--shadow-2);
   --control-primary-bg: color-mix(in oklab, var(--text-1) 6%, var(--surface-1));
@@ -515,7 +516,8 @@ li {
     --shadow-1: 0 10px 30px rgba(0, 0, 0, 0.35);
     --shadow-2: 0 18px 60px rgba(0, 0, 0, 0.5);
 
-    --control-bg-hover: color-mix(in oklab, var(--surface-2) 65%, var(--surface-1));
+    --control-bg-hover: color-mix(in oklab, var(--surface-2) 65%, var(--text-1));
+    --control-border-hover: color-mix(in oklab, var(--text-1) 22%, var(--border-1));
     --control-primary-bg: color-mix(in oklab, var(--text-1) 10%, var(--surface-1));
     --control-primary-border: color-mix(in oklab, var(--text-1) 22%, var(--border-1));
 
@@ -561,6 +563,7 @@ li {
 
 .control:hover {
   background: var(--control-bg-hover);
+  border-color: var(--control-border-hover);
   box-shadow: var(--control-shadow-hover);
   transform: translateY(-1px);
 }

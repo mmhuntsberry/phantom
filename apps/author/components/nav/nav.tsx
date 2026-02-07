@@ -127,6 +127,14 @@ export default function Nav({ pathname }: NavProps) {
               isOpen ? styles.mobilePanelOpen : ""
             }`}
           >
+            <button
+              className={styles.closeButton}
+              type="button"
+              aria-label="Close navigation"
+              onClick={() => setIsOpen(false)}
+            >
+              <X size={32} />
+            </button>
             <div className={styles.mobileLinks}>
               {allLinks.map((link: NavLink) => (
                 <Link
