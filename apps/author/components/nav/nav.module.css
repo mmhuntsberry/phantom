@@ -29,8 +29,8 @@
 
 .link.active {
   opacity: 1;
-  background-color: var(--palette-alert-highlight-400);
-  color: var(--palette-neutral-1000);
+  background-color: var(--neo-accent-2);
+  color: var(--_palette-gray-100);
   border-bottom: var(--border-width-md) solid var(--palette-neutral-darkest);
   border-right: var(--border-width-md) solid var(--palette-neutral-darkest);
 }
@@ -42,8 +42,12 @@
 
 .link.active:hover {
   opacity: 1;
-  background-color: var(--palette-alert-highlight-400);
-  color: var(--palette-neutral-lightest);
+  background-color: color-mix(
+    in oklab,
+    var(--neo-accent-2) 78%,
+    var(--palette-neutral-1000)
+  );
+  color: var(--_palette-gray-100);
 }
 
 .link:active {
@@ -157,16 +161,20 @@
   border: none;
   border-bottom: var(--border-width-md) solid var(--palette-neutral-darkest);
   border-right: var(--border-width-md) solid var(--palette-neutral-darkest);
-  background-color: var(--palette-alert-highlight-400);
-  color: var(--palette-neutral-1000);
+  background-color: var(--neo-accent-2);
+  color: var(--_palette-gray-100);
   box-shadow: var(--shadow-brutal-sm);
   padding: var(--space-2xs) var(--space-xs);
   transition: color 0.2s ease;
 }
 
 .mobileLink.active:hover {
-  background-color: var(--palette-alert-highlight-400);
-  color: var(--palette-neutral-lightest);
+  background-color: color-mix(
+    in oklab,
+    var(--neo-accent-2) 78%,
+    var(--palette-neutral-1000)
+  );
+  color: var(--_palette-gray-100);
 }
 
 /* All screens above mobile - allow wrapping */
@@ -234,8 +242,12 @@
 
   .link.active:hover {
     opacity: 1;
-    background-color: var(--palette-alert-highlight-400);
-    color: var(--palette-neutral-1000);
+    background-color: color-mix(
+      in oklab,
+      var(--neo-accent-2) 78%,
+      var(--palette-neutral-1000)
+    );
+    color: var(--_palette-gray-100);
   }
 
   .mobilePanel {
@@ -253,7 +265,11 @@
   }
 
   .mobileLink.active:hover {
-    background-color: var(--palette-alert-highlight-400);
-    color: var(--palette-neutral-1000);
+    background-color: color-mix(
+      in oklab,
+      var(--neo-accent-2) 78%,
+      var(--palette-neutral-1000)
+    );
+    color: var(--_palette-gray-100);
   }
 }

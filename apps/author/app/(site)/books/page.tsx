@@ -5,7 +5,8 @@ import styles from "./page.module.css";
 
 export const metadata = {
   title: "Books | Matthew Huntsberry",
-  description: "Books and novellas from Matthew Huntsberry, including coming-soon releases.",
+  description:
+    "Books and novellas from Matthew Huntsberry, including coming-soon releases.",
 };
 
 export default async function BooksPage() {
@@ -25,7 +26,14 @@ export default async function BooksPage() {
           <p className={styles.empty}>New books are on the way.</p>
         ) : (
           books.map((book) => (
-            <article className={styles.card} key={book._id}>
+            <article
+              className={`${styles.card} ${
+                book.status === "comingSoon"
+                  ? styles.cardComingSoon
+                  : styles.cardAvailable
+              }`}
+              key={book._id}
+            >
               <div className={styles.cover}>
                 {book.cover?.asset?.url ? (
                   <Image
@@ -64,7 +72,9 @@ export default async function BooksPage() {
                   <p className={styles.description}>{book.shortPitch}</p>
                 )}
                 <Link className={styles.cta} href={`/books/${book.slug}`}>
-                  {book.status === "comingSoon" ? "View details" : "See where to buy"}
+                  {book.status === "comingSoon"
+                    ? "View details"
+                    : "See where to buy"}
                 </Link>
               </div>
             </article>
