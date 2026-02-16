@@ -14,7 +14,7 @@
       },
       "configurations": {
         "development": {
-          "outputPath": "apps/author"
+          "outputPath": "dist/apps/author"
         },
         "production": {}
       }

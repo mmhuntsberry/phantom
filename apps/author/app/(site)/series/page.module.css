@@ -1,0 +1,29 @@
+.title {
+  font-size: var(--fs-4xl);
+  font-weight: 1000;
+  font-family: var(--font-family-display);
+  letter-spacing: -0.04em;
+  margin: 0px;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.section {
+  margin-block-start: 48px;
+}
+
+.link {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: var(--space-xs);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  margin: 0px;
+  border-bottom: var(--border-width-md) solid var(--palette-neutral-darkest);
+  padding-bottom: var(--space-3xs);
+}
+
+.link:hover {
+  background-color: var(--palette-alert-highlight-400);
+  color: var(--palette-neutral-1000);
+}

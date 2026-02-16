@@ -12,8 +12,15 @@ body,
 html {
   margin: 0;
   padding: 0;
-  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
-    "Arial", sans-serif;
+  font-family: var(
+    --font-family-default,
+    "SF Pro Text",
+    "SF Pro Icons",
+    "Helvetica Neue",
+    "Helvetica",
+    "Arial",
+    sans-serif
+  );
   background-color: var(--palette-neutral-100);
   overflow-x: hidden; /* Prevent horizontal overflow */
   width: 100%;
@@ -608,4 +615,78 @@ UTILITY CLASSES
 
 .mt-4xl {
   margin-top: var(--space-4xl);
+}
+
+/* NEO-BRUTAL THEME OVERRIDES */
+
+:root {
+  --neo-bg: #fff2c2;
+  --neo-surface: #ffffff;
+  --neo-ink: #111111;
+  --neo-shadow: #111111;
+
+  --neo-accent: #ff3d00;
+  --neo-accent-2: #0057ff;
+  --neo-highlight: #f5ff00;
+
+  --palette-neutral-lightest: var(--neo-surface);
+  --palette-neutral-100: var(--neo-bg);
+  --palette-neutral-200: #ffeaa1;
+  --palette-neutral-300: #ffe082;
+  --palette-neutral-400: #f7d266;
+  --palette-neutral-500: #d3b452;
+  --palette-neutral-600: #806b2f;
+  --palette-neutral-700: #6f5f2e;
+  --palette-neutral-800: #3b3522;
+  --palette-neutral-900: #1f1c13;
+  --palette-neutral-1000: #14120c;
+  --palette-neutral-darkest: var(--neo-ink);
+
+  --palette-alert-info-500: var(--neo-accent-2);
+  --palette-alert-danger-500: #ff2bd6;
+  --palette-alert-success-500: #00d084;
+  --palette-alert-warning-500: #ff7a00;
+  --palette-alert-highlight-400: var(--neo-highlight);
+
+  --border-width-sm: 2px;
+  --border-width-md: 3px;
+  --border-width-lg: 4px;
+
+  --border-radius-square: 0px;
+  --border-radius-2xs: 0px;
+  --border-radius-xs: 0px;
+  --border-radius-sm: 0px;
+  --border-radius-md: 0px;
+  --border-radius-lg: 0px;
+
+  --font-family-default: ui-sans-serif, system-ui, -apple-system, "SF Pro Text",
+    "Segoe UI", Arial, sans-serif;
+  --font-family-display: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  --shadow-brutal-sm: 3px 3px 0 0 var(--neo-shadow);
+  --shadow-brutal-md: 6px 6px 0 0 var(--neo-shadow);
+  --shadow-brutal-lg: 10px 10px 0 0 var(--neo-shadow);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --neo-bg: #0b1020;
+    --neo-surface: #111a33;
+    --neo-ink: #fff6d8;
+    --neo-shadow: #000000;
+
+    --palette-neutral-100: var(--neo-ink);
+    --palette-neutral-200: #f2dfa8;
+    --palette-neutral-300: #e8cf9a;
+    --palette-neutral-400: #cdb487;
+    --palette-neutral-500: #9a835f;
+    --palette-neutral-600: #6f5f57;
+    --palette-neutral-700: #2a3456;
+    --palette-neutral-800: #1b2645;
+    --palette-neutral-900: var(--neo-surface);
+    --palette-neutral-1000: var(--neo-bg);
+    --palette-neutral-lightest: #16224a;
+    --palette-neutral-darkest: #ffffff;
+  }
 }

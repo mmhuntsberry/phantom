@@ -8,6 +8,11 @@
   opacity: 0.85;
 }
 
+.link:hover,
+.link:focus-visible {
+  opacity: 1;
+}
+
 @media (prefers-color-scheme: dark) {
   .nav {
     color: var(--text-1);

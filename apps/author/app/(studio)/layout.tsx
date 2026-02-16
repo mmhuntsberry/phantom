@@ -1,20 +1,9 @@
-export const metadata = {
-  title: "Matthew Huntsberry | Design Systems Engineer",
-  description: "",
-};
-
-export default function RootLayout({
+export default function StudioLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body>
-        <main>{children}</main>
-      </body>
-    </html>
-  );
+  return <main>{children}</main>;
 }
 
 export const revalidate = 10;

@@ -17,8 +17,11 @@ export const navLinks: NavLink[] = [
   { href: "/stories", label: "Stories" },
   { href: "/poems", label: "Poems" },
   { href: "/books", label: "Books" },
+  { href: "/series", label: "Series" },
+  { href: "/writings", label: "Writings" },
   { href: "/about", label: "About" },
   { href: "/newsletter", label: "Newsletter" },
+  { href: "/subscribe", label: "Subscribe" },
 ];
 
 export type NavProps = {
@@ -124,6 +127,14 @@ export default function Nav({ pathname }: NavProps) {
               isOpen ? styles.mobilePanelOpen : ""
             }`}
           >
+            <button
+              className={styles.closeButton}
+              type="button"
+              aria-label="Close navigation"
+              onClick={() => setIsOpen(false)}
+            >
+              <X size={32} />
+            </button>
             <div className={styles.mobileLinks}>
               {allLinks.map((link: NavLink) => (
                 <Link

@@ -1,13 +1,10 @@
 .header {
-  /* background-color: rgba(255, 255, 255, 0.8); translucent */
   background-color: var(--palette-neutral-100);
-  opacity: 0.9;
-  backdrop-filter: blur(var(--space-lg));
-  -webkit-backdrop-filter: blur(var(--space-lg)); /* Safari support */
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 var(--space-xs) var(--space-xl) rgba(0, 0, 16px, 0.05); /* <--- soft edge */
+  border-bottom: var(--border-width-lg) solid var(--palette-neutral-darkest);
+  box-shadow: var(--shadow-brutal-md);
 }
 
 .headerContainer {
@@ -19,7 +16,7 @@
   gap: var(--space-2xs);
   min-width: 0;
   overflow-x: hidden;
-  padding: 0;
+  padding: var(--space-lg);
   margin: 0;
 }
 
@@ -30,7 +27,23 @@
   flex-direction: row;
   min-width: 0;
   width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .navAndName {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .name {
+    flex: 1;
+    min-width: 0;
+    margin-top: 0;
+    order: 0;
+  }
 }
 
 @media (max-width: 360px) {
@@ -92,6 +105,26 @@
 .iconLink {
   display: inline-flex;
   flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--neo-ink);
+  border: none;
+  border-bottom: var(--border-width-md) solid var(--palette-neutral-darkest);
+  border-right: var(--border-width-md) solid var(--palette-neutral-darkest);
+  background-color: var(--palette-neutral-lightest);
+  box-shadow: var(--shadow-brutal-sm);
+  padding: var(--space-2xs);
+  transition: transform 0.08s ease, box-shadow 0.08s ease,
+    background-color 0.2s ease;
+}
+
+.iconLink:hover {
+  background-color: var(--palette-neutral-200);
+}
+
+.iconLink:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {
@@ -107,7 +140,7 @@
     margin-block-start: var(--space-xs);
     margin-block-end: var(--space-md);
   }
-  
+
   .iconLink img,
   .iconLink svg {
     width: 40px !important;
@@ -121,16 +154,30 @@
     margin-block-end: var(--space-sm);
     gap: var(--space-2xs);
   }
-  
+
   .iconLink img,
   .iconLink svg {
     width: 36px !important;
     height: 36px !important;
   }
 }
-
 @media (prefers-color-scheme: dark) {
   .header {
     background-color: var(--palette-neutral-1000);
+  }
+
+  .iconLink {
+    color: var(--neo-ink);
+    border-bottom-color: #ffffff;
+    border-right-color: #ffffff;
+    box-shadow: 3px 3px 0 0 #ffffff;
+  }
+
+  .iconLink:hover {
+    background-color: var(--palette-neutral-800);
+  }
+
+  .iconLink:active {
+    box-shadow: none;
   }
 }
