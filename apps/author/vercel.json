@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd ../.. && npx nx build author",
+  "buildCommand": "../../node_modules/.bin/next build",
   "devCommand": "cd ../.. && npx nx serve author",
   "framework": "nextjs",
-  "outputDirectory": "../../dist/apps/author/.next"
+  "outputDirectory": ".next"
 }
