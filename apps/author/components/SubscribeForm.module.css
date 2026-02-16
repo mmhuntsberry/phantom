@@ -74,3 +74,90 @@
     transform: rotate(360deg);
   }
 }
+
+/* Success overlay + confetti */
+.successOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--palette-neutral-alpha-72);
+  display: grid;
+  place-items: center;
+  z-index: 2000;
+  padding: var(--space-md);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2100;
+}
+
+.confettiPiece {
+  position: absolute;
+  top: -12px;
+  border-radius: 2px;
+  opacity: 0.9;
+  transform: rotate(var(--confetti-rotate, 0deg));
+  animation-name: confetti-fall;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-10px) rotate(var(--confetti-rotate, 0deg));
+  }
+  100% {
+    transform: translateY(110vh)
+      rotate(calc(var(--confetti-rotate, 0deg) + 360deg));
+  }
+}
+
+.successCard {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  background: linear-gradient(
+    135deg,
+    var(--palette-neutral-lightest),
+    var(--palette-neutral-100)
+  );
+  border-radius: var(--border-radius-md);
+  padding: var(--space-lg);
+  border: 1px solid var(--palette-neutral-200);
+  box-shadow: var(--shadow-md);
+}
+
+.successMessage {
+  margin: 0 0 var(--space-md);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+}
+
+.doneButton {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  .successOverlay {
+    background-color: var(--palette-neutral-alpha-88);
+  }
+
+  .successCard {
+    background: linear-gradient(
+      135deg,
+      var(--palette-neutral-900),
+      var(--palette-neutral-1000)
+    );
+    border-color: var(--palette-neutral-700);
+  }
+}
